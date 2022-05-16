@@ -1,6 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["vite.config.*"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "paths": { "@/*":["./src/*"] },
   "compilerOptions": {
     "composite": true,
     "types": ["node"]
