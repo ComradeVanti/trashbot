@@ -5,7 +5,10 @@ export const geoStore = defineStore("geo", {
     position: { lat: 0, lng: 0 },
   }),
   actions: {
-    updatePosition(position: any) {
+    updatePosition(position: {
+      latitude: Float32Array;
+      longitude: Float32Array;
+    }) {
       return { lat: position.latitude, lng: position.longitude };
     },
   },
