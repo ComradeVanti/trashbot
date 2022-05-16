@@ -2,12 +2,16 @@
   "name": "trashbot.server",
   "version": "1.0.0",
   "description": "The trashiest server in the world",
+  "scripts": {
+    "watch": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts"
+  },
   "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^17.0.33",
+    "nodemon": "^2.0.16",
     "typescript": "^4.6.4"
   }
 }
