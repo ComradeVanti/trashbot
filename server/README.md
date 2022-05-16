@@ -27,3 +27,4 @@ You will receive a message of the form
   "roomId": string
 }
 ```
+on `me/host`
