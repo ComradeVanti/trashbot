@@ -24,7 +24,18 @@ export default {
   },
   methods: {
     getCurrPos() {
-      this.position = this.store.updatePosition();
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.position = this.store.updatePosition(position.coords);
+          },
+          () => {
+            console.log("Something went wrong (1)");
+          }
+        );
+      } else {
+        console.log("Something went wrong (2)");
+      }
     },
   },
 };
