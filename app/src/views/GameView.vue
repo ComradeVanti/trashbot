@@ -4,7 +4,17 @@
     :zoom="15"
     map-type-id="terrain"
     style="width: 500px; height: 300px"
-  />
+  >
+    <GMapCluster>
+      <GMapMarker :position="position" />
+      <GMapCircle
+        :center="position"
+        :radius="10"
+        :visible="true"
+        :options="{ fillColor: 'blue', fillOpacity: 0.1 }"
+      ></GMapCircle>
+    </GMapCluster>
+  </GMapMap>
 
   <button @click="getCurrPos">update</button>
 </template>
