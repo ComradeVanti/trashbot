@@ -1,8 +1,5 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-    <a href="/game">Map</a>
-  </div>
+    <h1>TEST MAP</h1>
 </template>
 
 <style>
