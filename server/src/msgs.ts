@@ -1,8 +1,10 @@
-interface HostMsg {
+import {playerId, roomId} from "./domain"
+
+export type HostMsg = {
     playerName: string
 }
 
-interface HostResponse {
+export type HostResponse = {
     playerId: playerId
     roomId: roomId
 }

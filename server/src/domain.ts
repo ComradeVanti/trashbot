@@ -1,3 +1,3 @@
-type playerId = string
+export type playerId = string
 
-type roomId = string
+export type roomId = number

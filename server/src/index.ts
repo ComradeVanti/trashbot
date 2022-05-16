@@ -1,6 +1,7 @@
 import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io"
+import {HostMsg, HostResponse} from "./msgs";
 
 const port = 3000
 
@@ -19,7 +20,7 @@ app.get('/ping', (req, res) => {
 io.on("connection", socket => {
     socket.on("server/host", (msg: HostMsg) => {
         const playerId = socket.id
-        const roomId = "1234"
+        const roomId = 10000
         const response: HostResponse = {playerId, roomId}
         socket.emit("me/host", response)
     })
