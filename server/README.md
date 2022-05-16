@@ -16,14 +16,14 @@ Send GET `/ping` to check if the server is online. The server will return
 Send a message of the form 
 ```json
 {
-  "player-name": string
+  "playerName": string
 }
 ```
 to `server/host` to open a new room with a player with the given name as host.
 You will receive a message of the form
 ```json
 {
-  "player-id": string,
-  "room-id": string
+  "playerId": string,
+  "roomId": string
 }
 ```
