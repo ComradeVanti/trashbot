@@ -3,6 +3,7 @@ import {createServer} from "http";
 import {Server} from "socket.io"
 import {HostMsg, HostResponse} from "./msgs";
 import * as RoomId from "./RoomId"
+import * as PlayerId from "./PlayerId"
 
 const port = 3000
 
@@ -20,7 +21,7 @@ app.get('/ping', (req, res) => {
 
 io.on("connection", socket => {
     socket.on("server/host", (msg: HostMsg) => {
-        const playerId = socket.id
+        const playerId = PlayerId.HOST
         const roomId = RoomId.generate()
         const response: HostResponse = {playerId, roomId}
         socket.emit("me/host", response)

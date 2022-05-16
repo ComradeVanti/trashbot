@@ -15,4 +15,4 @@ Send GET `/ping` to check if the server is online. The server will return
 
 Send `{ "playerName": string }` to `server/host`.  
 This will open reserve an id for the player and open a new room.  
-If successful receive `{ "playerId": string, "roomId": number }` on `me/host`
+If successful receive `{ "playerId": number, "roomId": number }` on `me/host`
