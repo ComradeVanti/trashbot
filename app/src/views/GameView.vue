@@ -8,14 +8,15 @@
 </template>
 
 <script>
+import { geoStore } from "../stores/index.ts";
+
 export default {
   name: "GameView",
   data() {
+    const store = geoStore();
+
     return {
-      position: {
-        lat: 48.2137044744728,
-        lng: 15.631431169725559,
-      },
+      position: store.position,
     };
   },
 };
