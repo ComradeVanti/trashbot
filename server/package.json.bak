@@ -1,9 +1,0 @@
-{
-  "name": "trashbot.server",
-  "version": "1.0.0",
-  "description": "The trashies tserver in the world",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}
