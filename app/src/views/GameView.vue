@@ -5,6 +5,8 @@
     map-type-id="terrain"
     style="width: 500px; height: 300px"
   />
+
+  <button @click="getCurrPos">update</button>
 </template>
 
 <script>
@@ -16,8 +18,14 @@ export default {
     const store = geoStore();
 
     return {
+      store,
       position: store.position,
     };
+  },
+  methods: {
+    getCurrPos() {
+      this.position = this.store.updatePosition();
+    },
   },
 };
 </script>
