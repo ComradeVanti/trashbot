@@ -1,6 +1,7 @@
 import Immutable from "immutable";
 import {roomId} from "./domain";
 import {Room} from "./Room";
+import {Lobby} from "./Lobby";
 
 type RoomMap = Immutable.Map<roomId, Room>
 
@@ -39,6 +40,14 @@ export class RoomDB {
     add(room: Room): [RoomDB, roomId] {
         const id = this.generateFreeId()
         return [new RoomDB(this.rooms.set(id, room)), id]
+    }
+
+    tryGetRoom(id: roomId): Room | null {
+        return this.rooms.get(id) ?? null
+    }
+
+    updateRoom(id: roomId, room: Room): RoomDB {
+        return new RoomDB(this.rooms.set(id, room))
     }
 
 }

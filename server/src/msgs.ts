@@ -1,5 +1,7 @@
 import {Location, playerId, roomId} from "./domain"
 
+// HOST
+
 export type HostMsg = {
     playerName: string
 }
@@ -8,6 +10,15 @@ export type HostResponse = {
     playerId: playerId
     roomId: roomId
 }
+
+// JOIN
+
+export type JoinMsg = {
+    playerName: string
+}
+
+
+// GET-ACTORS
 
 export type PlayerActorResponse = {
     type: 0,
