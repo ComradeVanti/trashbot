@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/StartView.vue";
+import GameView from "../views/GameView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
+import LobbyView from "../views/LobbyView.vue";
+import RuleSetView from "../views/RuleSetView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +17,22 @@ const router = createRouter({
     {
       path: "/game",
       name: "game",
-      component: () => import("../views/GameView.vue"),
+      component: GameView,
     },
     {
       path: "/:pathMatch(.*)*",
       name: "not_found",
-      component: () => import("../views/NotFoundView.vue"),
+      component: NotFoundView,
+    },
+    {
+      path: "/lobby",
+      name: "lobby",
+      component: LobbyView,
+    },
+    {
+      path: "/rules",
+      name: "rules",
+      component: RuleSetView,
     },
   ],
 });
