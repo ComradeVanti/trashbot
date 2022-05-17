@@ -76,7 +76,7 @@ ERRORS:
 
 - 0 = Bad name
 - 1 = Duplicate name
-- 2 = Room is not in the lobby
+- 2 = Room is not in the lobby-state
 
 #### Get actors
 
