@@ -84,7 +84,7 @@ ERRORS:
 
 Sent to the client if the lobby changes.
 
-Server -> Client `lobby/change`
+Server -> Client `lobby/changed`
 
 ```js
 { playerId: number, action: "JOINED" | "LEFT" }
