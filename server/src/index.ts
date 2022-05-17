@@ -35,8 +35,8 @@ app.get('/ping', (req, res) => {
 io.on("connection", socket => {
     socket.on("server/host", (msg: HostMsg) => {
         const player = {id: PlayerId.HOST, name: msg.playerName}
-        const room = mapRoomDB(db => ManageRooms.openNewFor(player, db))
-        const response: HostResponse = {playerId: player.id, roomId: room.id}
+        const roomId = mapRoomDB(db => ManageRooms.openNewFor(player, db))
+        const response: HostResponse = {playerId: player.id, roomId}
         socket.emit("me/host", response)
     })
 })

@@ -1,5 +1,5 @@
-import {Player, Room, RoomDB, roomId} from "./domain";
-import {Map} from "immutable"
+import {Lobby, Player, Room, RoomDB, roomId, RoomType} from "./domain";
+import Immutable, {Map, List} from "immutable"
 
 const MIN_ID: roomId = 10000
 const MAX_ID: roomId = 99999
@@ -19,8 +19,12 @@ function generateFreeIdFor(roomDB: RoomDB): roomId {
 
 export const EMPTY_DB = Map<roomId, Room>()
 
-export function openNewFor(host: Player, roomDB: RoomDB): [RoomDB, Room] {
+function lobby(players: Immutable.List<Player>): Room {
+    return {type: RoomType.LOBBY, players}
+}
+
+export function openNewFor(host: Player, roomDB: RoomDB): [RoomDB, roomId] {
     const roomId = generateFreeIdFor(roomDB)
-    const room = {id: roomId, players: [host]}
-    return [roomDB.set(roomId, room), room]
+    const room = lobby(List.of(host))
+    return [roomDB.set(roomId, room), roomId]
 }
