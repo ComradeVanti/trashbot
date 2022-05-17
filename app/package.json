@@ -12,6 +12,7 @@
     "@fawmi/vue-google-maps": "^0.9.67",
     "pinia": "^2.0.14",
     "vue": "^3.2.33",
+    "vue-3-ts-socket.io": "^1.0.3",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {

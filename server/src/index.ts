@@ -9,7 +9,11 @@ const port = 3000
 
 const app = express()
 const httpServer = createServer(app);
-const io = new Server(httpServer)
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*",
+    }
+})
 
 let roomDB = ManageRooms.EMPTY_DB
 
