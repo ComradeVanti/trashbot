@@ -45,8 +45,39 @@ Client -> Server `server/join`
 { playerName: string, roomId: number }
 ```
 OK: Server -> Client `me/join`
+```js
 { playerId: number }
+```
 ERRORS:
 - 0 = Bad name
 - 1 = Room not found
 - 2 = Duplicate name
+
+#### Get actors
+
+Get all actors around the player. Send the id of the player and their 
+location to the server. Server responds with array of actors.
+
+An actor is either a player or item, which can be differentiated by their 
+`type` property.
+- 0 = player
+- 1 = item
+
+Client -> Server `[roomId]/get-actors`
+```js
+{ playerId: number, location: { lat: number, lng: number } }
+```
+Server -> Client `me/actors`
+```js
+{
+    actors: [
+        {
+            type: 0,
+            id: playerId,
+            location: { lat: number, lng: number }
+        }
+    ]
+}
+```
+Error:
+- 0 = Player is not part of room
