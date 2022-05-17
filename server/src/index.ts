@@ -66,7 +66,7 @@ io.on("connection", socket => {
 
         registerRoomEvents(roomId)
 
-        socket.to(roomId.toString())
+        socket.join(roomId.toString())
         const response: HostResponse = {playerId, roomId}
 
         console.log(`Socket ${socket.id} is now the host of room ${roomId}`)
@@ -81,9 +81,11 @@ io.on("connection", socket => {
             const [roomWithPlayer, playerId] = room.addPlayer(msg.playerName)
             mapRoomDB(it => it.updateRoom(msg.roomId, roomWithPlayer))
 
-            io.to(msg.roomId.toString()).emit("lobby/changed", {playerId, action: "JOINED"})
+            console.log(`Send join info to all in room ${msg.roomId}`)
 
-            socket.to(msg.roomId.toString())
+            socket.join(msg.roomId.toString())
+            socket.to(msg.roomId.toString()).emit("lobby/changed", {playerId, action: "JOINED"})
+
             const response: JoinResponse = {
                 playerId,
                 playersInLobby: Array.from(roomWithPlayer.getPlayers())
