@@ -4,7 +4,9 @@
     :zoom="15"
     map-type-id="terrain"
     style="width: 500px; height: 300px"
-  />
+  >
+    <user-pin />
+  </GMapMap>
   <button @click="getCurrPos()">update</button>
 </template>
 
@@ -12,8 +14,11 @@
 import { mapState } from "pinia";
 import { geoStore } from "../stores/index.ts";
 
+import UserPin from "../components/UserPin.vue";
+
 export default {
   name: "GameView",
+  components: { UserPin },
   setup() {
     const store = geoStore();
 
