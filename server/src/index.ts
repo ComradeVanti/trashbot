@@ -1,10 +1,10 @@
 import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io"
-import {HostMsg, HostResponse} from "./msgs";
-import * as ManageRooms from "./ManageRooms"
-import * as PlayerId from "./PlayerId"
-import {RoomDB} from "./domain";
+import {GetActorsMsg, GetActorsResponse, HostMsg, HostResponse} from "./msgs";
+import {roomId} from "./domain";
+import {Lobby} from "./Lobby";
+import {RoomDB} from "./RoomDB";
 
 const port = 3000
 
@@ -16,7 +16,7 @@ const io = new Server(httpServer, {
     }
 })
 
-let roomDB = ManageRooms.EMPTY_DB
+let roomDB = RoomDB.EMPTY
 
 function mapRoomDB<TOut>(map: ((db: RoomDB) => [RoomDB, TOut])) {
     const [newDB, output] = map(roomDB)
@@ -33,10 +33,18 @@ app.get('/ping', (req, res) => {
 // SOCKET.IO
 
 io.on("connection", socket => {
+
+    function registerRoomEvents(roomId: roomId) {
+    }
+
+
     socket.on("server/host", (msg: HostMsg) => {
-        const player = {id: PlayerId.HOST, name: msg.playerName}
-        const roomId = mapRoomDB(db => ManageRooms.openNewFor(player, db))
-        const response: HostResponse = {playerId: player.id, roomId}
+        const [room, playerId] = Lobby.newWithHost(msg.playerName)
+        const roomId = mapRoomDB(it => it.add(room))
+
+        registerRoomEvents(roomId)
+
+        const response: HostResponse = {playerId, roomId}
         socket.emit("me/host", response)
     })
 })
