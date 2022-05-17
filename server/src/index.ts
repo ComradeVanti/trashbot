@@ -40,21 +40,9 @@ app.get('/ping', (req, res) => {
 
 io.on("connection", socket => {
 
-    function registerRoomEvents(roomId: roomId) {
-        socket.on(`${roomId}/join`, (msg: JoinMsg) => {
-            const room = roomDB.tryGetRoom(roomId)
-            if (room instanceof Lobby) {
-                const [roomWithPlayer, playerId] = room.addPlayer(msg.playerName)
-                mapRoomDB(it => it.updateRoom(roomId, roomWithPlayer))
-                const response: JoinResponse = {
-                    playerId,
-                    playersInLobby: Array.from(roomWithPlayer.getPlayers())
-                }
-                socket.emit("me/join", response)
-            } else
-                socket.emit("me/join", {errorCode: 2})
-        })
+    console.log(`Socket ${socket.id} connected`)
 
+    function registerRoomEvents(roomId: roomId) {
         socket.on(`${roomId}/get-actors`, (msg: GetActorsMsg) => {
             const response: GetActorsResponse = {
                 actors: [
@@ -80,7 +68,27 @@ io.on("connection", socket => {
         registerRoomEvents(roomId)
 
         const response: HostResponse = {playerId, roomId}
+
+        console.log(`Socket ${socket.id} is now the host of room ${roomId}`)
         socket.emit("me/host", response)
+    })
+
+    socket.on(`server/join`, (msg: JoinMsg) => {
+        console.log(`Socket ${socket.id} tries to join room ${msg.roomId}`)
+        const room = roomDB.tryGetRoom(msg.roomId)
+        if (room === null) {
+            return socket.emit("me/join", {errorCode: 3})
+        }
+        if (room instanceof Lobby) {
+            const [roomWithPlayer, playerId] = room.addPlayer(msg.playerName)
+            mapRoomDB(it => it.updateRoom(msg.roomId, roomWithPlayer))
+            const response: JoinResponse = {
+                playerId,
+                playersInLobby: Array.from(roomWithPlayer.getPlayers())
+            }
+            socket.emit("me/join", response)
+        } else
+            socket.emit("me/join", {errorCode: 2})
     })
 
     socket.onAny(([event]) => {

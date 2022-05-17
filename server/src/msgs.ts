@@ -14,7 +14,8 @@ export type HostResponse = {
 // JOIN
 
 export type JoinMsg = {
-    playerName: string
+    playerName: string,
+    roomId: number
 }
 
 export type JoinResponse = {

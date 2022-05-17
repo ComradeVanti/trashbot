@@ -55,11 +55,12 @@ the id of the room they want to join. The server will attempt to add the
 player to the given room. If successful it will send back the unique id of the
 joined player.
 
-Client -> Server `[roomid]/join`
+Client -> Server `server/join`
 
 ```js
 {
-    playerName: string
+    playerName: string,
+    roomId: number
 }
 ```
 
@@ -77,6 +78,7 @@ ERRORS:
 - 0 = Bad name
 - 1 = Duplicate name
 - 2 = Room is not in the lobby-state
+- 3 = Room does not exist
 
 #### Get actors
 
