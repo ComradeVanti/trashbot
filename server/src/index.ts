@@ -26,7 +26,6 @@ io.on("connection", socket => {
         const player = {id: PlayerId.HOST, name: msg.playerName}
         const [room, newDB] = ManageRooms.openNewFor(player, roomDB)
         roomDB = newDB
-        console.log(JSON.stringify(roomDB.entries()))
         const response: HostResponse = {playerId: player.id, roomId: room.id}
         socket.emit("me/host", response)
     })
