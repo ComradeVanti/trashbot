@@ -39,9 +39,8 @@ OK: Server -> Client `me/host`
 
 ```js 
 {
-    playerId: number, roomId
-:
-    number
+    playerId: number, 
+    roomId: number
 }
 ```
 
@@ -93,13 +92,8 @@ Client -> Server `[roomId]/get-actors`
 
 ```js
 {
-    playerId: number, location
-:
-    {
-        lat: number, lng
-    :
-        number
-    }
+    playerId: number, 
+    location: { lat: number, lng: number }
 }
 ```
 
