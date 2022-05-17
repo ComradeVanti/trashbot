@@ -4,40 +4,34 @@
     :zoom="15"
     map-type-id="terrain"
     style="width: 500px; height: 300px"
-  >
-    <GMapCluster>
-      <GMapMarker :position="position" />
-      <GMapCircle
-        :center="position"
-        :radius="10"
-        :visible="true"
-        :options="{ fillColor: 'blue', fillOpacity: 0.1 }"
-      ></GMapCircle>
-    </GMapCluster>
-  </GMapMap>
-
-  <button @click="getCurrPos">update</button>
+  />
+  <button @click="getCurrPos()">update</button>
 </template>
 
 <script>
+import { mapState } from "pinia";
 import { geoStore } from "../stores/index.ts";
 
 export default {
   name: "GameView",
-  data() {
+  setup() {
     const store = geoStore();
 
     return {
       store,
-      position: store.position,
     };
+  },
+  computed: {
+    ...mapState(geoStore, {
+      position: "newPosition",
+    }),
   },
   methods: {
     getCurrPos() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            this.position = this.store.updatePosition(position.coords);
+            this.store.updatePosition(position.coords);
           },
           () => {
             console.log("Something went wrong (1)");
