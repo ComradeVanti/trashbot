@@ -23,9 +23,9 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
+  --color-background: rgba(61,59,48, 1);
+  --color-background-soft: rgba(61,59,48, 1);
+  --color-background-mute: rgba(61,59,48, 1);
 
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
@@ -71,4 +71,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.content {
+  height: 100vh;
+  padding: 20px;
 }
