@@ -1,6 +1,13 @@
 <template>
   <GMapCluster>
-    <GMapMarker :position="position" />
+    <GMapMarker
+      id="marker"
+      :position="position"
+      :icon="{
+        url: img,
+        scaledSize: { width: 45, height: 40 },
+      }"
+    />
     <GMapCircle
       :center="position"
       :radius="10"
@@ -20,8 +27,15 @@
 import { mapState } from "pinia";
 import { geoStore } from "../stores/index.ts";
 
+const img_path = await import("../assets/img/UserBot.png");
+
 export default {
   name: "UserPin",
+  setup() {
+    return {
+      img: img_path.default,
+    };
+  },
   computed: {
     ...mapState(geoStore, {
       position: "position",
@@ -30,4 +44,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#marker {
+  offset: 15px 15px;
+}
+</style>

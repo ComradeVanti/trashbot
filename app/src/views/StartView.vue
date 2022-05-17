@@ -24,16 +24,25 @@
 <script>
 import InputField from "@/components/InputField.vue";
 import ButtonComp from "@/components/ButtonComp.vue";
+import { gameStore } from "@/stores";
 export default {
   components: { InputField, ButtonComp },
   name: "GameView",
-  // setup() {},
+  setup() {
+    const store = gameStore();
+
+    return {
+      store,
+    };
+  },
   sockets: {
     connect: function () {
       console.log("socket connected");
     },
     "me/host": function (data) {
       console.log(data);
+      this.saveLobbyCode(data.roomId);
+
       // this.$socket.emit(`${data.roomId}/get-actors`, { playerId: 123 });
     },
     "me/actors": function (data) {
@@ -43,10 +52,13 @@ export default {
   methods: {
     savePlayerName() {
       console.log(this.playerName);
+      this.store.savePlayer(this.playerName);
       //save to state?
     },
-    saveLobbyCode() {
+    saveLobbyCode(roomId) {
+      this.lobbyCode = roomId;
       console.log(this.lobbyCode);
+      this.store.saveRoomId(this.lobbyCode);
       //save to state?
     },
     sendHost: function () {
@@ -71,7 +83,7 @@ export default {
       console.log(this.playerName);
       this.savePlayerName();
       this.saveLobbyCode();
-      this.sendPlayer();
+      // this.sendPlayer();
       this.$router.push("lobby");
       //save to state?
     },
