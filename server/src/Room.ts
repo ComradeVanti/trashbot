@@ -5,7 +5,7 @@ export abstract class Room {
 
     private static MIN_PLAYER_ID: playerId = 0
     private static MAX_PLAYER_ID: playerId = 1000
-    private static ID_DIFF = Room.MIN_PLAYER_ID - Room.MAX_PLAYER_ID
+    private static ID_DIFF = Room.MAX_PLAYER_ID - Room.MIN_PLAYER_ID
 
     static generateId(): playerId {
         return Math.floor(Math.random() * Room.ID_DIFF) + Room.MIN_PLAYER_ID
