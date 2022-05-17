@@ -24,10 +24,17 @@
 <script>
 import InputField from "@/components/InputField.vue";
 import ButtonComp from "@/components/ButtonComp.vue";
+import { gameStore } from "@/stores";
 export default {
   components: { InputField, ButtonComp },
   name: "GameView",
-  // setup() {},
+  setup() {
+    const store = gameStore();
+
+    return {
+      store,
+    };
+  },
   sockets: {
     connect: function () {
       console.log("socket connected");
@@ -43,6 +50,7 @@ export default {
   methods: {
     savePlayerName() {
       console.log(this.playerName);
+      this.store.savePlayer(this.playerName);
       //save to state?
     },
     saveLobbyCode() {
@@ -62,7 +70,7 @@ export default {
     createLobby() {
       console.log(this.playerName);
       this.savePlayerName();
-      this.sendHost();
+      // this.sendHost();
       this.$router.push("lobby");
     },
 
@@ -71,7 +79,7 @@ export default {
       console.log(this.playerName);
       this.savePlayerName();
       this.saveLobbyCode();
-      this.sendPlayer();
+      // this.sendPlayer();
       this.$router.push("lobby");
       //save to state?
     },
