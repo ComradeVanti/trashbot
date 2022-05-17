@@ -7,7 +7,15 @@
   >
     <user-pin />
   </GMapMap>
-  <button @click="getCurrPos()">update</button>
+  <button type="button" class="btn btn-primary" @click="getCurrPos()">
+    update
+  </button>
+
+  <toast-msg
+    id="locationError"
+    msg="Standort nicht gefunden. Überprüfe deine Standorteinstellungen."
+    bgColor="danger"
+  />
 </template>
 
 <script>
@@ -15,10 +23,11 @@ import { mapState } from "pinia";
 import { geoStore } from "../stores/index.ts";
 
 import UserPin from "../components/UserPin.vue";
+import ToastMsg from "../components/ToastMsg.vue";
 
 export default {
   name: "GameView",
-  components: { UserPin },
+  components: { UserPin, ToastMsg },
   setup() {
     const store = geoStore();
 
@@ -42,12 +51,23 @@ export default {
             this.store.updatePosition(position.coords);
           },
           () => {
-            console.log("Something went wrong (1)");
+            this.locationError();
           }
         );
       } else {
-        console.log("Something went wrong (2)");
+        this.locationError();
       }
+    },
+
+    locationError() {
+      this.showToast("locationError");
+    },
+    showToast(id) {
+      const toast = document.getElementById(id);
+
+      // eslint-disable-next-line no-undef
+      const action = new bootstrap.Toast(toast);
+      action.show();
     },
   },
 };
