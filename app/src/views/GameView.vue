@@ -26,6 +26,9 @@ export default {
       position: "newPosition",
     }),
   },
+  created() {
+    this.getCurrPos();
+  },
   methods: {
     getCurrPos() {
       if (navigator.geolocation) {
