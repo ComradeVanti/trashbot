@@ -1,14 +1,9 @@
 import {Room} from "./Room";
 import Immutable from "immutable";
-import {playerId, roomId} from "./domain";
+import {playerId} from "./domain";
 
-export class LobbyPlayerData {
+type LobbyPlayerData = {
     readonly name: string
-
-    constructor(name: string) {
-        this.name = name
-    }
-
 }
 
 type PlayerDataMap = Immutable.Map<playerId, LobbyPlayerData>
@@ -32,4 +27,13 @@ export class Lobby extends Room {
         this.playerData = playerData
     }
 
+
+    addPlayer(name: string) {
+        const playerData = {name}
+        const playerId = this.generateFreeId()
+        return new Lobby(
+            this.playerIds.push(playerId),
+            this.playerData.set(playerId, playerData)
+        )
+    }
 }
