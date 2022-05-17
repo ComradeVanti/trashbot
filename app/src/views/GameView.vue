@@ -1,15 +1,20 @@
 <template>
-  <GMapMap
-    :center="position"
-    :zoom="15"
-    map-type-id="terrain"
-    style="width: 500px; height: 300px"
-  >
-    <user-pin />
-  </GMapMap>
-  <button type="button" class="btn btn-primary" @click="getCurrPos()">
-    update
-  </button>
+  <div class="content">
+    <div id="map-container">
+      <GMapMap id="map" :zoom="15" :center="position">
+        <user-pin />
+      </GMapMap>
+    </div>
+
+    <button
+      id="update-btn"
+      class="btn btn-primary"
+      type="button"
+      @click="getCurrPos()"
+    >
+      Aktualisiere Standort
+    </button>
+  </div>
 
   <toast-msg
     id="locationError"
@@ -74,11 +79,20 @@ export default {
 </script>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+#map-container,
+.vue-map-container {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+
+  box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
+}
+#update-btn {
+  z-index: 100;
+  position: absolute;
+
+  bottom: 30px;
+  left: 30px;
 }
 </style>
