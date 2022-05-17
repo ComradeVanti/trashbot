@@ -30,6 +30,10 @@ export const gameStore = defineStore("game", {
       console.log("asdf1");
       this.playerName = updatedName;
     },
+    saveRoomId(lobbyCode: number) {
+      console.log("roomId");
+      this.roomId = lobbyCode;
+    },
   },
   getters: {
     updatedName: (state) => state.playerName,

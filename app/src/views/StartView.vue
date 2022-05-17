@@ -41,6 +41,8 @@ export default {
     },
     "me/host": function (data) {
       console.log(data);
+      this.saveLobbyCode(data.roomId);
+
       // this.$socket.emit(`${data.roomId}/get-actors`, { playerId: 123 });
     },
     "me/actors": function (data) {
@@ -53,8 +55,10 @@ export default {
       this.store.savePlayer(this.playerName);
       //save to state?
     },
-    saveLobbyCode() {
+    saveLobbyCode(roomId) {
+      this.lobbyCode = roomId;
       console.log(this.lobbyCode);
+      this.store.saveRoomId(this.lobbyCode);
       //save to state?
     },
     sendHost: function () {
@@ -70,7 +74,7 @@ export default {
     createLobby() {
       console.log(this.playerName);
       this.savePlayerName();
-      // this.sendHost();
+      this.sendHost();
       this.$router.push("lobby");
     },
 
