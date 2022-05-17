@@ -21,7 +21,5 @@ app.use(
     connection: "http://localhost:3000",
   })
 );
-// app.use(cors)
-
 
 app.mount("#app");
