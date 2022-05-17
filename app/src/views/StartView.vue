@@ -1,10 +1,22 @@
 <template>
-  <main>Hello World</main>
-  <!-- <Button @click="clickButton">Test</Button> -->
+  <!-- <main>Hello World</main> -->
+
+  <input-field aria-label="Name" placeholder="Name"></input-field>
+  <input-field aria-label="Lobby Code" placeholder="Lobby Code"></input-field>
+
+  <br />
+
+  <button-comp>Join</button-comp>
+  <br />
+  <br />
+  <button-comp>Host</button-comp>
 </template>
 
 <script>
+import InputField from "@/components/InputField.vue";
+import ButtonComp from "@/components/ButtonComp.vue";
 export default {
+  components: { InputField, ButtonComp },
   name: "GameView",
   // setup() {},
   sockets: {
