@@ -60,13 +60,13 @@ io.on("connection", socket => {
         })
     }
 
-
     socket.on("server/host", (msg: HostMsg) => {
         const [room, playerId] = Lobby.newWithHost(msg.playerName)
         const roomId = mapRoomDBOut(it => it.add(room))
 
         registerRoomEvents(roomId)
 
+        socket.to(roomId.toString())
         const response: HostResponse = {playerId, roomId}
 
         console.log(`Socket ${socket.id} is now the host of room ${roomId}`)
@@ -76,12 +76,14 @@ io.on("connection", socket => {
     socket.on(`server/join`, (msg: JoinMsg) => {
         console.log(`Socket ${socket.id} tries to join room ${msg.roomId}`)
         const room = roomDB.tryGetRoom(msg.roomId)
-        if (room === null) {
-            return socket.emit("me/join", {errorCode: 3})
-        }
+        if (room === null) return socket.emit("me/join", {errorCode: 3})
         if (room instanceof Lobby) {
             const [roomWithPlayer, playerId] = room.addPlayer(msg.playerName)
             mapRoomDB(it => it.updateRoom(msg.roomId, roomWithPlayer))
+
+            io.to(msg.roomId.toString()).emit("lobby/changed", {playerId, action: "JOINED"})
+
+            socket.to(msg.roomId.toString())
             const response: JoinResponse = {
                 playerId,
                 playersInLobby: Array.from(roomWithPlayer.getPlayers())

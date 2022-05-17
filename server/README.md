@@ -80,6 +80,16 @@ ERRORS:
 - 2 = Room is not in the lobby-state
 - 3 = Room does not exist
 
+#### Lobby changed
+
+Sent to the client if the lobby changes.
+
+Server -> Client `lobby/change`
+
+```js
+{ playerId: number, action: "JOINED" | "LEFT" }
+```
+
 #### Get actors
 
 Get all actors around the player. Send the id of the player and their
