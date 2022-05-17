@@ -17,6 +17,11 @@ export type JoinMsg = {
     playerName: string
 }
 
+export type JoinResponse = {
+    playerId: playerId,
+    playersInLobby: { id: playerId, name: string }[]
+}
+
 
 // GET-ACTORS
 

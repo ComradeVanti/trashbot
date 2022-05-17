@@ -1,5 +1,5 @@
 import {Room} from "./Room";
-import Immutable from "immutable";
+import Immutable, {Collection} from "immutable";
 import {playerId} from "./domain";
 
 type LobbyPlayerData = {
@@ -28,12 +28,16 @@ export class Lobby extends Room {
     }
 
 
-    addPlayer(name: string) {
+    addPlayer(name: string): [Lobby, playerId] {
         const playerData = {name}
         const playerId = this.generateFreeId()
-        return new Lobby(
+        return [new Lobby(
             this.playerIds.push(playerId),
             this.playerData.set(playerId, playerData)
-        )
+        ), playerId]
+    }
+
+    getPlayers() {
+        return this.playerIds.map(id => ({id, name: this.playerData.get(id)!!.name}))
     }
 }

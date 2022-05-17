@@ -67,7 +67,8 @@ OK: Server -> Client `me/join`
 
 ```js
 {
-    playerId: number
+    playerId: number,
+    playersInLobby: [  { id: number, name: string } ]
 }
 ```
 
