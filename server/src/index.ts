@@ -95,7 +95,10 @@ io.on("connection", socket => {
             socket.emit("me/join", {errorCode: 2})
     })
 
-    socket.onAny(([event]) => {
+    socket.onAny((event) => {
+
+        console.log(`Socket: ${socket.id} Msg: ${event}`)
+
         const match = roomIdRegex.exec(event)
         const context = match?.groups?.context || ""
 
