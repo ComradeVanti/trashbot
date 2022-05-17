@@ -19,8 +19,8 @@ function generateFreeIdFor(roomDB: RoomDB): roomId {
 
 export const EMPTY_DB = Map<roomId, Room>()
 
-export function openNewFor(host: Player, roomDB: RoomDB): [Room, RoomDB] {
+export function openNewFor(host: Player, roomDB: RoomDB): [RoomDB, Room] {
     const roomId = generateFreeIdFor(roomDB)
     const room = {id: roomId, players: [host]}
-    return [room, roomDB.set(roomId, room)]
+    return [roomDB.set(roomId, room), room]
 }

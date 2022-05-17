@@ -1,5 +1,7 @@
 import Immutable from "immutable"
 
+export type Unit = null
+
 export type playerId = number
 
 export type roomId = number
