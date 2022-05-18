@@ -53,7 +53,7 @@ export default {
     savePlayerName() {
       console.log(this.playerName);
       this.store.savePlayer(this.playerName);
-      //save to state?
+      this.store.savePlayerId(this.playerId);
     },
     saveLobbyCode(roomId) {
       this.lobbyCode = roomId;
