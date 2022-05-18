@@ -5,6 +5,7 @@
     role="alert"
     aria-live="assertive"
     aria-atomic="true"
+    data-delay="7000"
   >
     <div class="d-flex">
       <div class="toast-body">{{ msg }}</div>
@@ -53,6 +54,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 20px;
+  margin: 20px 30px;
+
+  z-index: 1000000;
 }
 </style>
