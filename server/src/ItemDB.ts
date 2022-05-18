@@ -44,4 +44,14 @@ export class ItemDB {
         return this.items.get(id) ?? null
     }
 
+    addKey(obj: any, key: string, value: any): any {
+        const withKey = JSON.parse(JSON.stringify(obj))
+        withKey.key = value
+        return withKey
+    }
+
+    getItems() {
+        return this.items.map((item, id) => (this.addKey(item, "id", id))).toList().toArray()
+    }
+
 }
