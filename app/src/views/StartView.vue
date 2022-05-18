@@ -1,6 +1,4 @@
 <template>
-  <!-- <main>Hello World</main> -->
-
   <input-field
     aria-label="Name"
     placeholder="Name"
@@ -46,12 +44,17 @@ export default {
     "me/actors": function (data) {
       console.log(data);
     },
+    "me/join": function (data) {
+      console.log(data);
+      this.saveLobbyCode(data.roomId, data.playerId);
+    },
+    "lobby/changed": function (data) {
+      console.log(data);
+    },
   },
   methods: {
     savePlayerName() {
-      console.log(this.playerName);
       this.store.savePlayer(this.playerName);
-      this.store.savePlayerId(this.playerId);
     },
     saveLobbyCode(roomId, playerId) {
       if (roomId !== undefined) this.lobbyCode = roomId;
@@ -64,14 +67,13 @@ export default {
       this.$socket.emit("server/host", { playerName: this.playerName });
     },
     sendPlayer: function () {
-      this.$socket.emit("server/join", {
+      this.$socket.emit(`server/join`, {
         playerName: this.playerName,
-        roomId: 123,
+        roomId: parseInt(this.lobbyCode),
       });
     },
 
     createLobby() {
-      console.log(this.playerName);
       this.savePlayerName();
       this.sendHost();
       this.$router.push("lobby");
@@ -79,12 +81,9 @@ export default {
 
     joinLobby() {
       console.log(this.lobbyCode);
-      console.log(this.playerName);
       this.savePlayerName();
-      this.saveLobbyCode();
-      // this.sendPlayer();
+      this.sendPlayer();
       this.$router.push("lobby");
-      //save to state?
     },
   },
 };
