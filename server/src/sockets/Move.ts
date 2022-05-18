@@ -6,10 +6,6 @@ import {InGame} from "../InGame";
 
 export module Move {
 
-    enum Errors {
-        NOT_IN_GAME = 10
-    }
-
     type Request = {
         playerId: playerId | undefined,
         roomId: roomId | undefined,
@@ -23,20 +19,15 @@ export module Move {
             return roomDB
         }
 
-        const room = roomDB.tryGetRoom(request.roomId)
+        const game = roomDB.tryGetGame(request.roomId)
 
-        if (!room) {
+        if (!game) {
             client.sendError("me/location", UniversalErrors.ROOM_NOT_FOUND)
             return roomDB
         }
 
-        if (room instanceof InGame) {
-            roomDB.updateRoom(request.roomId, room.movePlayer(request.playerId, request.location))
-            return roomDB
-        } else {
-            client.sendError("me/location", Errors.NOT_IN_GAME)
-            return roomDB
-        }
+        roomDB.updateGame(request.roomId, game.movePlayer(request.playerId, request.location))
+        return roomDB
     }
 
 }

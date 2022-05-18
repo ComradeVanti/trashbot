@@ -1,4 +1,3 @@
-import {Room} from "./Room";
 import {Location, playerId} from "./domain";
 import Immutable from "immutable";
 
@@ -9,17 +8,16 @@ type InGamePlayerData = {
 
 type PlayerDataMap = Immutable.Map<playerId, InGamePlayerData>
 
-export class InGame extends Room {
+export class InGame {
 
-    readonly playerData: PlayerDataMap
+    readonly players: PlayerDataMap
 
-    constructor(playerIds: Immutable.List<playerId>, playerData: PlayerDataMap) {
-        super(playerIds)
-        this.playerData = playerData
+    constructor(playerData: PlayerDataMap) {
+        this.players = playerData
     }
 
     private mapData(mapF: (map: PlayerDataMap) => PlayerDataMap): InGame {
-        return new InGame(this.playerIds, mapF(this.playerData))
+        return new InGame(mapF(this.players))
     }
 
     private mapPlayerData(id: playerId, mapF: (data: InGamePlayerData) => InGamePlayerData) {

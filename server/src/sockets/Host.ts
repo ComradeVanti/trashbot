@@ -26,8 +26,8 @@ export module Host {
             return roomDB
         }
 
-        const [room, playerId] = Lobby.newWithHost(request.playerName)
-        const [dbWithLobby, roomId] = roomDB.add(room)
+        const [lobby, playerId] = Lobby.newWithHost(request.playerName)
+        const [dbWithLobby, roomId] = roomDB.addLobby(lobby)
 
         client.joinRoom(roomId)
 

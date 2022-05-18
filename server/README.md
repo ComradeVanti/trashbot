@@ -75,7 +75,6 @@ ERRORS:
 
 - 10 = Bad name
 - 11 = Duplicate name
-- 12 = Room is not in the lobby-state
 
 #### Lobby changed
 
@@ -102,9 +101,6 @@ Server -> Client `lobby/players`
 ```js
 { players: { id: number, name: string }[] }
 ```
-
-ERRORS:
-- 10 = Room is not lobby
 
 #### Lobby ready
 
@@ -136,10 +132,6 @@ Client -> Server `me/location`
 ```
 
 If successful the server will not respond.
-
-ERRORS
-
-- 10 = Room is not in-game
 
 #### Get actors
 

@@ -27,18 +27,14 @@ export module PlayersInLobby {
             return roomDB
         }
 
-        const room = roomDB.tryGetRoom(request.roomId)
-        if (room === null) {
+        const lobby = roomDB.tryGetLobby(request.roomId)
+        if (lobby === null) {
             client.sendError("lobby/players", UniversalErrors.ROOM_NOT_FOUND)
             return roomDB
         }
 
-        if (room instanceof Lobby) {
-            const response: Response = {players: Array.from(room.getPlayers())}
-            client.send("lobby/players", response)
-        } else {
-            client.sendError("lobby/players", Errors.ROOM_NOT_LOBBY)
-        }
+        const response: Response = {players: Array.from(lobby.getPlayers())}
+        client.send("lobby/players", response)
 
         return roomDB
     }

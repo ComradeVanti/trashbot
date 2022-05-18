@@ -1,6 +1,6 @@
-import {Room} from "./Room";
-import Immutable, {Collection} from "immutable";
+import Immutable from "immutable";
 import {playerId} from "./domain";
+import {PlayersInLobby} from "./sockets/PlayersInLobby";
 
 type LobbyPlayerData = {
     readonly name: string
@@ -8,36 +8,53 @@ type LobbyPlayerData = {
 
 type PlayerDataMap = Immutable.Map<playerId, LobbyPlayerData>
 
-export class Lobby extends Room {
+export class Lobby {
+
+    private static MIN_PLAYER_ID: playerId = 0
+    private static MAX_PLAYER_ID: playerId = 1000
+    private static ID_DIFF = Lobby.MAX_PLAYER_ID - Lobby.MIN_PLAYER_ID
+
+    static generateId(): playerId {
+        return Math.floor(Math.random() * Lobby.ID_DIFF) + Lobby.MIN_PLAYER_ID
+    }
 
     static newWithHost(name: string): [Lobby, playerId] {
         const playerData = {name}
         const playerId = this.generateId()
-        return [new Lobby(
-            Immutable.List.of(playerId),
-            Immutable.Map([[playerId, playerData]])),
+        return [
+            new Lobby(Immutable.Map([[playerId, playerData]])),
             playerId]
     }
 
 
-    readonly playerData: PlayerDataMap
+    readonly players: PlayerDataMap
 
-    constructor(playerIds: Immutable.List<playerId>, playerData: PlayerDataMap) {
-        super(playerIds)
-        this.playerData = playerData
+    constructor(playerData: PlayerDataMap) {
+        this.players = playerData
     }
 
+    private hasPlayerWith(id: playerId): boolean {
+        return this.players.has(id)
+    }
+
+    private generateFreeId(): playerId {
+        let id = 0
+        do {
+            id = Lobby.generateId()
+        } while (this.hasPlayerWith(id))
+        return id
+    }
 
     addPlayer(name: string): [Lobby, playerId] {
         const playerData = {name}
         const playerId = this.generateFreeId()
-        return [new Lobby(
-            this.playerIds.push(playerId),
-            this.playerData.set(playerId, playerData)
-        ), playerId]
+        return [
+            new Lobby(this.players.set(playerId, playerData)),
+            playerId]
     }
 
     getPlayers() {
-        return this.playerIds.map(id => ({id, name: this.playerData.get(id)!!.name}))
+        return Array.from(this.players.entries())
+            .map(([id, data]) => ({id, name: data.name}))
     }
 }
