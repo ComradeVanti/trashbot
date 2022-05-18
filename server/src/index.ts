@@ -37,6 +37,8 @@ io.on("connection", socket => {
 
     socket.onAny((event, request) => {
 
+        console.log(`Socket ${socket.id} -> Server ${event}`)
+
         function handleWith(handleFunc: ((request: any, db: RoomDB, client: SocketClient) => RoomDB)) {
             roomDB = handleFunc(request, roomDB, client)
         }
