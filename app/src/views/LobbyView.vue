@@ -8,11 +8,16 @@
       {{ player }}
     </div>
   </div>
+
+  <!-- nur für Host -->
+  <button-comp @click="sendAllPlayers()">Start Game</button-comp>
 </template>
 
 <script>
 import { gameStore } from "@/stores";
+import ButtonComp from "@/components/ButtonComp.vue";
 export default {
+  components: { ButtonComp },
   data() {
     const store = gameStore();
 
@@ -22,6 +27,9 @@ export default {
     "lobby/players": function (data) {
       this.allPlayers = data.players.map((it) => it.name);
     },
+    "lobby/ready": function (data) {
+      console.log(data);
+    },
   },
   methods: {
     getAllPlayers() {
@@ -29,6 +37,13 @@ export default {
         playerId: this.store.playerId,
         roomId: parseInt(this.store.roomId),
       });
+    },
+    sendAllPlayers() {
+      this.$socket.emit("lobby/ready", {
+        playerId: this.store.playerId,
+        roomId: parseInt(this.store.roomId),
+      });
+      this.$router.push("game");
     },
   },
   mounted() {
