@@ -54,7 +54,7 @@ io.on("connection", socket => {
                 return handleWith(PlayersInLobby.handle)
             case "lobby/ready":
                 return handleWith(Ready.handle)
-            case "me/location":
+            case "game/location":
                 return handleWith(Move.handle)
             case "game/get-actors":
                 return handleWith(GetActors.handle)

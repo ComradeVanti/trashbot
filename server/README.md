@@ -125,7 +125,7 @@ Server -> Client `lobby/ready`
 
 Send the player's location to the server, so it can store it.
 
-Client -> Server `me/location`
+Client -> Server `game/location`
 
 ```js
 { playerId: number, roomId: number, location: {lat: number, lng: number}}

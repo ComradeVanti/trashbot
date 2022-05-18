@@ -15,14 +15,14 @@ export module Move {
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
 
         if (request.playerId === undefined || request.roomId === undefined || request.location === undefined) {
-            client.sendError("me/location", UniversalErrors.BAD_MESSAGE)
+            client.sendError("game/location", UniversalErrors.BAD_MESSAGE)
             return roomDB
         }
 
         const game = roomDB.tryGetGame(request.roomId)
 
         if (!game) {
-            client.sendError("me/location", UniversalErrors.ROOM_NOT_FOUND)
+            client.sendError("game/location", UniversalErrors.ROOM_NOT_FOUND)
             return roomDB
         }
 
