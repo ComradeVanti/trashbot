@@ -5,6 +5,7 @@
     v-model="playerName"
     @input="(event) => (playerName = event.target.value)"
   ></input-field>
+  <!-- nur für Player -->
   <input-field
     aria-label="Lobby Code"
     placeholder="Lobby Code"
@@ -16,6 +17,7 @@
   <button-comp @click="createLobby()">Host</button-comp>
   <br />
   <br />
+  <!-- nur für Player -->
   <button-comp @click="joinLobby()">Join</button-comp>
 </template>
 
@@ -41,15 +43,9 @@ export default {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
     },
-    "me/actors": function (data) {
-      console.log(data);
-    },
     "me/join": function (data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
-    },
-    "lobby/changed": function (data) {
-      console.log(data);
     },
   },
   methods: {
@@ -62,6 +58,8 @@ export default {
       console.log(this.lobbyCode);
       this.store.saveRoomId(this.lobbyCode);
       this.store.savePlayerId(this.playerId);
+      localStorage.setItem("roomId", this.lobbyCode);
+      localStorage.setItem("playerId", this.playerId);
     },
     sendHost: function () {
       this.$socket.emit("server/host", { playerName: this.playerName });
@@ -76,6 +74,7 @@ export default {
     createLobby() {
       this.savePlayerName();
       this.sendHost();
+
       this.$router.push("lobby");
     },
 
@@ -83,6 +82,8 @@ export default {
       console.log(this.lobbyCode);
       this.savePlayerName();
       this.sendPlayer();
+      localStorage.setItem("roomId", this.lobbyCode);
+      localStorage.setItem("playerId", this.playerId);
       this.$router.push("lobby");
     },
   },

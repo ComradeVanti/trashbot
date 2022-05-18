@@ -1,6 +1,4 @@
-export type playerId = number
-
-export type roomId = number
+export type id = number
 
 export type degree = number
 
@@ -23,6 +21,7 @@ export enum PartType {
 }
 
 export type Item = {
+    id: id
     location: Location,
     stats: Stats,
     type: PartType

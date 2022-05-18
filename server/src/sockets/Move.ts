@@ -1,14 +1,13 @@
-import {Location, playerId, roomId} from "../domain"
+import {Location, id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {SocketClient} from "./SocketClient";
 import {UniversalErrors} from "./UniversalErrors";
-import {Game} from "../Game";
 
 export module Move {
 
     type Request = {
-        playerId: playerId | undefined,
-        roomId: roomId | undefined,
+        playerId: id | undefined,
+        roomId: id | undefined,
         location: Location | undefined
     }
 

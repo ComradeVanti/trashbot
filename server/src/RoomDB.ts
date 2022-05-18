@@ -1,20 +1,20 @@
 import Immutable from "immutable";
-import {Location, roomId} from "./domain";
+import {Location, id} from "./domain";
 import {Lobby} from "./Lobby";
 import {Game} from "./Game";
 
-type LobbyMap = Immutable.Map<roomId, Lobby>
-type GameMap = Immutable.Map<roomId, Game>
+type LobbyMap = Immutable.Map<id, Lobby>
+type GameMap = Immutable.Map<id, Game>
 
 export class RoomDB {
 
-    private static MIN_ROOM_ID: roomId = 10000
-    private static MAX_ROOM_ID: roomId = 99999
+    private static MIN_ROOM_ID: id = 10000
+    private static MAX_ROOM_ID: id = 99999
     private static ID_DIFF = RoomDB.MAX_ROOM_ID - RoomDB.MIN_ROOM_ID
 
     static EMPTY = new RoomDB(Immutable.Map(), Immutable.Map())
 
-    private static generateId(): roomId {
+    private static generateId(): id {
         return Math.floor(Math.random() * RoomDB.ID_DIFF) + RoomDB.MIN_ROOM_ID
     }
 
@@ -23,11 +23,11 @@ export class RoomDB {
         private readonly games: GameMap) {
     }
 
-    private hasLobbyWith(id: roomId) {
+    private hasLobbyWith(id: id) {
         return this.lobbies.has(id)
     }
 
-    private generateFreeId(): roomId {
+    private generateFreeId(): id {
         let id = 0
         do {
             id = RoomDB.generateId()
@@ -35,28 +35,28 @@ export class RoomDB {
         return id
     }
 
-    addLobby(lobby: Lobby): [RoomDB, roomId] {
+    addLobby(lobby: Lobby): [RoomDB, id] {
         const id = this.generateFreeId()
         return [new RoomDB(this.lobbies.set(id, lobby), this.games), id]
     }
 
-    tryGetLobby(id: roomId): Lobby | null {
+    tryGetLobby(id: id): Lobby | null {
         return this.lobbies.get(id) ?? null
     }
 
-    tryGetGame(id: roomId): Game | null {
+    tryGetGame(id: id): Game | null {
         return this.games.get(id) ?? null
     }
 
-    updateLobby(id: roomId, lobby: Lobby): RoomDB {
+    updateLobby(id: id, lobby: Lobby): RoomDB {
         return new RoomDB(this.lobbies.set(id, lobby), this.games)
     }
 
-    updateGame(id: roomId, game: Game): RoomDB {
+    updateGame(id: id, game: Game): RoomDB {
         return new RoomDB(this.lobbies, this.games.set(id, game))
     }
 
-    startGameIn(id: roomId, hostLocation: Location): RoomDB {
+    startGameIn(id: id, hostLocation: Location): RoomDB {
         const lobby = this.tryGetLobby(id)
         if (lobby) {
             return new RoomDB(
