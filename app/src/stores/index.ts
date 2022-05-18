@@ -7,7 +7,6 @@ export const geoStore = defineStore("geo", {
   actions: {
     updatePosition(position: { latitude: number; longitude: number }) {
       this.position = { lat: position.latitude, lng: position.longitude };
-      console.log(this.position);
     },
   },
   getters: {
