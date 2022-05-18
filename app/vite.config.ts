@@ -19,6 +19,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
+    https:true,
     port: 3001,
   },
 });
