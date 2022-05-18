@@ -52,6 +52,10 @@ io.on("connection", socket => {
                 return handleWith(GetActors.handle)
         }
     })
+
+    socket.on("disconnect", () => {
+        console.log(`Socket ${socket.id} disconnected`)
+    })
 })
 
 httpServer.listen(port, () => {
