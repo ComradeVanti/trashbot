@@ -2,6 +2,7 @@ import {playerId, roomId} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {Lobby} from "../Lobby";
 import {SocketClient} from "./SocketClient";
+import {UniversalErrors} from "./UniversalErrors";
 
 export module Host {
 
@@ -10,7 +11,7 @@ export module Host {
     }
 
     type Request = {
-        playerName: string
+        playerName: string | undefined
     }
 
     type Response = {
@@ -19,6 +20,12 @@ export module Host {
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
+        if(request.playerName === undefined)
+        {
+            client.sendError("server/host", UniversalErrors.BAD_MESSAGE)
+            return roomDB
+        }
+
         const [room, playerId] = Lobby.newWithHost(request.playerName)
         const [dbWithLobby, roomId] = roomDB.add(room)
 

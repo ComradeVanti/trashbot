@@ -27,6 +27,7 @@ UNIVERSAL ERROR CODES:
 - 1 = Player does not exist
 - 2 = Player does not have permission for this action
 - 3 = Player does not have access to the room
+- 4 = The message was missing some important property
 
 #### Host
 

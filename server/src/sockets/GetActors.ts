@@ -10,8 +10,8 @@ export module GetActors {
     }
 
     type Request = {
-        playerId: number,
-        roomId: number
+        playerId: number | undefined,
+        roomId: number | undefined
     }
 
     type Response = {

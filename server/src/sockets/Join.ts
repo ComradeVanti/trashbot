@@ -13,8 +13,8 @@ export module Join {
     }
 
     type Request = {
-        playerName: string,
-        roomId: roomId
+        playerName: string | undefined,
+        roomId: roomId | undefined
     }
 
     type Response = {
@@ -22,6 +22,12 @@ export module Join {
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
+
+        if (request.roomId === undefined || request.playerName === undefined) {
+            client.sendError("server/join", UniversalErrors.BAD_MESSAGE)
+            return roomDB
+        }
+
         const room = roomDB.tryGetRoom(request.roomId)
         if (room === null) {
             client.sendError("server/join", UniversalErrors.ROOM_NOT_FOUND)

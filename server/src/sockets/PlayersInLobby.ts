@@ -12,8 +12,8 @@ export module PlayersInLobby {
 
 
     type Request = {
-        playerId: playerId,
-        roomId: roomId
+        playerId: playerId | undefined,
+        roomId: roomId | undefined
     }
 
     type Response = {
@@ -21,6 +21,12 @@ export module PlayersInLobby {
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
+
+        if (request.playerId === undefined || request.roomId === undefined) {
+            client.sendError("server/join", UniversalErrors.BAD_MESSAGE)
+            return roomDB
+        }
+
         const room = roomDB.tryGetRoom(request.roomId)
         if (room === null) {
             client.sendError("lobby/players", UniversalErrors.ROOM_NOT_FOUND)

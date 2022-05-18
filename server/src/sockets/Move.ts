@@ -11,12 +11,18 @@ export module Move {
     }
 
     type Request = {
-        playerId: playerId,
-        roomId: roomId,
-        location: Location
+        playerId: playerId | undefined,
+        roomId: roomId | undefined,
+        location: Location | undefined
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
+
+        if (request.playerId === undefined || request.roomId === undefined || request.location === undefined) {
+            client.sendError("server/join", UniversalErrors.BAD_MESSAGE)
+            return roomDB
+        }
+
         const room = roomDB.tryGetRoom(request.roomId)
 
         if (!room) {
