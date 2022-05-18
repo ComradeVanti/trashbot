@@ -82,6 +82,8 @@ export default {
       console.log(this.lobbyCode);
       this.savePlayerName();
       this.sendPlayer();
+      localStorage.setItem("roomId", this.lobbyCode);
+      localStorage.setItem("playerId", this.playerId);
       this.$router.push("lobby");
     },
   },
