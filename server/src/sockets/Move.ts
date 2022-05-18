@@ -15,7 +15,7 @@ export module Move {
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
 
         if (request.playerId === undefined || request.roomId === undefined || request.location === undefined) {
-            client.sendError("server/join", UniversalErrors.BAD_MESSAGE)
+            client.sendError("me/location", UniversalErrors.BAD_MESSAGE)
             return roomDB
         }
 
