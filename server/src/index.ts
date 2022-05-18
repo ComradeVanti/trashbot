@@ -7,6 +7,7 @@ import {Host} from "./sockets/Host";
 import {Join} from "./sockets/Join";
 import {makeSocketClient, SocketClient} from "./sockets/SocketClient";
 import {GetActors} from "./sockets/GetActors";
+import {PlayersInLobby} from "./sockets/PlayersInLobby";
 
 const port = 3000
 
@@ -45,6 +46,8 @@ io.on("connection", socket => {
                 return handleWith(Host.handle)
             case "server/join":
                 return handleWith(Join.handle)
+            case "lobby/players":
+                return handleWith(PlayersInLobby.handle)
             case "game/get-actors":
                 return handleWith(GetActors.handle)
         }

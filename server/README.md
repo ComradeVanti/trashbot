@@ -67,10 +67,7 @@ Client -> Server `server/join`
 OK: Server -> Client `me/join`
 
 ```js
-{
-    playerId: number,
-    playersInLobby: { id: number, name: string }[]
-}
+{ playerId: number }
 ```
 
 ERRORS:
@@ -88,6 +85,25 @@ Server -> Client `lobby/changed`
 ```js
 { playerId: number, action: "JOINED" | "LEFT" }
 ```
+
+#### Players in lobby
+
+Send this to the server to get all the players which are currently in the lobby.
+
+Client -> Server `lobby/players`
+
+```js
+{ playerId: number, roomId: number }
+```
+
+Server -> Client `lobby/players`
+
+```js
+{ players: { id: number, name: string }[] }
+```
+
+ERRORS:
+- 10 = Room is not lobby
 
 #### Lobby ready
 

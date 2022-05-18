@@ -18,8 +18,7 @@ export module Join {
     }
 
     type Response = {
-        playerId: number,
-        playersInLobby: { id: number, name: string } []
+        playerId: number
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
@@ -35,10 +34,7 @@ export module Join {
             client.sendToRoom(request.roomId, "lobby/changed", {playerId, action: "JOINED"})
             client.joinRoom(request.roomId)
 
-            const response: Response = {
-                playerId,
-                playersInLobby: Array.from(roomWithPlayer.getPlayers())
-            }
+            const response: Response = {playerId}
             client.send("me/join", response)
             return dbWithPlayer
         } else {
