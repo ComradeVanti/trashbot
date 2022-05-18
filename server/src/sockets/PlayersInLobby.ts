@@ -1,4 +1,4 @@
-import {playerId, roomId} from "../domain"
+import {id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {Lobby} from "../Lobby";
 import {SocketClient} from "./SocketClient";
@@ -12,8 +12,8 @@ export module PlayersInLobby {
 
 
     type Request = {
-        playerId: playerId | undefined,
-        roomId: roomId | undefined
+        playerId: id | undefined,
+        roomId: id | undefined
     }
 
     type Response = {

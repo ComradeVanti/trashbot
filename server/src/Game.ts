@@ -1,4 +1,4 @@
-import {Item, Location, PartType, playerId, Stats} from "./domain";
+import {Item, Location, PartType, id, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {PlaneMath} from "./PlaneMath";
@@ -10,7 +10,7 @@ type InGamePlayerData = {
     readonly stats: Stats
 }
 
-type PlayerDataMap = Immutable.Map<playerId, InGamePlayerData>
+type PlayerDataMap = Immutable.Map<id, InGamePlayerData>
 
 export class Game {
 
@@ -53,7 +53,7 @@ export class Game {
         return new Game(mapF(this.players), this.items)
     }
 
-    private mapPlayer(id: playerId, mapF: (data: InGamePlayerData) => InGamePlayerData) {
+    private mapPlayer(id: id, mapF: (data: InGamePlayerData) => InGamePlayerData) {
         return this.mapPlayers(it => {
             const data = it.get(id)
 
@@ -65,7 +65,7 @@ export class Game {
         })
     }
 
-    tryGetPlayer(id: playerId): InGamePlayerData | null {
+    tryGetPlayer(id: id): InGamePlayerData | null {
         return this.players.get(id) ?? null
     }
 
@@ -77,7 +77,7 @@ export class Game {
         return this.findPlayersInCircle(player.location, player.stats.range)
     }
 
-    movePlayer(id: playerId, location: Location) {
+    movePlayer(id: id, location: Location) {
         return this.mapPlayer(id, it => ({name: it.name, location, stats: it.stats}))
     }
 

@@ -1,12 +1,12 @@
-import {errorCode, roomId} from "../domain";
+import {errorCode, id} from "../domain";
 import {Server, Socket} from "socket.io";
 
 export type SocketClient = {
     send(event: string, data: any): void,
-    sendToRoom(id: roomId, event: string, data: any): void,
+    sendToRoom(id: id, event: string, data: any): void,
     sendError(event: string, code: errorCode): void,
-    joinRoom(id: roomId): void,
-    leaveRoom(id: roomId): void,
+    joinRoom(id: id): void,
+    leaveRoom(id: id): void,
 }
 
 export function makeSocketClient(io: Server, socket: Socket): SocketClient {
@@ -16,7 +16,7 @@ export function makeSocketClient(io: Server, socket: Socket): SocketClient {
         socket.emit(event, data)
     }
 
-    function sendToRoom(id: roomId, event: string, data: any) {
+    function sendToRoom(id: id, event: string, data: any) {
         console.log(`Server -> Room ${id}: ${event}`)
         io.to(id.toString()).emit(event, data)
     }
@@ -26,12 +26,12 @@ export function makeSocketClient(io: Server, socket: Socket): SocketClient {
         socket.emit("me/error", {event, errorCode: code})
     }
 
-    function joinRoom(id: roomId) {
+    function joinRoom(id: id) {
         console.log(`Socket ${socket.id} joined ${id}`)
         socket.join(id.toString())
     }
 
-    function leaveRoom(id: roomId) {
+    function leaveRoom(id: id) {
         console.log(`Socket ${socket.id} left ${id}`)
         socket.leave(id.toString())
     }

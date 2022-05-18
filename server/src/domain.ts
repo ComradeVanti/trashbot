@@ -1,6 +1,4 @@
-export type playerId = number
-
-export type roomId = number
+export type id = number
 
 export type degree = number
 

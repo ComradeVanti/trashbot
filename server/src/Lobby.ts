@@ -1,24 +1,24 @@
 import Immutable from "immutable";
-import {playerId} from "./domain";
+import {id} from "./domain";
 import {PlayersInLobby} from "./sockets/PlayersInLobby";
 
 type LobbyPlayerData = {
     readonly name: string
 }
 
-type PlayerDataMap = Immutable.Map<playerId, LobbyPlayerData>
+type PlayerDataMap = Immutable.Map<id, LobbyPlayerData>
 
 export class Lobby {
 
-    private static MIN_PLAYER_ID: playerId = 0
-    private static MAX_PLAYER_ID: playerId = 1000
+    private static MIN_PLAYER_ID: id = 0
+    private static MAX_PLAYER_ID: id = 1000
     private static ID_DIFF = Lobby.MAX_PLAYER_ID - Lobby.MIN_PLAYER_ID
 
-    static generateId(): playerId {
+    static generateId(): id {
         return Math.floor(Math.random() * Lobby.ID_DIFF) + Lobby.MIN_PLAYER_ID
     }
 
-    static newWithHost(name: string): [Lobby, playerId] {
+    static newWithHost(name: string): [Lobby, id] {
         const playerData = {name}
         const playerId = this.generateId()
         return [
@@ -33,11 +33,11 @@ export class Lobby {
         this.players = playerData
     }
 
-    private hasPlayerWith(id: playerId): boolean {
+    private hasPlayerWith(id: id): boolean {
         return this.players.has(id)
     }
 
-    private generateFreeId(): playerId {
+    private generateFreeId(): id {
         let id = 0
         do {
             id = Lobby.generateId()
@@ -45,7 +45,7 @@ export class Lobby {
         return id
     }
 
-    addPlayer(name: string): [Lobby, playerId] {
+    addPlayer(name: string): [Lobby, id] {
         const playerData = {name}
         const playerId = this.generateFreeId()
         return [

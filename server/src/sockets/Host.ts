@@ -1,4 +1,4 @@
-import {playerId, roomId} from "../domain"
+import {id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {Lobby} from "../Lobby";
 import {SocketClient} from "./SocketClient";
@@ -15,13 +15,12 @@ export module Host {
     }
 
     type Response = {
-        playerId: playerId
-        roomId: roomId
+        playerId: id
+        roomId: id
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
-        if(request.playerName === undefined)
-        {
+        if (request.playerName === undefined) {
             client.sendError("server/host", UniversalErrors.BAD_MESSAGE)
             return roomDB
         }

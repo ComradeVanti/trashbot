@@ -1,14 +1,13 @@
-import {Location, playerId, roomId} from "../domain"
+import {Location, id} from "../domain"
 import {RoomDB} from "../RoomDB";
-import {Lobby} from "../Lobby";
 import {SocketClient} from "./SocketClient";
 import {UniversalErrors} from "./UniversalErrors";
 
 export module Ready {
 
     type Request = {
-        playerId: playerId | undefined,
-        roomId: roomId | undefined,
+        playerId: id | undefined,
+        roomId: id | undefined,
         location: Location | undefined
     }
 

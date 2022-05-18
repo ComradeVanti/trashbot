@@ -1,4 +1,4 @@
-import {errorCode, roomId} from "../domain"
+import {errorCode, id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {Lobby} from "../Lobby";
 import {UniversalErrors} from "./UniversalErrors";
@@ -13,7 +13,7 @@ export module Join {
 
     type Request = {
         playerName: string | undefined,
-        roomId: roomId | undefined
+        roomId: id | undefined
     }
 
     type Response = {
