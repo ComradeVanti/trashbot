@@ -18,23 +18,16 @@ export const gameStore = defineStore("game", {
   state: () => ({
     playerId: 1230,
     playerName: "playerName",
-    roomId: 0,
-    position: { lat: 0, lng: 0 },
-    actors: {
-      playerId: 0,
-      actorPosition: { lat: 0, lng: 0 },
-    },
+    roomId: 1230,
   }),
   actions: {
     savePlayer(updatedName: string) {
-      console.log("asdf1");
       this.playerName = updatedName;
     },
     savePlayerId(updatedId: number) {
       this.playerId = updatedId;
     },
     saveRoomId(lobbyCode: number) {
-      console.log("roomId");
       this.roomId = lobbyCode;
     },
   },
