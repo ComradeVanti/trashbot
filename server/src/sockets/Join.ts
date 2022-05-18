@@ -25,7 +25,7 @@ export module Join {
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
         const room = roomDB.tryGetRoom(request.roomId)
         if (room === null) {
-            client.sendError(UniversalErrors.ROOM_NOT_FOUND)
+            client.sendError("server/join", UniversalErrors.ROOM_NOT_FOUND)
             return roomDB
         }
         if (room instanceof Lobby) {
@@ -42,7 +42,7 @@ export module Join {
             client.send("me/join", response)
             return dbWithPlayer
         } else {
-            client.sendError(Errors.ROOM_NOT_LOBBY)
+            client.sendError("server/join", Errors.ROOM_NOT_LOBBY)
             return roomDB
         }
     }
