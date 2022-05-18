@@ -117,14 +117,12 @@ export default {
       data.players.forEach((player) => {
         this.players.push(player);
       });
-      console.log(this.players);
     },
   },
 
   methods: {
     locate() {
       this.getCurrPos();
-      console.log(this.players);
     },
 
     getCurrPos() {
@@ -138,10 +136,17 @@ export default {
               this.accuracyInfo();
             }
 
-            console.log("send: " + this.playerId + " | " + this.roomId);
             this.$socket.emit("game/get-actors", {
               playerId: this.playerId,
               roomId: this.roomId,
+            });
+            this.$socket.emit("game/location", {
+              playerId: this.playerId,
+              roomId: this.roomId,
+              location: {
+                lat: this.position.lat,
+                lng: this.position.lng,
+              },
             });
           },
           () => {

@@ -3,6 +3,7 @@ import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {PlaneMath} from "./PlaneMath";
 import {Items} from "./Items";
+import {ItemDB} from "./ItemDB";
 
 type InGamePlayerData = {
     readonly name: string,
@@ -40,12 +41,12 @@ export class Game {
         }
 
 
-        return new Game(players, Immutable.List(makeItems()))
+        return new Game(players, ItemDB.fromItems(makeItems()))
     }
 
 
     constructor(readonly players: PlayerDataMap,
-                readonly items: Immutable.List<Item>) {
+                readonly items: ItemDB) {
 
     }
 
