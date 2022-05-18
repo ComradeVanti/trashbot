@@ -53,12 +53,17 @@ export default {
     "lobby/players": function (data) {
       this.allPlayers = data.players.map((it) => it.name);
     },
-    "lobby/ready": function (data) {
-      console.log(data);
+    "lobby/ready": function () {
+      return;
+    },
+    "lobby/changed": function () {
+      this.getAllPlayers();
     },
   },
   methods: {
     getAllPlayers() {
+      console.log(this.allPlayers);
+
       this.$socket.emit("lobby/players", {
         playerId: this.store.playerId,
         roomId: parseInt(this.store.roomId),
@@ -109,13 +114,6 @@ export default {
       const action = new bootstrap.Toast(toast);
       action.show();
     },
-  },
-  mounted() {
-    const seconds = 1;
-
-    this.timeoutId = window.setInterval(() => {
-      this.getAllPlayers();
-    }, seconds * 1000);
   },
 };
 </script>
