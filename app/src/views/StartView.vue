@@ -47,16 +47,19 @@ export default {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
     },
+    "me/error": function (data) {
+      console.log(data.errorCode);
+    },
   },
   methods: {
     savePlayerName() {
       this.store.savePlayer(this.playerName);
     },
     saveLobbyCode(roomId, playerId) {
-      if (roomId !== undefined) this.lobbyCode = roomId;
+      if (roomId !== undefined) this.lobbyCode = parseInt(roomId);
       this.playerId = playerId;
-      console.log(this.lobbyCode);
-      this.store.saveRoomId(this.lobbyCode);
+
+      this.store.saveRoomId(parseInt(this.lobbyCode));
       this.store.savePlayerId(this.playerId);
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);

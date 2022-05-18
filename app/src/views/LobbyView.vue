@@ -59,6 +59,9 @@ export default {
     "lobby/changed": function () {
       this.getAllPlayers();
     },
+    "me/error": function (data) {
+      console.log("errCode: " + data.errorCode);
+    },
   },
   methods: {
     getAllPlayers() {
