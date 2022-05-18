@@ -124,6 +124,22 @@ Server -> Client `lobby/ready`
 {}
 ```
 
+#### Send player location
+
+Send the player's location to the server, so it can store it.
+
+Client -> Server `me/location`
+
+```js
+{ playerId: number, roomId: number, location: {lat: number, lng: number}}
+```
+
+If successful the server will not respond.
+
+ERRORS
+
+- 10 = Room is not in-game
+
 #### Get actors
 
 Get all actors around the player. Server responds with array of players and items.
