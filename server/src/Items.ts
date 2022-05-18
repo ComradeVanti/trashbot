@@ -10,6 +10,7 @@ export module Items {
 
     export function makeItemOfType(location: Location, type: PartType): Item {
         return {
+            id: 0,
             location,
             stats: makeStatsFor(type),
             type

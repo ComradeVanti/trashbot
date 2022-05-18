@@ -21,6 +21,7 @@ export enum PartType {
 }
 
 export type Item = {
+    id: id
     location: Location,
     stats: Stats,
     type: PartType
