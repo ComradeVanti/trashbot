@@ -22,6 +22,11 @@
     msg="Wir benötigen deinen Standort, dass du spielen kannst!"
     bgColor="danger"
   />
+  <toast-msg
+    id="locationDenied"
+    msg="Geolocation wird von diesem Browser nicht unterstützt."
+    bgColor="danger"
+  />
 </template>
 
 <script>
@@ -92,18 +97,19 @@ export default {
 
     // get host position at beginning
     getCurrPos() {
+      console.log("Hi");
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             console.log(position);
             this.useGeoStore.updatePosition(position.coords);
           },
-          () => {
-            this.locationError();
+          (error) => {
+            console.log(error);
           }
         );
       } else {
-        this.locationError();
+        this.showToast("locationDenied");
       }
     },
     locationError() {
