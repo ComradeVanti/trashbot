@@ -78,6 +78,10 @@ export default {
         this.$socket.emit("lobby/ready", {
           playerId: this.store.playerId,
           roomId: parseInt(this.store.roomId),
+          location: {
+            lat: pos.lat,
+            lng: pos.lng,
+          },
         });
         this.$router.push("game");
       }
