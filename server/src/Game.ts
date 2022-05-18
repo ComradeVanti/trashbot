@@ -8,7 +8,7 @@ type InGamePlayerData = {
 
 type PlayerDataMap = Immutable.Map<playerId, InGamePlayerData>
 
-export class InGame {
+export class Game {
 
     readonly players: PlayerDataMap
 
@@ -16,8 +16,8 @@ export class InGame {
         this.players = playerData
     }
 
-    private mapData(mapF: (map: PlayerDataMap) => PlayerDataMap): InGame {
-        return new InGame(mapF(this.players))
+    private mapData(mapF: (map: PlayerDataMap) => PlayerDataMap): Game {
+        return new Game(mapF(this.players))
     }
 
     private mapPlayerData(id: playerId, mapF: (data: InGamePlayerData) => InGamePlayerData) {

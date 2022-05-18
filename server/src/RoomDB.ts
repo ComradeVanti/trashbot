@@ -1,10 +1,10 @@
 import Immutable from "immutable";
 import {roomId} from "./domain";
 import {Lobby} from "./Lobby";
-import {InGame} from "./InGame";
+import {Game} from "./Game";
 
 type LobbyMap = Immutable.Map<roomId, Lobby>
-type GameMap = Immutable.Map<roomId, InGame>
+type GameMap = Immutable.Map<roomId, Game>
 
 export class RoomDB {
 
@@ -44,7 +44,7 @@ export class RoomDB {
         return this.lobbies.get(id) ?? null
     }
 
-    tryGetGame(id: roomId): InGame | null {
+    tryGetGame(id: roomId): Game | null {
         return this.games.get(id) ?? null
     }
 
@@ -52,7 +52,7 @@ export class RoomDB {
         return new RoomDB(this.lobbies.set(id, lobby), this.games)
     }
 
-    updateGame(id: roomId, game: InGame): RoomDB {
+    updateGame(id: roomId, game: Game): RoomDB {
         return new RoomDB(this.lobbies, this.games.set(id, game))
     }
 

@@ -2,7 +2,7 @@ import {Location, playerId, roomId} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {SocketClient} from "./SocketClient";
 import {UniversalErrors} from "./UniversalErrors";
-import {InGame} from "../InGame";
+import {Game} from "../Game";
 
 export module Move {
 
