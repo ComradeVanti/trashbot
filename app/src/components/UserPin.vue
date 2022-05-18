@@ -1,7 +1,7 @@
 <template>
   <GMapCluster>
     <GMapMarker
-      id="marker"
+      class="marker"
       :position="position"
       :icon="{
         url: img,
@@ -10,16 +10,26 @@
     />
     <GMapCircle
       :center="position"
+      :radius="6"
+      :visible="true"
+      :options="{
+        fillColor: '#54c0ff',
+        fillOpacity: 0.3,
+        strokeColor: '#54c0ff',
+        strokeOpacity: 0,
+      }"
+    />
+    <GMapCircle
+      :center="position"
       :radius="10"
       :visible="true"
       :options="{
-        fillColor: 'blue',
-        fillOpacity: 0.1,
-        strokeColor: 'blue',
-        strokeOpacity: 0.5,
+        fillColor: '#54c0ff',
+        fillOpacity: 0,
+        strokeColor: '#54c0ff',
+        strokeOpacity: 0.6,
       }"
-    ></GMapCircle>
-    <!-- radius describes m -->
+    />
   </GMapCluster>
 </template>
 
@@ -44,8 +54,4 @@ export default {
 };
 </script>
 
-<style>
-#marker {
-  offset: 15px 15px;
-}
-</style>
+<style></style>
