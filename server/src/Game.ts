@@ -1,5 +1,6 @@
 import {Location, playerId, Stats} from "./domain";
 import Immutable from "immutable";
+import {Lobby} from "./Lobby";
 
 type InGamePlayerData = {
     readonly name: string,
@@ -10,6 +11,15 @@ type InGamePlayerData = {
 type PlayerDataMap = Immutable.Map<playerId, InGamePlayerData>
 
 export class Game {
+
+    static fromLobby(lobby: Lobby): Game {
+        const players = lobby.players.map((it) => ({
+            name: it.name,
+            location: { lat: 0, lng: 0},
+            stats: { range: 1000 }
+        }))
+        return new Game(players)
+    }
 
     readonly players: PlayerDataMap
 

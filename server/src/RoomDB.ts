@@ -56,4 +56,15 @@ export class RoomDB {
         return new RoomDB(this.lobbies, this.games.set(id, game))
     }
 
+    startGameIn(id: roomId): RoomDB {
+        const lobby = this.tryGetLobby(id)
+        if (lobby) {
+            return new RoomDB(
+                this.lobbies.remove(id),
+                this.games.set(id, Game.fromLobby(lobby))
+            )
+        } else
+            return this
+    }
+
 }
