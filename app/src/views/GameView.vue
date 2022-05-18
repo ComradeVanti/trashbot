@@ -54,7 +54,7 @@
 
 <script>
 import { mapState } from "pinia";
-import { geoStore } from "../stores/index.ts";
+import { geoStore, gameStore } from "../stores/index.ts";
 
 import UserPin from "../components/UserPin.vue";
 import EnemyPin from "../components/EnemyPin.vue";
@@ -106,7 +106,12 @@ export default {
 
   computed: {
     ...mapState(geoStore, {
-      position: "newPosition",
+      position: "position",
+    }),
+
+    ...mapState(gameStore, {
+      roomId: "roomId",
+      playerId: "playerId",
     }),
   },
 
@@ -120,6 +125,17 @@ export default {
     this.timeoutId = window.setInterval(() => {
       this.locate();
     }, seconds * 1000);
+  },
+
+  sockets: {
+    connect: function () {
+      console.log("socket connected");
+    },
+
+    // get surrounding objects
+    "me/actors": function (data) {
+      console.log(data);
+    },
   },
 
   methods: {
@@ -137,6 +153,12 @@ export default {
             if (this.accuracy > 50) {
               this.accuracyInfo();
             }
+
+            console.log("send: " + this.playerId + " | " + this.roomId);
+            this.$socket.emit("game/get-actors", {
+              playerId: this.playerId,
+              roomId: this.roomId,
+            });
           },
           () => {
             this.locationError();
