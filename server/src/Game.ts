@@ -1,6 +1,7 @@
 import {Location, playerId, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
+import {PlaneMath} from "./sockets/PlaneMath";
 
 type InGamePlayerData = {
     readonly name: string,
@@ -15,8 +16,8 @@ export class Game {
     static fromLobby(lobby: Lobby): Game {
         const players = lobby.players.map((it) => ({
             name: it.name,
-            location: { lat: 0, lng: 0},
-            stats: { range: 1000 }
+            location: {lat: 0, lng: 0},
+            stats: {range: 1000}
         }))
         return new Game(players)
     }
@@ -41,6 +42,10 @@ export class Game {
             }
             return it
         })
+    }
+
+    findPlayersInCircle(point: Location, radius: number) {
+        return this.players.filter(it => PlaneMath.distance(point, it.location) <= radius)
     }
 
     movePlayer(id: playerId, location: Location) {
