@@ -1,9 +1,10 @@
-import {Location, playerId} from "./domain";
+import {Location, playerId, Stats} from "./domain";
 import Immutable from "immutable";
 
 type InGamePlayerData = {
     readonly name: string,
-    readonly location: Location
+    readonly location: Location,
+    readonly stats: Stats
 }
 
 type PlayerDataMap = Immutable.Map<playerId, InGamePlayerData>
@@ -33,7 +34,7 @@ export class Game {
     }
 
     movePlayer(id: playerId, location: Location) {
-        return this.mapPlayerData(id, it => ({name: it.name, location}))
+        return this.mapPlayerData(id, it => ({name: it.name, location, stats: it.stats}))
     }
 
 }

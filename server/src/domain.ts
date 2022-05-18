@@ -10,3 +10,7 @@ export type Location = {
     lat: degree
     lng: degree
 }
+
+export type Stats = {
+    range: number,
+}
