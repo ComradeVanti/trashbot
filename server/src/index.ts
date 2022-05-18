@@ -9,6 +9,7 @@ import {makeSocketClient, SocketClient} from "./sockets/SocketClient";
 import {GetActors} from "./sockets/GetActors";
 import {PlayersInLobby} from "./sockets/PlayersInLobby";
 import {Ready} from "./sockets/Ready";
+import {Move} from "./sockets/Move";
 
 const port = 3000
 
@@ -53,6 +54,8 @@ io.on("connection", socket => {
                 return handleWith(PlayersInLobby.handle)
             case "lobby/ready":
                 return handleWith(Ready.handle)
+            case "me/location":
+                return handleWith(Move.handle)
             case "game/get-actors":
                 return handleWith(GetActors.handle)
         }

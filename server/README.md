@@ -133,6 +133,7 @@ Client -> Server `me/location`
 
 If successful the server will not respond.
 
+
 #### Get actors
 
 Get all actors around the player. Server responds with array of players and items.
