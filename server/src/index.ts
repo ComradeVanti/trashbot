@@ -1,5 +1,5 @@
 import express from "express";
-import {createServer} from "https";
+import {createServer} from "http";
 import {Server} from "socket.io"
 import {errorCode} from "./domain";
 import {RoomDB} from "./RoomDB";
@@ -10,14 +10,11 @@ import {GetActors} from "./sockets/GetActors";
 import {PlayersInLobby} from "./sockets/PlayersInLobby";
 import {Ready} from "./sockets/Ready";
 import {Move} from "./sockets/Move";
-import * as fs from "fs"
 
 const port = 3000
-const key = fs.readFileSync("./key.pem")
-const cert = fs.readFileSync("./cert.pem")
 
 const app = express()
-const httpServer = createServer({key, cert}, app);
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
         origin: "*",
