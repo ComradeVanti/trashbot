@@ -11,14 +11,22 @@ Send GET `/ping` to check if the server is online. The server will return
 
 ### Socket.io
 
-All messages sent from the server to the client may also be of the form
-`{ errorCode: number }`. Check if the message is an error by checking if it has
-an `errorCode` property.
+If the server encountered a problem while evaluating your message it will 
+send an error to `me/error`. These messages will be of the form:
+```js
+{ event: string, errorCode: number }
+```
 
-In some special cases the server will also send errors to `me/error`. The
-codes/situations for this are:
+where `event` is the name of the event that you sent the server and 
+`errorCode`is an integer indicating what went wrong. Codes 0 - 9 are 
+reserved for universal errors, while codes 10 and up are related to the 
+specific message you sent.
 
-- 0 = You attempted to send a message to a non-existent room
+UNIVERSAL ERROR CODES:
+- 0 = Room does not exist
+- 1 = Player does not exist
+- 2 = Player does not have permission for this action
+- 3 = Player does not have access to the room
 
 #### Host
 
@@ -41,7 +49,7 @@ OK: Server -> Client `me/host`
 
 ERRORS:
 
-- 0 = Bad player name
+- 10 = Bad player name
 
 #### Join
 
@@ -61,16 +69,15 @@ OK: Server -> Client `me/join`
 ```js
 {
     playerId: number,
-    playersInLobby: [  { id: number, name: string } ]
+    playersInLobby: { id: number, name: string }[]
 }
 ```
 
 ERRORS:
 
-- 0 = Bad name
-- 1 = Duplicate name
-- 2 = Room is not in the lobby-state
-- 3 = Room does not exist
+- 10 = Bad name
+- 11 = Duplicate name
+- 12 = Room is not in the lobby-state
 
 #### Lobby changed
 
@@ -101,26 +108,16 @@ Server -> Client `lobby/ready`
 {}
 ```
 
-ERRORS:
-- 0 = The given id is not the host
-
 #### Get actors
 
-Get all actors around the player. Send the id of the player and their
-location to the server. Server responds with array of actors.
+Get all actors around the player. Server responds with array of players and items.
 
-An actor is either a player or item, which can be differentiated by their
-`type` property.
-
-- 0 = player
-- 1 = item
-
-Client -> Server `[roomId]/get-actors`
+Client -> Server `game/get-actors`
 
 ```js
 {
     playerId: number, 
-    location: { lat: number, lng: number }
+    roomId: number
 }
 ```
 
@@ -128,16 +125,16 @@ Server -> Client `me/actors`
 
 ```js
 {
-    actors: [
+    players: [
         {
-            type: 0,
             id: playerId,
+            location: {lat: number, lng: number}
+        }
+    ],
+    items: [
+        {
             location: {lat: number, lng: number}
         }
     ]
 }
 ```
-
-Error:
-
-- 0 = Player is not part of room

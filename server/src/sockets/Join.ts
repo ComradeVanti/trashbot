@@ -1,0 +1,50 @@
+import {errorCode, roomId} from "../domain"
+import {RoomDB} from "../RoomDB";
+import {Lobby} from "../Lobby";
+import {UniversalErrors} from "./UniversalErrors";
+import {SocketClient} from "./SocketClient";
+
+export module Join {
+
+    enum Errors {
+        BAD_NAME = 10,
+        DUPLICATE_NAME = 11,
+        ROOM_NOT_LOBBY = 12
+    }
+
+    type Request = {
+        playerName: string,
+        roomId: roomId
+    }
+
+    type Response = {
+        playerId: number,
+        playersInLobby: { id: number, name: string } []
+    }
+
+    export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
+        const room = roomDB.tryGetRoom(request.roomId)
+        if (room === null) {
+            client.sendError(UniversalErrors.ROOM_NOT_FOUND)
+            return roomDB
+        }
+        if (room instanceof Lobby) {
+            const [roomWithPlayer, playerId] = room.addPlayer(request.playerName)
+            const dbWithPlayer = roomDB.updateRoom(request.roomId, roomWithPlayer)
+
+            client.sendToRoom(request.roomId, "lobby/changed", {playerId, action: "JOINED"})
+            client.joinRoom(request.roomId)
+
+            const response: Response = {
+                playerId,
+                playersInLobby: Array.from(roomWithPlayer.getPlayers())
+            }
+            client.send("me/join", response)
+            return dbWithPlayer
+        } else {
+            client.sendError(Errors.ROOM_NOT_LOBBY)
+            return roomDB
+        }
+    }
+
+}
