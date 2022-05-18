@@ -8,26 +8,28 @@
         scaledSize: { width: 45, height: 40 },
       }"
     />
+
     <GMapCircle
       :center="position"
       :radius="6"
       :visible="true"
       :options="{
         fillColor: '#54c0ff',
-        fillOpacity: 0.3,
+        fillOpacity: 0.05,
         strokeColor: '#54c0ff',
-        strokeOpacity: 0,
+        strokeOpacity: 0.5,
       }"
     />
+
     <GMapCircle
       :center="position"
-      :radius="10"
+      :radius="15"
       :visible="true"
       :options="{
         fillColor: '#54c0ff',
-        fillOpacity: 0,
+        fillOpacity: 0.0,
         strokeColor: '#54c0ff',
-        strokeOpacity: 0.6,
+        strokeOpacity: 0.3,
       }"
     />
   </GMapCluster>

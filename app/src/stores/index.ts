@@ -16,6 +16,7 @@ export const geoStore = defineStore("geo", {
 
 export const gameStore = defineStore("game", {
   state: () => ({
+    playerId: 1230,
     playerName: "playerName",
     roomId: 0,
     position: { lat: 0, lng: 0 },
