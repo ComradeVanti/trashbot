@@ -30,18 +30,13 @@ authenticate the player in future exchanges.
 Client -> Server `server/host`
 
 ```js
-{
-    playerName: string
-}
+{ playerName: string }
 ```
 
 OK: Server -> Client `me/host`
 
 ```js 
-{
-    playerId: number, 
-    roomId: number
-}
+{ playerId: number, roomId: number }
 ```
 
 ERRORS:
@@ -58,10 +53,7 @@ joined player.
 Client -> Server `server/join`
 
 ```js
-{
-    playerName: string,
-    roomId: number
-}
+{ playerName: string, roomId: number }
 ```
 
 OK: Server -> Client `me/join`
@@ -89,6 +81,28 @@ Server -> Client `lobby/changed`
 ```js
 { playerId: number, action: "JOINED" | "LEFT" }
 ```
+
+#### Lobby ready
+
+Sent from host to server to indicate that all players have joined and the 
+room is now ready to choose a rule-set. The server will send a message to 
+all players in the room, notifying them of this event, so that they can 
+transition to the rule-set page.
+
+Client -> Server `lobby/ready`
+
+```js
+{ playerId: number }
+```
+
+Server -> Client `lobby/ready`
+
+```js
+{}
+```
+
+ERRORS:
+- 0 = The given id is not the host
 
 #### Get actors
 
