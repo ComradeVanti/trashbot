@@ -41,9 +41,7 @@ export default {
     },
     "me/host": function (data) {
       console.log(data);
-      this.saveLobbyCode(data.roomId);
-
-      // this.$socket.emit(`${data.roomId}/get-actors`, { playerId: 123 });
+      this.saveLobbyCode(data.roomId, data.playerId);
     },
     "me/actors": function (data) {
       console.log(data);
@@ -55,11 +53,12 @@ export default {
       this.store.savePlayer(this.playerName);
       this.store.savePlayerId(this.playerId);
     },
-    saveLobbyCode(roomId) {
-      this.lobbyCode = roomId;
+    saveLobbyCode(roomId, playerId) {
+      if (roomId !== undefined) this.lobbyCode = roomId;
+      this.playerId = playerId;
       console.log(this.lobbyCode);
       this.store.saveRoomId(this.lobbyCode);
-      //save to state?
+      this.store.savePlayerId(this.playerId);
     },
     sendHost: function () {
       this.$socket.emit("server/host", { playerName: this.playerName });
