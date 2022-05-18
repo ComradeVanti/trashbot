@@ -24,11 +24,11 @@ export module GetActors {
             players: [
                 {
                     playerId: 123,
-                    location: {lat: 10, lng: 5}
+                    location: {lat: 48.211992021759514, lng: 15.62987263544636}
                 },
                 {
                     playerId: 456,
-                    location: {lat: 11, lng: 6}
+                    location: {lat: 48.21358705490682, lng: 15.631356595173013}
                 }
             ], items: []
         }
