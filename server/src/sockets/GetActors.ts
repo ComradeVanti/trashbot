@@ -1,6 +1,6 @@
 import {RoomDB} from "../RoomDB";
 import {SocketClient} from "./SocketClient";
-import {Location, playerId} from "../domain";
+import {Item, Location, playerId} from "../domain";
 import {UniversalErrors} from "./UniversalErrors";
 import {Game} from "../Game";
 
@@ -17,7 +17,7 @@ export module GetActors {
 
     type Response = {
         players: { playerId: playerId, location: Location }[],
-        items: { location: Location }[]
+        items: Item[]
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {

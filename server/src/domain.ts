@@ -14,3 +14,16 @@ export type Location = {
 export type Stats = {
     range: number,
 }
+
+export enum PartType {
+    Arms,
+    Legs,
+    Body,
+    Head
+}
+
+export type Item = {
+    location: Location,
+    stats: Stats,
+    type: PartType
+}

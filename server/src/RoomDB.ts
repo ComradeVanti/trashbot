@@ -1,5 +1,5 @@
 import Immutable from "immutable";
-import {roomId} from "./domain";
+import {Location, roomId} from "./domain";
 import {Lobby} from "./Lobby";
 import {Game} from "./Game";
 
@@ -56,12 +56,12 @@ export class RoomDB {
         return new RoomDB(this.lobbies, this.games.set(id, game))
     }
 
-    startGameIn(id: roomId): RoomDB {
+    startGameIn(id: roomId, hostLocation: Location): RoomDB {
         const lobby = this.tryGetLobby(id)
         if (lobby) {
             return new RoomDB(
                 this.lobbies.remove(id),
-                this.games.set(id, Game.fromLobby(lobby))
+                this.games.set(id, Game.fromLobby(lobby, hostLocation, 500))
             )
         } else
             return this

@@ -1,7 +1,8 @@
-import {Location, playerId, Stats} from "./domain";
+import {Item, Location, PartType, playerId, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
-import {PlaneMath} from "./sockets/PlaneMath";
+import {PlaneMath} from "./PlaneMath";
+import {Items} from "./Items";
 
 type InGamePlayerData = {
     readonly name: string,
@@ -13,27 +14,47 @@ type PlayerDataMap = Immutable.Map<playerId, InGamePlayerData>
 
 export class Game {
 
-    static fromLobby(lobby: Lobby): Game {
+    static fromLobby(lobby: Lobby, hostLocation: Location, gameRadius: number): Game {
+
         const players = lobby.players.map((it) => ({
             name: it.name,
             location: {lat: 0, lng: 0},
             stats: {range: 1000}
         }))
-        return new Game(players)
+
+        const playerCount = players.count()
+
+        function randomLocation() {
+            return PlaneMath.randomPointInCircle(hostLocation, gameRadius)
+        }
+
+        function makeItemsOfType(type: PartType, count: number) {
+            return Array.from({length: count}, () => (Items.makeItemOfType(randomLocation(), type)))
+        }
+
+        function makeItems(): Item[] {
+            return Array.prototype.concat.apply([], [
+                makeItemsOfType(PartType.Arms, playerCount),
+                makeItemsOfType(PartType.Head, playerCount)
+            ])
+        }
+
+
+        return new Game(players, Immutable.List(makeItems()))
     }
 
-    readonly players: PlayerDataMap
 
-    constructor(playerData: PlayerDataMap) {
-        this.players = playerData
+    constructor(readonly players: PlayerDataMap,
+                readonly items: Immutable.List<Item>) {
+
     }
 
-    private mapData(mapF: (map: PlayerDataMap) => PlayerDataMap): Game {
-        return new Game(mapF(this.players))
+    private mapPlayers(mapF: (map: PlayerDataMap) => PlayerDataMap): Game {
+        return new Game(mapF(this.players), this.items)
     }
 
-    private mapPlayerData(id: playerId, mapF: (data: InGamePlayerData) => InGamePlayerData) {
-        return this.mapData(it => {
+    private mapPlayer(id: playerId, mapF: (data: InGamePlayerData) => InGamePlayerData) {
+        return this.mapPlayers(it => {
             const data = it.get(id)
 
             if (data !== undefined) {
@@ -57,7 +78,7 @@ export class Game {
     }
 
     movePlayer(id: playerId, location: Location) {
-        return this.mapPlayerData(id, it => ({name: it.name, location, stats: it.stats}))
+        return this.mapPlayer(id, it => ({name: it.name, location, stats: it.stats}))
     }
 
 }
