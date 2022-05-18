@@ -4,7 +4,7 @@
     :position="position"
     :icon="{
       url: img,
-      scaledSize: { width: 45, height: 40 },
+      scaledSize: { width: 35, height: 30 },
     }"
   />
 </template>
@@ -19,6 +19,7 @@ export default {
       img: img_path.default,
     };
   },
+  props: ["position"],
 };
 </script>
 
