@@ -47,6 +47,9 @@ export default {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
     },
+    "me/error": function (data) {
+      console.log(data.errorCode);
+    },
   },
   methods: {
     savePlayerName() {
