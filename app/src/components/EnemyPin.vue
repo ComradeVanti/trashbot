@@ -14,7 +14,7 @@ const img_path = await import("../assets/img/EnemyBot.png");
 
 export default {
   name: "EnemyPin",
-  setup() {
+  data() {
     return {
       img: img_path.default,
     };
