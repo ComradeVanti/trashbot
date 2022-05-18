@@ -25,8 +25,7 @@ export module Move {
             return roomDB
         }
 
-        roomDB.updateGame(request.roomId, game.movePlayer(request.playerId, request.location))
-        return roomDB
+        return roomDB.updateGame(request.roomId, game.movePlayer(request.playerId, request.location))
     }
 
 }
