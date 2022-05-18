@@ -44,8 +44,16 @@ export class Game {
         })
     }
 
+    tryGetPlayer(id: playerId): InGamePlayerData | null {
+        return this.players.get(id) ?? null
+    }
+
     findPlayersInCircle(point: Location, radius: number) {
         return this.players.filter(it => PlaneMath.distance(point, it.location) <= radius)
+    }
+
+    findPlayersInViewOf(player: InGamePlayerData) {
+        return this.findPlayersInCircle(player.location, player.stats.range)
     }
 
     movePlayer(id: playerId, location: Location) {
