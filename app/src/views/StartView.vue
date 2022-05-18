@@ -56,10 +56,10 @@ export default {
       this.store.savePlayer(this.playerName);
     },
     saveLobbyCode(roomId, playerId) {
-      if (roomId !== undefined) this.lobbyCode = roomId;
+      if (roomId !== undefined) this.lobbyCode = parseInt(roomId);
       this.playerId = playerId;
-      console.log(this.lobbyCode);
-      this.store.saveRoomId(this.lobbyCode);
+
+      this.store.saveRoomId(parseInt(this.lobbyCode));
       this.store.savePlayerId(this.playerId);
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
