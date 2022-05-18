@@ -112,7 +112,7 @@ transition to the rule-set page.
 Client -> Server `lobby/ready`
 
 ```js
-{ playerId: number; roomId: number }
+{ playerId: number; roomId: number, location: {lat: number, lng: number} }
 ```
 
 Server -> Client `lobby/ready`
