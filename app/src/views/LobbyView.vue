@@ -11,18 +11,44 @@
 
   <!-- nur für Host -->
   <button-comp @click="sendAllPlayers()">Start Game</button-comp>
+
+  <toast-msg
+    id="wait"
+    msg="Gleich können wir starten ... Probiere es in ein paar Sekunden nocheinmal."
+    bgColor="primary"
+  />
+  <toast-msg
+    id="locationError"
+    msg="Wir benötigen deinen Standort, dass du spielen kannst!"
+    bgColor="danger"
+  />
 </template>
 
 <script>
-import { gameStore } from "@/stores";
+import { geoStore, gameStore } from "@/stores";
+
+import ToastMsg from "../components/ToastMsg.vue";
 import ButtonComp from "@/components/ButtonComp.vue";
+
 export default {
-  components: { ButtonComp },
+  name: "LobbyView",
+  components: { ButtonComp, ToastMsg },
   data() {
     const store = gameStore();
+    const useGeoStore = geoStore();
 
-    return { store, allPlayers: [], timeoutId: "" };
+    return {
+      useGeoStore,
+      store,
+      allPlayers: [],
+      timeoutId: "",
+    };
   },
+
+  created() {
+    this.getCurrPos();
+  },
+
   sockets: {
     "lobby/players": function (data) {
       this.allPlayers = data.players.map((it) => it.name);
@@ -39,11 +65,49 @@ export default {
       });
     },
     sendAllPlayers() {
-      this.$socket.emit("lobby/ready", {
-        playerId: this.store.playerId,
-        roomId: parseInt(this.store.roomId),
-      });
-      this.$router.push("game");
+      const pos = { ...this.useGeoStore.position };
+
+      if (pos.lat == 0 && pos.lng == 0) {
+        this.showToast("wait");
+      } else {
+        this.$socket.emit("lobby/ready", {
+          playerId: this.store.playerId,
+          roomId: parseInt(this.store.roomId),
+        });
+        this.$router.push("game");
+      }
+    },
+
+    // get host position at beginning
+    getCurrPos() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log(position);
+            this.useGeoStore.updatePosition(position.coords);
+
+            this.$socket.emit("game/get-actors", {
+              playerId: this.playerId,
+              roomId: this.roomId,
+            });
+          },
+          () => {
+            this.locationError();
+          }
+        );
+      } else {
+        this.locationError();
+      }
+    },
+    locationError() {
+      this.showToast("locationError");
+    },
+    showToast(id) {
+      const toast = document.getElementById(id);
+
+      // eslint-disable-next-line no-undef
+      const action = new bootstrap.Toast(toast);
+      action.show();
     },
   },
   mounted() {
