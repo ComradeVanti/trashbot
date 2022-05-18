@@ -14,6 +14,14 @@
         }"
       >
         <user-pin />
+
+        <GMapCluster>
+          <enemy-pin
+            v-for="player in players"
+            :key="player['playerId']"
+            :position="player['location']"
+          />
+        </GMapCluster>
       </GMapMap>
     </div>
 
@@ -63,7 +71,7 @@ import ToastMsg from "../components/ToastMsg.vue";
 export default {
   name: "GameView",
   components: { UserPin, EnemyPin, ToastMsg },
-  setup() {
+  data() {
     const store = geoStore();
 
     return {
@@ -71,36 +79,7 @@ export default {
       accuracy: 0,
       timeoutId: "",
 
-      players: [
-        {
-          id: 1234234,
-          position: {
-            lat: 48.211992021759514,
-            lng: 15.62987263544636,
-          },
-        },
-        {
-          id: 43263256,
-          position: {
-            lat: 48.21358705490682,
-            lng: 15.631356595173013,
-          },
-        },
-        {
-          id: 13241245,
-          position: {
-            lat: 48.212893919279736,
-            lng: 15.63025436725125,
-          },
-        },
-        {
-          id: 2435356,
-          position: {
-            lat: 48.21163557355482,
-            lng: 15.629415613645717,
-          },
-        },
-      ],
+      players: [],
     };
   },
 
@@ -134,13 +113,18 @@ export default {
 
     // get surrounding objects
     "me/actors": function (data) {
-      console.log(data);
+      this.players = [];
+      data.players.forEach((player) => {
+        this.players.push(player);
+      });
+      console.log(this.players);
     },
   },
 
   methods: {
     locate() {
       this.getCurrPos();
+      console.log(this.players);
     },
 
     getCurrPos() {
