@@ -1,6 +1,5 @@
 import {RoomDB} from "../RoomDB";
 import {SocketClient} from "./SocketClient";
-import {Lobby} from "../Lobby";
 import {Location, playerId} from "../domain";
 
 export module GetActors {

@@ -22,8 +22,8 @@ export function makeSocketClient(io: Server, socket: Socket): SocketClient {
     }
 
     function sendError(event: string, code: errorCode) {
-        console.log(`Server -> Socket ${socket.id}: ${event}/${code}`)
-        send("me/error", {event, errorCode: code})
+        console.log(`Server -> Socket ${socket.id}: ${event} / ${code}`)
+        socket.emit("me/error", {event, errorCode: code})
     }
 
     function joinRoom(id: roomId) {
