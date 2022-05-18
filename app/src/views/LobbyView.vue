@@ -97,11 +97,6 @@ export default {
           (position) => {
             console.log(position);
             this.useGeoStore.updatePosition(position.coords);
-
-            this.$socket.emit("game/get-actors", {
-              playerId: this.playerId,
-              roomId: this.roomId,
-            });
           },
           () => {
             this.locationError();
