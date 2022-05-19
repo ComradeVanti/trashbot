@@ -25,7 +25,7 @@ export module Move {
 
                     const pickupItems = gameWithMovedPlayer.findItemsInPickupRange(player)
                     const message = pickupItems.map(it => ({
-                        id: request.playerId,
+                        id: it.id,
                         type: it.type,
                         states: it.stats
                     }))
