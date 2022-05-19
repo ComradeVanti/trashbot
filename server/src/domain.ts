@@ -11,6 +11,7 @@ export type SphereXY = {
 
 export type Stats = {
     range: number,
+    coolness: number
 }
 
 export enum PartType {

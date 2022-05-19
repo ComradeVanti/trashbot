@@ -20,7 +20,7 @@ export class Game {
         const players = lobby.players.map((it) => ({
             name: it.name,
             location: {lat: 0, lng: 0},
-            stats: {range: 1000}
+            stats: {range: 200, coolness: 0}
         }))
 
         const playerCount = players.count()

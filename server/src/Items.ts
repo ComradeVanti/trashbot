@@ -2,9 +2,15 @@ import {Item, SphereXY, PartType, Stats} from "./domain";
 
 export module Items {
 
+    function randBetween(min: number, max: number) {
+        const diff = max - min
+        return Math.random() * diff + min
+    }
+
     function makeStatsFor(partType: PartType): Stats {
         return {
-            range: partType === PartType.Head ? Math.random() * 200 + 100 : 0
+            range: partType === PartType.Head ? randBetween(50, 200) : 0,
+            coolness: randBetween(0, 100)
         }
     }
 
