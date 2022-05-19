@@ -1,47 +1,45 @@
 <template>
-  <div>
-    <div class="rectangle">
+  <div class="content">
+    <div class="bg">
       <img
         src="/src/assets/img/BackgroundBlob.png"
         class="blob"
         alt="BackgroundBlob"
       />
-      <div class="container">
-        <h1>MATERIAL BOT</h1>
+    </div>
+    <div class="form">
+      <h1>MATERIAL BOT</h1>
+      <div class="robo-image-container">
         <img
           src="/src/assets/img/MainRobot.png"
-          class="robotImage"
           alt="Robot"
         />
+      </div>
+      <input-field
+        aria-label="Name"
+        placeholder="Name"
+        v-model="playerName"
+        class="nameField"
+        @input="(event) => (playerName = event.target.value)"
+      ></input-field>
+      <!-- nur für Player -->
+
+      <button-comp class="hostButton" @click="createLobby()"
+      >Host
+      </button-comp
+      >
+      <div class="containerJoinBtn">
         <input-field
-          aria-label="Name"
-          placeholder="Name"
-          v-model="playerName"
-          class="nameField"
-          @input="(event) => (playerName = event.target.value)"
+          aria-label="Lobby-Code"
+          placeholder="Lobby-Code"
+          v-model="lobbyCode"
+          class="codeField"
+          @input="(event) => (lobbyCode = event.target.value)"
         ></input-field>
-        <!-- nur für Player -->
-
-        <br />
-        <button-comp class="hostButton" @click="createLobby()"
-          >Host</button-comp
+        <button-comp class="joinButton" @click="joinLobby()"
+        >Join
+        </button-comp
         >
-        <br />
-
-        <div class="containerJoinBtn">
-          <input-field
-            aria-label="Lobby-Code"
-            placeholder="Lobby-Code"
-            v-model="lobbyCode"
-            class="codeField"
-            @input="(event) => (lobbyCode = event.target.value)"
-          ></input-field>
-          <button-comp class="joinButton" @click="joinLobby()"
-            >Join</button-comp
-          >
-        </div>
-
-        <!-- nur für Player -->
       </div>
     </div>
   </div>
@@ -51,6 +49,7 @@
 import InputField from "@/components/InputField.vue";
 import ButtonComp from "@/components/ButtonComp.vue";
 import { gameStore } from "@/stores";
+
 export default {
   components: { InputField, ButtonComp },
   name: "GameView",
@@ -58,26 +57,26 @@ export default {
     const store = gameStore();
 
     return {
-      store,
+      store
     };
   },
   sockets: {
-    connect: function () {
+    connect: function() {
       console.log("socket connected");
     },
-    "me/host": function (data) {
+    "me/host": function(data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/join": function (data) {
+    "me/join": function(data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/error": function (data) {
+    "me/error": function(data) {
       console.log(data.errorCode);
-    },
+    }
   },
   methods: {
     savePlayerName() {
@@ -93,13 +92,13 @@ export default {
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
     },
-    sendHost: function () {
+    sendHost: function() {
       this.$socket.emit("server/host", { playerName: this.playerName });
     },
-    sendPlayer: function () {
+    sendPlayer: function() {
       this.$socket.emit(`server/join`, {
         playerName: this.playerName,
-        roomId: parseInt(this.lobbyCode),
+        roomId: parseInt(this.lobbyCode)
       });
     },
 
@@ -116,25 +115,18 @@ export default {
       this.sendPlayer();
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
-    },
+    }
   },
   created() {
     console.log(import.meta.env.BASE_URL);
     localStorage.clear();
-  },
+  }
 };
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-  height: 100%;
-  align-items: center;
-}
+
 h1 {
-  width: 306px;
   font-family: "Play", sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -144,38 +136,55 @@ h1 {
   text-align: center;
   color: #5a81bc;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
-.rectangle {
+.content {
+  height: 100%;
+  position: relative;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  width: 90vw;
-  height: 90vh;
-  margin: 5vh 5vw;
+  top: 0;
+  left: 0;
   background: #ffffff;
   box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
   border-radius: 41px;
 }
 
-.robotImage {
-  z-index: 10;
-  max-height: 50%;
-  min-height: 50%;
+.form {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
 }
 
+.robo-image-container {
+  height: 40vh;
+}
+
+.robo-image-container img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
 .blob {
-  position: absolute;
   width: 105%;
-  height: 105%;
-  z-index: 5;
-  left: -5px;
+  height: 100%;
+  left: -1px;
 }
 
 .hostButton {
   background: #ed6449;
   z-index: 5;
   align-self: stretch;
+  margin-top: 20px;
 }
 
 .joinButton {
@@ -201,6 +210,7 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   align-self: stretch;
+  margin-top: 20px;
 }
 
 body {
