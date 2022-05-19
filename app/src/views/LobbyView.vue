@@ -6,9 +6,12 @@
     <div class="recUser">
       <p>Room Code: {{ store.roomId }}</p>
     </div>
+
     <h2>Players:</h2>
     <div class="recPLayers">
-      <p>{{ store.playerName }}</p>
+      <p v-for="(player, idx) in allPlayers" :key="idx">
+        <span>{{ player }}</span>
+      </p>
     </div>
 
     <button-comp v-if="this.store.isHost" @click="sendAllPlayers()"
@@ -51,6 +54,7 @@ export default {
     };
   },
   created() {
+    this.getAllPlayers();
     this.getCurrPos();
     this.checkIfUserIsLoggedIn();
   },
