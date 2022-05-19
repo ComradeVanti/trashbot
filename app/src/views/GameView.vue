@@ -170,9 +170,9 @@ export default {
         this.$router.push("/");
       } else {
         console.log("loggedin");
-        this.userStore.savePlayerId(localStorage.getItem("playerId"));
+        this.userStore.savePlayerId(parseInt(localStorage.getItem("playerId")));
         this.userStore.savePlayer(localStorage.getItem("playerName"));
-        this.userStore.saveRoomId(localStorage.getItem("roomId"));
+        this.userStore.saveRoomId(parseInt(localStorage.getItem("roomId")));
       }
     },
 
