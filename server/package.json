@@ -5,7 +5,7 @@
   "scripts": {
     "run": "ts-node src/index.ts",
     "watch": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
-    "live": "ts-node ./index.ts"
+    "live": "tsc && node dist/index.js"
   },
   "main": "index.js",
   "keywords": [],
