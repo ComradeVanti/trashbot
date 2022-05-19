@@ -35,6 +35,10 @@
     <timer-component />
   </div>
 
+  <button-comp v-if="itemInRange == true" class="pickUpItem"
+    >Item aufheben</button-comp
+  >
+
   <info-window :userId="selectedUser" />
 
   <toast-msg
@@ -60,6 +64,7 @@ import ToastMsg from "../components/ToastMsg.vue";
 import InfoWindow from "../components/InfoWindow.vue";
 import PlaygroundCircle from "../components/PlaygroundCircle.vue";
 import TimerComponent from "../components/TimerComponent.vue";
+import ButtonComp from "@/components/ButtonComp.vue";
 
 export default {
   name: "GameView",
@@ -71,6 +76,7 @@ export default {
     InfoWindow,
     PlaygroundCircle,
     TimerComponent,
+    ButtonComp,
   },
   data() {
     const locationStore = geoStore();
@@ -85,6 +91,8 @@ export default {
 
       players: [],
       items: [],
+      itemInRange: false,
+      itemsInRange: [],
     };
   },
 
@@ -121,6 +129,18 @@ export default {
     "me/actors": function (data) {
       this.players = data.players;
       this.items = data.items;
+    },
+
+    "me/items-in-range": function (data) {
+      // todo: add logic for multiple items
+      if (data[0] && data.length > 0) {
+        data.forEach((item) => {
+          this.itemsInRange.push(item.id);
+        });
+        this.itemInRange = true;
+      } else {
+        this.itemInRange = false;
+      }
     },
   },
 
@@ -226,5 +246,15 @@ export default {
   background-color: aliceblue;
   padding: 10px;
   border-radius: 5px;
+}
+
+.pickUpItem {
+  z-index: 100;
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
 }
 </style>
