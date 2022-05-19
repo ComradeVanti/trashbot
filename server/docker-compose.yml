@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     restart: unless-stopped
-    command: 'npm run live'
+    command: 'npm run git pull'
     cpus: 3
     networks:
       - mkl_external
@@ -17,7 +17,7 @@ services:
       - 'traefik.http.routers.devapitrash.entrypoints=web-secure'
       - 'traefik.http.routers.devapitrash.tls=true'
       - 'traefik.http.routers.devapitrash.tls.certresolver=letsencrypt'
-      - 'traefik.http.services.devapitrash.loadbalancer.server.port=8001'
+      - 'traefik.http.services.devapitrash.loadbalancer.server.port=8002'
 networks:
   mkl_external:
     external: true
