@@ -1,6 +1,6 @@
-import {id} from "../domain"
+import {Entity, id} from "../domain"
 import {RoomDB} from "../RoomDB";
-import {Lobby} from "../Lobby";
+import {Guest} from "../Lobby";
 import {SocketClient} from "./SocketClient";
 import {UniversalErrors} from "./UniversalErrors";
 
@@ -17,7 +17,7 @@ export module PlayersInLobby {
     }
 
     type Response = {
-        players: { id: number, name: string } []
+        players: Entity<Guest> []
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
@@ -33,7 +33,7 @@ export module PlayersInLobby {
             return roomDB
         }
 
-        const response: Response = {players: Array.from(lobby.getPlayers())}
+        const response: Response = {players: lobby.guestsWithId}
         client.send("lobby/players", response)
 
         return roomDB

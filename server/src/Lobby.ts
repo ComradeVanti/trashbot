@@ -1,12 +1,9 @@
 import Immutable from "immutable";
-import {id} from "./domain";
-import {PlayersInLobby} from "./sockets/PlayersInLobby";
+import {Entity, id} from "./domain";
 
-type LobbyPlayerData = {
+export type Guest = {
     readonly name: string
 }
-
-type PlayerDataMap = Immutable.Map<id, LobbyPlayerData>
 
 export class Lobby {
 
@@ -19,42 +16,37 @@ export class Lobby {
     }
 
     static newWithHost(name: string): [Lobby, id] {
-        const playerData = {name}
-        const playerId = this.generateId()
+        const guest = {name}
+        const id = this.generateId()
         return [
-            new Lobby(Immutable.Map([[playerId, playerData]])),
-            playerId]
+            new Lobby(Immutable.Map([[id, guest]])),
+            id]
     }
 
-
-    readonly players: PlayerDataMap
-
-    constructor(playerData: PlayerDataMap) {
-        this.players = playerData
+    constructor(readonly guests: Immutable.Map<id, Guest>) {
     }
 
-    private hasPlayerWith(id: id): boolean {
-        return this.players.has(id)
+    private hasGuestWith(id: id): boolean {
+        return this.guests.has(id)
     }
 
     private generateFreeId(): id {
         let id = 0
         do {
             id = Lobby.generateId()
-        } while (this.hasPlayerWith(id))
+        } while (this.hasGuestWith(id))
         return id
     }
 
-    addPlayer(name: string): [Lobby, id] {
-        const playerData = {name}
-        const playerId = this.generateFreeId()
+    addGuest(guest: Guest): [Lobby, id] {
+        const id = this.generateFreeId()
         return [
-            new Lobby(this.players.set(playerId, playerData)),
-            playerId]
+            new Lobby(this.guests.set(id, guest)),
+            id]
     }
 
-    getPlayers() {
-        return Array.from(this.players.entries())
+    get guestsWithId(): Entity<Guest>[] {
+        return Array.from(this.guests.entries())
             .map(([id, data]) => ({id, name: data.name}))
     }
 }
