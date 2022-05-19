@@ -123,7 +123,8 @@ Server -> Client `lobby/ready`
 
 #### Send player location
 
-Send the player's location to the server, so it can store it.
+Send the player's location to the server, so it can store it. The server 
+will respond with all items the player is in range to pick-up
 
 Client -> Server `game/location`
 
@@ -131,7 +132,16 @@ Client -> Server `game/location`
 { playerId: number, roomId: number, location: {lat: number, lng: number}}
 ```
 
-If successful the server will not respond.
+Server -> Client `me/items-in-range`
+
+```js
+{
+    id: number,
+    type: number
+    stats: Object
+}[]
+```
+
 
 
 #### Get actors
@@ -163,20 +173,5 @@ Server -> Client `me/actors`
             location: {lat: number, lng: number}
         }
     ]
-}
-```
-
-#### Item in pickup-range
-
-When the player sends their location to the server it may tell the player 
-that they are now in range to pick up an item
-
-Server -> Client `me/item-in-range`
-
-```js
-{
-    id: number,
-    type: number
-    stats: Object
 }
 ```
