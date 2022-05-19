@@ -2,10 +2,12 @@
   <GMapMarker
     class="marker"
     :position="position"
+    :clickable="true"
     :icon="{
       url: img,
       scaledSize: { width: 35, height: 30 },
     }"
+    @click="$emit('openWindow')"
   />
 </template>
 
@@ -20,6 +22,7 @@ export default {
     };
   },
   props: ["position"],
+  emits: ["openWindow"],
 };
 </script>
 

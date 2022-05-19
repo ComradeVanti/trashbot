@@ -3,10 +3,12 @@
     <GMapMarker
       class="marker"
       :position="position"
+      :clickable="true"
       :icon="{
         url: img,
         scaledSize: { width: 45, height: 40 },
       }"
+      @click="$emit('openWindow')"
     />
 
     <GMapCircle
@@ -53,6 +55,7 @@ export default {
       position: "position",
     }),
   },
+  emits: ["openWindow"],
 };
 </script>
 
