@@ -4,13 +4,13 @@
     :position="object.location"
     :icon="{
       url: img,
-      scaledSize: { width: 35, height: 30 },
+      scaledSize: { width: 30, height: 30 },
     }"
   />
 </template>
 
 <script>
-const img_path = await import("../assets/img/EnemyBot.png");
+const img_path = await import("../assets/img/Gear.png");
 
 export default {
   name: "ItemPin",
@@ -20,9 +20,6 @@ export default {
     };
   },
   props: ["object"],
-  created() {
-      console.log(object.location);
-  }
 };
 </script>
 

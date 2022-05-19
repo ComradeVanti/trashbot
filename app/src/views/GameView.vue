@@ -60,10 +60,12 @@ export default {
   name: "GameView",
   components: { UserPin, EnemyPin, ItemPin, ToastMsg, InfoWindow },
   data() {
-    const store = geoStore();
+    const locationStore = geoStore();
+    const userStore = gameStore();
 
     return {
-      store,
+      userStore,
+      locationStore,
       accuracy: 0,
       ASK_SEC: 5,
 
@@ -117,7 +119,7 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
           (position) => {
-            this.store.updatePosition(position.coords);
+            this.locationStore.updatePosition(position.coords);
             this.accuracy = position.coords.accuracy;
 
             if (this.accuracy > 50) {
@@ -161,16 +163,22 @@ export default {
       const action = new bootstrap.Toast(toast);
       action.show();
     },
+
     checkIfUserIsLoggedIn() {
       if (!localStorage.getItem("playerId")) {
         console.log("not");
         this.$router.push("/");
       } else {
         console.log("loggedin");
-        this.store.savePlayerId(localStorage.getItem("playerId"));
-        this.store.savePlayer(localStorage.getItem("playerName"));
-        this.store.saveRoomId(localStorage.getItem("roomId"));
+        this.userStore.savePlayerId(localStorage.getItem("playerId"));
+        this.userStore.savePlayer(localStorage.getItem("playerName"));
+        this.userStore.saveRoomId(localStorage.getItem("roomId"));
       }
+    },
+
+    openWindow() {
+      const dialog = document.querySelector("#detailPage.modal");
+      dialog.style.display = "flex";
     },
   },
 };
