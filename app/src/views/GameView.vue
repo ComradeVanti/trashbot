@@ -16,15 +16,15 @@
         <user-pin @openWindow="openWindow()" />
 
         <GMapCluster>
-          <item-pin v-for="(idx, item) in items" :key="idx" :object="item" />
-        </GMapCluster>
-
-        <GMapCluster>
           <enemy-pin
             v-for="player in players"
             :key="player['playerId']"
             :position="player['location']"
           />
+        </GMapCluster>
+
+        <GMapCluster>
+          <item-pin v-for="item in items" :key="item['id']" :object="item" />
         </GMapCluster>
       </GMapMap>
     </div>
@@ -102,10 +102,8 @@ export default {
 
     // get surrounding objects
     "me/actors": function (data) {
-      this.players = [];
-      data.players.forEach((player) => {
-        this.players.push(player);
-      });
+      this.players = data.players;
+      this.items = data.items;
     },
   },
 
