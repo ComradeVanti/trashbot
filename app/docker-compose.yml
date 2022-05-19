@@ -15,7 +15,7 @@ services:
       - "traefik.http.routers.devapptrash.entrypoints=web-secure"
       - "traefik.http.routers.devapptrash.tls=true"
       - "traefik.http.routers.devapptrash.tls.certresolver=letsencrypt"
-      - "traefik.http.services.devapptrash.loadbalancer.server.port=8003"
+      - "traefik.http.services.devapptrash.loadbalancer.server.port=8080"
   server:
     container_name: trashbot-api
     image: trashbot-api:1.0.0
