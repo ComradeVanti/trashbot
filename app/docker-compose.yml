@@ -2,14 +2,12 @@ version: "3.8"
 services:
   app:
     container_name: trashbot-app
-    image: node:lts
-    working_dir: /var/www/html/app/
-    entrypoint: /bin/bash
-    expose:
-      - 8000
-    volumes:
-      - ./app/:/var/www/html/app
-    tty: true
+    image: trashbot-app:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    command: 'npm run dev'
     networks:
       - mkl_external
     labels:
