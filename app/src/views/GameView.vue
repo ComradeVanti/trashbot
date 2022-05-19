@@ -13,13 +13,14 @@
           minZoom: '18',
         }"
       >
-        <user-pin @openWindow="openWindow()" />
+        <user-pin @openWindow="openWindow(playerId)" />
 
         <GMapCluster>
           <enemy-pin
             v-for="player in players"
             :key="player['id']"
             :position="player['location']"
+            @openWindow="openWindow(player['id'])"
           />
         </GMapCluster>
 
@@ -32,7 +33,7 @@
     <div id="accuracy">Ungenauigkeit: {{ accuracy }}m</div>
   </div>
 
-  <info-window />
+  <info-window :userId="selectedUser" />
 
   <toast-msg
     id="locationError"
@@ -67,6 +68,7 @@ export default {
       userStore,
       locationStore,
       accuracy: 0,
+      selectedUser: null,
       ASK_SEC: 5,
 
       players: [],
@@ -176,7 +178,8 @@ export default {
       }
     },
 
-    openWindow() {
+    openWindow(id) {
+      this.selectedUser = id;
       const dialog = document.querySelector("#detailPage.modal");
       dialog.style.display = "flex";
     },
