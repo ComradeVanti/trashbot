@@ -1,7 +1,7 @@
 import {Item, SphereXY, PartType, id, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
-import {PlaneMath} from "./PlaneMath";
+import {SphereMath} from "./SphereMath";
 import {Items} from "./Items";
 import {ItemDB} from "./ItemDB";
 
@@ -26,7 +26,7 @@ export class Game {
         const playerCount = players.count()
 
         function randomLocation() {
-            return PlaneMath.randomPointInCircle(hostLocation, gameRadius)
+            return SphereMath.randomPointInCircle(hostLocation, gameRadius)
         }
 
         function makeItemsOfType(type: PartType, count: number) {
@@ -71,7 +71,7 @@ export class Game {
     }
 
     findPlayersInCircle(point: SphereXY, radius: number) {
-        return this.players.filter(it => PlaneMath.distance(point, it.location) <= radius)
+        return this.players.filter(it => SphereMath.distance(point, it.location) <= radius)
     }
 
     findPlayersInViewOf(player: InGamePlayerData) {

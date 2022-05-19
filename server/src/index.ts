@@ -10,6 +10,7 @@ import {PlayersInLobby} from "./sockets/PlayersInLobby";
 import {Ready} from "./sockets/Ready";
 import {Move} from "./sockets/Move";
 import * as dotenv from "dotenv"
+import {SphereMath} from "./SphereMath";
 
 dotenv.config()
 const port = process.env.PORT || 3000
