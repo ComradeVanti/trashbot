@@ -54,6 +54,7 @@ export default {
   methods: {
     savePlayerName() {
       this.store.savePlayer(this.playerName);
+      localStorage.setItem("playerName", this.playerName);
     },
     saveLobbyCode(roomId, playerId) {
       if (roomId !== undefined) this.lobbyCode = parseInt(roomId);
@@ -77,7 +78,7 @@ export default {
     createLobby() {
       this.savePlayerName();
       this.sendHost();
-
+      localStorage.setItem("playerId", this.playerId);
       this.$router.push("lobby");
     },
 
@@ -90,9 +91,12 @@ export default {
       this.$router.push("lobby");
     },
   },
+  created() {
+    console.log(import.meta.env.BASE_URL);
+    localStorage.clear();
+  },
 };
 </script>
-
 
 <style scoped>
 .test {

@@ -1,6 +1,6 @@
 <template>
   <main>Lobby</main>
-  <p>{{ store.updatedName }}</p>
+  <p>{{ store.playerName }}</p>
   <p>{{ store.roomId }}</p>
 
   <div>
@@ -41,12 +41,13 @@ export default {
       useGeoStore,
       store,
       allPlayers: [],
-      timeoutId: "",
+      playerName: "",
+      roomId: "",
     };
   },
-
   created() {
     this.getCurrPos();
+    this.checkIfUserIsLoggedIn();
   },
 
   sockets: {
@@ -64,6 +65,17 @@ export default {
     },
   },
   methods: {
+    checkIfUserIsLoggedIn() {
+      if (!localStorage.getItem("playerId")) {
+        console.log("not");
+        this.$router.push("/");
+      } else {
+        console.log("loggedin");
+        this.store.savePlayerId(localStorage.getItem("playerId"));
+        this.store.savePlayer(localStorage.getItem("playerName"));
+        this.store.saveRoomId(localStorage.getItem("roomId"));
+      }
+    },
     getAllPlayers() {
       console.log(this.allPlayers);
 
