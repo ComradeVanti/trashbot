@@ -12,6 +12,7 @@ import {Move} from "./sockets/Move";
 import * as dotenv from "dotenv";
 import {PickUp} from "./sockets/PickUp";
 import {GetRobot} from "./sockets/GetRobot";
+import {GetRobots} from "./sockets/GetRobots";
 
 dotenv.config();
 const port = parseInt(process.env.PORT || "3000");
@@ -63,6 +64,8 @@ io.on("connection", (socket) => {
                 return handleWith(PickUp.handle);
             case "game/robot":
                 return handleWith(GetRobot.handle);
+            case "game/robots":
+                return handleWith(GetRobots.handle);
             default:
                 return console.log(`Unknown event from ${socket.id}: ${event}`);
         }

@@ -64,13 +64,14 @@ export class Game {
         return new Game(mapF(this.players), this.items)
     }
 
-    private mapItems(mapF: (db: ItemDB) => ItemDB | UniversalError): Game | UniversalError {
-        const newItemsOrError = mapF(this.items)
-        if (typeof newItemsOrError === "number")
-            return newItemsOrError
-        else
-            return new Game(this.players, newItemsOrError)
+
+    get playersWithId(): Entity<Player>[] {
+        return this.players
+            .map((player, id) => ({...player, id}))
+            .toList()
+            .toArray()
     }
+
 
     private mapPlayer(id: id, mapF: (data: Player) => Player) {
         return this.mapPlayers(it => {

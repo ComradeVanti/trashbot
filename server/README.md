@@ -192,7 +192,7 @@ Server -> Client `me/actors`
 }
 ```
 
-#### Get robot info
+#### Get specific robot info
 
 Get the current robot for a player.
 
@@ -203,6 +203,18 @@ Client -> Server `game/robot`
 ```
 
 Server -> Client `me/robot`
+
+#### Get all robots info
+
+Get the info of all robots.
+
+Client -> Server `game/robots`
+
+```js
+{ roomId: number }
+```
+
+Server -> Client `game/robots`
 
 ```js
 { robot: Object }
