@@ -1,15 +1,13 @@
 version: "3.8"
 services:
   app:
-    container_name: striddle-app
-    image: node:lts
-    working_dir: /var/www/html/app/
-    entrypoint: /bin/bash
-    expose:
-      - 8000
-    volumes:
-      - ./app/:/var/www/html/app
-    tty: true
+    container_name: trashbot-app
+    image: trashbot-app:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    command: 'npm run dev'
     networks:
       - mkl_external
     labels:
@@ -18,7 +16,7 @@ services:
       - "traefik.http.routers.devapptrash.entrypoints=web-secure"
       - "traefik.http.routers.devapptrash.tls=true"
       - "traefik.http.routers.devapptrash.tls.certresolver=letsencrypt"
-      # - "traefik.http.services.devapptrash.loadbalancer.server.port=3001"
+      - "traefik.http.services.devapptrash.loadbalancer.server.port=3001"
   server:
     container_name: striddle-api
     image: trashbot-api:1.0.0
@@ -32,11 +30,11 @@ services:
       - mkl_external
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.devapi.rule=Host(`striddle.api.mobile.media.fhstp.ac.at`)'
-      - 'traefik.http.routers.devapi.entrypoints=web-secure'
-      - 'traefik.http.routers.devapi.tls=true'
-      - 'traefik.http.routers.devapi.tls.certresolver=letsencrypt'
-      - 'traefik.http.services.devapi.loadbalancer.server.port=8000'
+      - 'traefik.http.routers.devapitrash.rule=Host(`trashbot.api.mobile.media.fhstp.ac.at`)'
+      - 'traefik.http.routers.devapitrash.entrypoints=web-secure'
+      - 'traefik.http.routers.devapitrash.tls=true'
+      - 'traefik.http.routers.devapitrash.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.devapitrash.loadbalancer.server.port=8000'
 networks:
   mkl_external:
     external: true

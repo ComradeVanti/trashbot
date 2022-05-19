@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  server:
+    container_name: trashbot-api
+    image: trashbot-api:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    command: 'npm run run'
+    cpus: 3
+    networks:
+      - mkl_external
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.devapitrash.rule=Host(`trashbot.api.mobile.media.fhstp.ac.at`)'
+      - 'traefik.http.routers.devapitrash.entrypoints=web-secure'
+      - 'traefik.http.routers.devapitrash.tls=true'
+      - 'traefik.http.routers.devapitrash.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.devapitrash.loadbalancer.server.port=8001'
+networks:
+  mkl_external:
+    external: true
