@@ -1,7 +1,6 @@
 import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io"
-import {errorCode} from "./domain";
 import {RoomDB} from "./RoomDB";
 import {Host} from "./sockets/Host";
 import {Join} from "./sockets/Join";
