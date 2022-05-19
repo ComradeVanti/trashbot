@@ -134,13 +134,11 @@ export default {
   align-items: center;
 }
 h1 {
-  width: 306px;
   font-family: "Play", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 54px;
   line-height: 88.7%;
-  /* or 48px */
   text-align: center;
   color: #5a81bc;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
@@ -201,9 +199,5 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   align-self: stretch;
-}
-
-body {
-  background-color: yellow;
 }
 </style>

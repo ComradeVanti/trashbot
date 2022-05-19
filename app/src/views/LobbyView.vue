@@ -157,6 +157,7 @@ export default {
   padding-top: 20px;
   height: 100%;
   align-items: center;
+  justify-content: space-between;
 }
 
 h1 {
