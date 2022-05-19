@@ -4,7 +4,7 @@ export type degree = number
 
 export type errorCode = number
 
-export type Location = {
+export type SphereXY = {
     lat: degree
     lng: degree
 }
@@ -21,7 +21,7 @@ export enum PartType {
 }
 
 export type Item = {
-    location: Location,
+    location: SphereXY,
     stats: Stats,
     type: PartType
 }

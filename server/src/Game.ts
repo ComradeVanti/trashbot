@@ -1,4 +1,4 @@
-import {Item, Location, PartType, id, Stats} from "./domain";
+import {Item, SphereXY, PartType, id, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {PlaneMath} from "./PlaneMath";
@@ -7,7 +7,7 @@ import {ItemDB} from "./ItemDB";
 
 type InGamePlayerData = {
     readonly name: string,
-    readonly location: Location,
+    readonly location: SphereXY,
     readonly stats: Stats
 }
 
@@ -15,7 +15,7 @@ type PlayerDataMap = Immutable.Map<id, InGamePlayerData>
 
 export class Game {
 
-    static fromLobby(lobby: Lobby, hostLocation: Location, gameRadius: number): Game {
+    static fromLobby(lobby: Lobby, hostLocation: SphereXY, gameRadius: number): Game {
 
         const players = lobby.players.map((it) => ({
             name: it.name,
@@ -70,7 +70,7 @@ export class Game {
         return this.players.get(id) ?? null
     }
 
-    findPlayersInCircle(point: Location, radius: number) {
+    findPlayersInCircle(point: SphereXY, radius: number) {
         return this.players.filter(it => PlaneMath.distance(point, it.location) <= radius)
     }
 
@@ -78,7 +78,7 @@ export class Game {
         return this.findPlayersInCircle(player.location, player.stats.range)
     }
 
-    movePlayer(id: id, location: Location) {
+    movePlayer(id: id, location: SphereXY) {
         return this.mapPlayer(id, it => ({name: it.name, location, stats: it.stats}))
     }
 

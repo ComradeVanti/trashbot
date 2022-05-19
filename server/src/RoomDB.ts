@@ -1,5 +1,5 @@
 import Immutable from "immutable";
-import {Location, id} from "./domain";
+import {SphereXY, id} from "./domain";
 import {Lobby} from "./Lobby";
 import {Game} from "./Game";
 
@@ -56,7 +56,7 @@ export class RoomDB {
         return new RoomDB(this.lobbies, this.games.set(id, game))
     }
 
-    startGameIn(id: id, hostLocation: Location): RoomDB {
+    startGameIn(id: id, hostLocation: SphereXY): RoomDB {
         const lobby = this.tryGetLobby(id)
         if (lobby) {
             return new RoomDB(

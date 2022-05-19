@@ -1,7 +1,6 @@
 import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io"
-import {errorCode} from "./domain";
 import {RoomDB} from "./RoomDB";
 import {Host} from "./sockets/Host";
 import {Join} from "./sockets/Join";
@@ -10,8 +9,10 @@ import {GetActors} from "./sockets/GetActors";
 import {PlayersInLobby} from "./sockets/PlayersInLobby";
 import {Ready} from "./sockets/Ready";
 import {Move} from "./sockets/Move";
+import * as dotenv from "dotenv"
 
-const port = 3000
+dotenv.config()
+const port = process.env.PORT || 3000
 
 const app = express()
 const httpServer = createServer(app);
@@ -58,6 +59,8 @@ io.on("connection", socket => {
                 return handleWith(Move.handle)
             case "game/get-actors":
                 return handleWith(GetActors.handle)
+            default:
+                return console.log(`Unknown event from ${socket.id}: ${event}`)
         }
     })
 
