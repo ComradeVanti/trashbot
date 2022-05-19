@@ -195,7 +195,7 @@ p {
 
 .rectUser {
   width: 70vw;
-  height: 105px;
+  height: 65px;
   background: #575a68;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
@@ -205,7 +205,7 @@ p {
 
 .rectPlayers {
   width: 70vw;
-  height: 40vh;
+  height: 36vh;
   background: #575a68;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
@@ -213,7 +213,7 @@ p {
 }
 
 .startBtn {
-  margin-top: 10px;
+  margin-top: 15px;
   width: 127px;
   margin-bottom: 10px;
 }
