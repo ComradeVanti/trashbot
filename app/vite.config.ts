@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: parseInt(process.env.PORT),
+    port: parseInt(process.env.VUE_APP_PORT),
     proxy: {
       "/api": {
         target: "http://localhost:3000",
