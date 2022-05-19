@@ -2,15 +2,11 @@ version: "3.8"
 services:
   app:
     container_name: trashbot-app
-    image: node:lts
-    working_dir: /var/www/html/app/
-    entrypoint: /bin/bash
-    command: npm run build
-    expose:
-      - 8003
-    volumes:
-      - ./app:/var/www/html/app
-    tty: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    # command: 'npm run run'
     networks:
       - mkl_external
     labels:
@@ -25,7 +21,7 @@ services:
     image: trashbot-api:1.0.0
     build:
       context: .
-      dockerfile: ./server/Dockerfile
+      dockerfile: ./Dockerfile
     restart: unless-stopped
     command: 'npm run run'
     cpus: 3
