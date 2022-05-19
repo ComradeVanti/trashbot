@@ -1,30 +1,38 @@
 <template>
-  <main>Lobby</main>
-  <p>{{ store.playerName }}</p>
-  <p>{{ store.roomId }}</p>
-
   <div>
-    <div v-for="(player, index) in allPlayers" v-bind:key="index">
-      {{ player }}
+    <h1>Lobby</h1>
+    <div class="rectangle"></div>
+    <div class="recPLayers">
+      <p>{{ store.playerName }}</p>
     </div>
+    <div class="recUser">
+      <p>Room Code: {{ store.roomId }}</p>
+    </div>
+    <h2>Players:</h2>
+
+    <div>
+      <div v-for="(player, index) in allPlayers" v-bind:key="index">
+        {{ player }}
+      </div>
+    </div>
+
+    <!-- nur für Host -->
+    <button-comp v-if="this.store.isHost" @click="sendAllPlayers()"
+      >Start Game</button-comp
+    >
+    <span v-if="!this.store.isHost">Warte bis der Host das Spiel startet</span>
+
+    <toast-msg
+      id="wait"
+      msg="Gleich können wir starten ... Probiere es in ein paar Sekunden nocheinmal."
+      bgColor="primary"
+    />
+    <toast-msg
+      id="locationError"
+      msg="Wir benötigen deinen Standort, dass du spielen kannst!"
+      bgColor="danger"
+    />
   </div>
-
-  <!-- nur für Host -->
-  <button-comp v-if="this.store.isHost" @click="sendAllPlayers()"
-    >Start Game</button-comp
-  >
-  <span v-if="!this.store.isHost">Warte bis der Host das Spiel startet</span>
-
-  <toast-msg
-    id="wait"
-    msg="Gleich können wir starten ... Probiere es in ein paar Sekunden nocheinmal."
-    bgColor="primary"
-  />
-  <toast-msg
-    id="locationError"
-    msg="Wir benötigen deinen Standort, dass du spielen kannst!"
-    bgColor="danger"
-  />
 </template>
 
 <script>
@@ -137,3 +145,92 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  position: absolute;
+  width: 266px;
+  height: 72px;
+  left: 62px;
+  top: 83px;
+  font-family: "Play", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 88.7%;
+  /* or 48px */
+  text-align: center;
+  color: #5a81bc;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+h2 {
+  position: absolute;
+  width: 95px;
+  height: 30px;
+  left: 147px;
+  top: 336px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 30px;
+  text-align: center;
+
+  color: #5a81bc;
+}
+
+p {
+  color: #ffffff;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.rectangle {
+  position: absolute;
+  width: 331px;
+  height: 783px;
+  left: 29px;
+  top: 30px;
+  background: #ffffff;
+  box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 41px;
+}
+
+.startBtn {
+  position: absolute;
+  width: 127px;
+  height: 53px;
+  left: 131px;
+  top: 726px;
+}
+
+.recPLayers {
+  position: absolute;
+  width: 266px;
+  height: 328px;
+  left: 62px;
+  top: 374px;
+
+  background: #575a68;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+}
+
+.recUser {
+  position: absolute;
+  width: 266px;
+  height: 105px;
+  left: 62px;
+  top: 209px;
+
+  background: #575a68;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+}
+</style>
