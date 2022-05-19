@@ -1,0 +1,29 @@
+<template>
+  <GMapMarker
+    class="marker"
+    :position="object.location"
+    :icon="{
+      url: img,
+      scaledSize: { width: 35, height: 30 },
+    }"
+  />
+</template>
+
+<script>
+const img_path = await import("../assets/img/EnemyBot.png");
+
+export default {
+  name: "ItemPin",
+  data() {
+    return {
+      img: img_path.default,
+    };
+  },
+  props: ["object"],
+  created() {
+      console.log(object.location);
+  }
+};
+</script>
+
+<style></style>
