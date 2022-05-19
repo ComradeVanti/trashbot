@@ -58,6 +58,8 @@ io.on("connection", socket => {
                 return handleWith(Move.handle)
             case "game/get-actors":
                 return handleWith(GetActors.handle)
+            default:
+                return console.log(`Unknown event from ${socket.id}: ${event}`)
         }
     })
 
