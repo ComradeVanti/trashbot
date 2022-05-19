@@ -153,12 +153,13 @@ Server -> Client `me/actors`
 {
     players: [
         {
-            id: playerId,
+            id: number,
             location: {lat: number, lng: number}
         }
     ],
     items: [
         {
+            id: number,
             location: {lat: number, lng: number}
         }
     ]

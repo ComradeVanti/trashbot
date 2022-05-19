@@ -10,14 +10,16 @@ export module GetActors {
         BAD_NAME = 10
     }
 
+    type ThingAtPlace = { id: id, location: SphereXY }
+
     type Request = {
         playerId: number | undefined,
         roomId: number | undefined
     }
 
     type Response = {
-        players: { playerId: id, location: SphereXY }[],
-        items: Item[]
+        players: ThingAtPlace[],
+        items: ThingAtPlace[]
     }
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
@@ -39,11 +41,12 @@ export module GetActors {
             return roomDB;
         }
 
-        const players = game.findPlayersInViewOf(player)
+        const players: ThingAtPlace[] = game.findPlayersInViewOf(player)
             .filter(it => it.id !== request.playerId)
-            .map(it => ({playerId: it.id, location: it.location}))
+            .map(it => ({id: it.id, location: it.location}))
 
-        const items = game.items.getItems()
+        const items: ThingAtPlace[] = game.items.getItems()
+            .map(it => ({id: it.id, location: it.location}))
 
         const response: Response = {players, items}
         client.send("me/actors", response)
