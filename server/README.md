@@ -122,6 +122,15 @@ Server -> Client `lobby/ready`
 {}
 ```
 
+It will also send the following to the host to indicate that the timer 
+should start and how many minutes the game will last:
+
+Server -> Client `game/start`
+
+```js
+{ minutes: number }
+```
+
 #### Send player location
 
 Send the player's location to the server, so it can store it. The server 
