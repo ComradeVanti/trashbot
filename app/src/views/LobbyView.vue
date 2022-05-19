@@ -87,12 +87,11 @@ export default {
         roomId: parseInt(this.store.roomId),
       });
     },
-    sendAllPlayers() {
-      const pos = { ...this.useGeoStore.position };
 
-      if (pos.lat == 0 && pos.lng == 0) {
-        this.showToast("wait");
-      } else {
+    sendAllPlayers() {
+      this.getCurrPos(() => {
+        const pos = { ...this.useGeoStore.position };
+
         this.$socket.emit("lobby/ready", {
           playerId: this.store.playerId,
           roomId: parseInt(this.store.roomId),
@@ -101,18 +100,21 @@ export default {
             lng: pos.lng,
           },
         });
+
         this.$router.push("game");
-      }
+      });
     },
 
     // get host position at beginning
-    getCurrPos() {
+    getCurrPos(_callback) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             console.log(position);
             this.useGeoStore.updatePosition(position.coords);
             this.store.setStartPoint(position.coords);
+
+            _callback();
           },
           () => {
             this.locationError();
