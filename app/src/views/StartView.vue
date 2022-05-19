@@ -132,7 +132,6 @@ h1 {
   font-weight: 700;
   font-size: 54px;
   line-height: 88.7%;
-  /* or 48px */
   text-align: center;
   color: #5a81bc;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
@@ -211,9 +210,5 @@ h1 {
   justify-content: space-between;
   align-self: stretch;
   margin-top: 20px;
-}
-
-body {
-  background-color: yellow;
 }
 </style>
