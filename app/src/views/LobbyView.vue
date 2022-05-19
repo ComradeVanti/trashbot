@@ -1,34 +1,40 @@
 <template>
   <div>
-    <h1>Lobby</h1>
-    <div class="rectangle"></div>
+    <div class="rectangle">
+      <div class="container">
+        <h1>Lobby</h1>
+        <div class="rectUser">
+          <p>Room Code: {{ store.roomId }}</p>
+        </div>
+        <h2>Players:</h2>
+        <div class="rectPlayers">
+          <p v-for="(player, idx) in allPlayers" :key="idx">
+            <span>{{ player }}</span>
+          </p>
+        </div>
 
-    <div class="recUser">
-      <p>Room Code: {{ store.roomId }}</p>
+        <button-comp
+          class="startBtn"
+          v-if="this.store.isHost"
+          @click="sendAllPlayers()"
+          >Start Game</button-comp
+        >
+        <span v-if="!this.store.isHost"
+          >Warte bis der Host das Spiel startet</span
+        >
+
+        <toast-msg
+          id="wait"
+          msg="Gleich können wir starten ... Probiere es in ein paar Sekunden nocheinmal."
+          bgColor="primary"
+        />
+        <toast-msg
+          id="locationError"
+          msg="Wir benötigen deinen Standort, dass du spielen kannst!"
+          bgColor="danger"
+        />
+      </div>
     </div>
-
-    <h2>Players:</h2>
-    <div class="recPLayers">
-      <p v-for="(player, idx) in allPlayers" :key="idx">
-        <span>{{ player }}</span>
-      </p>
-    </div>
-
-    <button-comp v-if="this.store.isHost" @click="sendAllPlayers()"
-      >Start Game</button-comp
-    >
-    <span v-if="!this.store.isHost">Warte bis der Host das Spiel startet</span>
-
-    <toast-msg
-      id="wait"
-      msg="Gleich können wir starten ... Probiere es in ein paar Sekunden nocheinmal."
-      bgColor="primary"
-    />
-    <toast-msg
-      id="locationError"
-      msg="Wir benötigen deinen Standort, dass du spielen kannst!"
-      bgColor="danger"
-    />
   </div>
 </template>
 
@@ -145,12 +151,16 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  height: 100%;
+  align-items: center;
+}
+
 h1 {
-  position: absolute;
-  width: 266px;
-  height: 72px;
-  left: 62px;
-  top: 83px;
+  width: 306px;
   font-family: "Play", sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -161,13 +171,13 @@ h1 {
   color: #5a81bc;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
+  margin-top: 60px;
 }
 
 h2 {
   position: absolute;
   width: 95px;
   height: 30px;
-  left: 147px;
   top: 336px;
   font-family: "Roboto";
   font-style: normal;
@@ -189,46 +199,35 @@ p {
   margin-top: 10px;
 }
 
-.rectangle {
-  position: absolute;
-  width: 331px;
-  height: 783px;
-  left: 29px;
-  top: 30px;
-  background: #ffffff;
-  box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 41px;
+.rectUser {
+  width: 70vw;
+  height: 105px;
+  background: #575a68;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  margin-top: 40px;
+}
+
+.rectPlayers {
+  width: 70vw;
+  height: 200px;
+  background: #575a68;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  margin-top: 30px;
 }
 
 .startBtn {
-  position: absolute;
-  width: 127px;
-  height: 53px;
-  left: 131px;
-  top: 726px;
+  margin-top: 20px;
 }
 
-.recPLayers {
+.rectangle {
   position: absolute;
-  width: 266px;
-  height: 328px;
-  left: 62px;
-  top: 374px;
-
-  background: #575a68;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
-}
-
-.recUser {
-  position: absolute;
-  width: 266px;
-  height: 105px;
-  left: 62px;
-  top: 209px;
-
-  background: #575a68;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
+  width: 90vw;
+  height: 90vh;
+  margin: 5vh 5vw;
+  background: #ffffff;
+  box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 41px;
 }
 </style>
