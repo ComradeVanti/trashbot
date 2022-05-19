@@ -32,6 +32,7 @@
     </div>
 
     <div id="accuracy">Ungenauigkeit: {{ accuracy }}m</div>
+    <timer-component />
   </div>
 
   <info-window :userId="selectedUser" />
@@ -58,6 +59,7 @@ import ItemPin from "../components/ItemPin.vue";
 import ToastMsg from "../components/ToastMsg.vue";
 import InfoWindow from "../components/InfoWindow.vue";
 import PlaygroundCircle from "../components/PlaygroundCircle.vue";
+import TimerComponent from "../components/TimerComponent.vue";
 
 export default {
   name: "GameView",
@@ -68,6 +70,7 @@ export default {
     ToastMsg,
     InfoWindow,
     PlaygroundCircle,
+    TimerComponent,
   },
   data() {
     const locationStore = geoStore();
