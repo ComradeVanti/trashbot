@@ -108,22 +108,14 @@ Server -> Client `lobby/players`
 Sent from host to server to indicate that all players have joined and the 
 room is now ready to choose a rule-set. The server will send a message to 
 all players in the room, notifying them of this event, so that they can 
-transition to the rule-set page.
+transition to the game. It will also send them the duration of the game in 
+minutes.
 
 Client -> Server `lobby/ready`
 
 ```js
 { playerId: number; roomId: number, location: {lat: number, lng: number} }
 ```
-
-Server -> Client `lobby/ready`
-
-```js
-{}
-```
-
-It will also send the following to the host to indicate that the timer 
-should start and how many minutes the game will last:
 
 Server -> Client `game/start`
 

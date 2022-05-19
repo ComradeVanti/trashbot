@@ -20,8 +20,7 @@ export module Ready {
         }
 
         const dbWithGame = roomDB.startGameIn(request.roomId, request.location)
-        client.sendToRoom(request.roomId, "lobby/ready", {})
-        client.send("game/start", {minutes: GAME_TIME_MINUTES})
+        client.sendToRoom(request.roomId, "game/start", {minutes: GAME_TIME_MINUTES})
         setTimeout(() => {
             client.sendToRoom(request.roomId, "game/done", {})
         }, GAME_TIME_MILLIS)
