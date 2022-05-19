@@ -1,5 +1,6 @@
 import Immutable from "immutable";
-import {Entity, id, Item} from "./domain";
+import {Entity, id, Item, SphereXY} from "./domain";
+import {SphereMath} from "./SphereMath";
 
 export class ItemDB {
 
@@ -44,10 +45,14 @@ export class ItemDB {
         return this.items.get(id) ?? null
     }
 
-    getItems(): Entity<Item>[] {
+    get itemsWithId(): Entity<Item>[] {
         return this.items.map((item, id) => ({...item, id}))
             .toList()
             .toArray()
+    }
+
+    getInCircle(point: SphereXY, radius: number) {
+        return this.itemsWithId.filter(it => SphereMath.distance(it.location, point) <= radius)
     }
 
 }

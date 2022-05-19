@@ -85,4 +85,8 @@ export class Game {
         return this.mapPlayer(id, it => ({name: it.name, location, stats: it.stats}))
     }
 
+    findItemsInPickupRange(player: Player) {
+        return this.items.getInCircle(player.location, 10)
+    }
+
 }

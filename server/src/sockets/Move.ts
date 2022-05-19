@@ -25,7 +25,23 @@ export module Move {
             return roomDB
         }
 
-        return roomDB.updateGame(request.roomId, game.movePlayer(request.playerId, request.location))
+        const gameWithMovedPlayer = game.movePlayer(request.playerId, request.location)
+
+        const player = game.tryGetPlayer(request.playerId)
+
+        if (player) {
+            const pickupItems = gameWithMovedPlayer.findItemsInPickupRange(player)
+            pickupItems.forEach(item => {
+                let message = {
+                    id: request.playerId,
+                    type: item.type,
+                    states: item.stats
+                }
+                client.send("me/item-in-range", message)
+            })
+        }
+
+        return roomDB.updateGame(request.roomId, gameWithMovedPlayer)
     }
 
 }
