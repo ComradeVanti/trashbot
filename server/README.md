@@ -204,7 +204,7 @@ Server -> Client `me/actors`
 
 Get the current robot for a player.
 
-Client -> Server `server/robot`
+Client -> Server `game/robot`
 
 ```js
 { playerId: number, roomId: number }
