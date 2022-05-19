@@ -3,6 +3,7 @@ import {SocketClient} from "./SocketClient";
 import {Item, SphereXY, id} from "../domain";
 import {UniversalError} from "./UniversalError";
 import {Game} from "../Game";
+import {Result} from "../Result";
 
 export module GetActors {
 
@@ -13,8 +14,8 @@ export module GetActors {
     type ThingAtPlace = { id: id, location: SphereXY }
 
     type Request = {
-        playerId: number | undefined,
-        roomId: number | undefined
+        playerId: number,
+        roomId: number
     }
 
     type Response = {
@@ -29,27 +30,24 @@ export module GetActors {
             return roomDB;
         }
 
-        const game = roomDB.tryGetGame(request.roomId)
-        if (game === null) {
-            client.sendError("game/get-actors", UniversalError.ROOM_NOT_FOUND)
-            return roomDB;
-        }
+        roomDB.tryGetGame(request.roomId)
+            .bind(game => game.tryGetPlayer(request.playerId)
+                .map(player => {
+                    const players: ThingAtPlace[] = game.findPlayersInViewOf(player)
+                        .filter(it => it.id !== request.playerId)
+                        .map(it => ({id: it.id, location: it.location}))
 
-        const player = game.tryGetPlayer(request.playerId)
-        if (player === null) {
-            client.sendError("game/get-actors", UniversalError.PLAYER_NOT_FOUND)
-            return roomDB;
-        }
+                    const items: ThingAtPlace[] = game.items.itemsWithId
+                        .map(it => ({id: it.id, location: it.location}))
 
-        const players: ThingAtPlace[] = game.findPlayersInViewOf(player)
-            .filter(it => it.id !== request.playerId)
-            .map(it => ({id: it.id, location: it.location}))
+                    const response: Response = {players, items}
+                    return response
+                }))
+            .match(
+                response => client.send("me/actors", response),
+                error => client.sendError("game/get-actors", error)
+            )
 
-        const items: ThingAtPlace[] = game.items.itemsWithId
-            .map(it => ({id: it.id, location: it.location}))
-
-        const response: Response = {players, items}
-        client.send("me/actors", response)
         return roomDB
     }
 

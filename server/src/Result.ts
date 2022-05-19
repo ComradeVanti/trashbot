@@ -37,4 +37,11 @@ export class Result<T> {
         return this.it
     }
 
+    match(okF: (value: T) => void, errorF: (error: UniversalError) => void): void {
+        if (typeof this.it === "number") {
+            errorF(this.it)
+        } else
+            okF(this.it)
+    }
+
 }
