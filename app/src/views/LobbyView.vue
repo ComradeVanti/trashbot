@@ -17,7 +17,7 @@
           class="startBtn"
           v-if="this.store.isHost"
           @click="sendAllPlayers()"
-          >Start Game</button-comp
+          >Start</button-comp
         >
         <span v-if="!this.store.isHost"
           >Warte bis der Host das Spiel startet</span
@@ -171,21 +171,15 @@ h1 {
   color: #5a81bc;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 h2 {
-  position: absolute;
-  width: 95px;
-  height: 30px;
-  top: 336px;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-size: 26px;
-  line-height: 30px;
   text-align: center;
-
   color: #5a81bc;
 }
 
@@ -205,20 +199,23 @@ p {
   background: #575a68;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
-  margin-top: 40px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 .rectPlayers {
   width: 70vw;
-  height: 200px;
+  height: 40vh;
   background: #575a68;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 18px;
-  margin-top: 30px;
+  overflow: scroll;
 }
 
 .startBtn {
-  margin-top: 20px;
+  margin-top: 10px;
+  width: 127px;
+  margin-bottom: 10px;
 }
 
 .rectangle {
