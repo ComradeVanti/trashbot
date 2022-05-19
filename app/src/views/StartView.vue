@@ -68,10 +68,12 @@ export default {
     "me/host": function (data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
+      this.$router.push("lobby");
     },
     "me/join": function (data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
+      this.$router.push("lobby");
     },
     "me/error": function (data) {
       console.log(data.errorCode);
@@ -106,7 +108,6 @@ export default {
       this.savePlayerName();
       this.sendHost();
       localStorage.setItem("playerId", this.playerId);
-      this.$router.push("lobby");
     },
 
     joinLobby() {
@@ -115,7 +116,6 @@ export default {
       this.sendPlayer();
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
-      this.$router.push("lobby");
     },
   },
   created() {
