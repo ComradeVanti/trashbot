@@ -13,7 +13,11 @@
           minZoom: '18',
         }"
       >
-        <user-pin />
+        <user-pin @openWindow="openWindow()" />
+
+        <GMapCluster>
+          <item-pin v-for="(idx, item) in items" :key="idx" :object="item" />
+        </GMapCluster>
 
         <GMapCluster>
           <enemy-pin
@@ -26,27 +30,9 @@
     </div>
 
     <div id="accuracy">Ungenauigkeit: {{ accuracy }}m</div>
-
-    <button
-      id="update-btn"
-      class="btn btn-primary"
-      type="button"
-      @click="stopRefresh()"
-    >
-      Stoppe Refresh
-    </button>
-
-    <!--
-    <button
-      id="update-btn"
-      class="btn btn-primary"
-      type="button"
-      @click="getCurrPos()"
-    >
-      Aktualisiere Standort
-    </button>
-    -->
   </div>
+
+  <info-window />
 
   <toast-msg
     id="locationError"
@@ -66,20 +52,23 @@ import { geoStore, gameStore } from "../stores/index.ts";
 
 import UserPin from "../components/UserPin.vue";
 import EnemyPin from "../components/EnemyPin.vue";
+import ItemPin from "../components/ItemPin.vue";
 import ToastMsg from "../components/ToastMsg.vue";
+import InfoWindow from "../components/InfoWindow.vue";
 
 export default {
   name: "GameView",
-  components: { UserPin, EnemyPin, ToastMsg },
+  components: { UserPin, EnemyPin, ItemPin, ToastMsg, InfoWindow },
   data() {
     const store = geoStore();
 
     return {
       store,
       accuracy: 0,
-      timeoutId: "",
+      ASK_SEC: 5,
 
       players: [],
+      items: [],
     };
   },
 
@@ -153,10 +142,6 @@ export default {
         this.locationError();
       }
     },
-
-    stopRefresh() {
-      console.log("Stop refreshing location ...");
-      clearTimeout(this.timeoutId);
     },
 
     accuracyInfo() {
