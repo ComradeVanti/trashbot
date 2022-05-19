@@ -119,8 +119,6 @@ export default {
   },
 
   mounted() {
-    this.locate();
-
     window.setInterval(() => {
       this.askEnemy();
     }, this.ASK_SEC * 1000);
@@ -151,10 +149,6 @@ export default {
   },
 
   methods: {
-    locate() {
-      this.getCurrPos();
-    },
-
     getCurrPos() {
       if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
