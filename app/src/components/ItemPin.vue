@@ -2,6 +2,7 @@
   <GMapMarker
     class="marker"
     :position="object.location"
+    :clickable="false"
     :icon="{
       url: img,
       scaledSize: { width: 30, height: 30 },
