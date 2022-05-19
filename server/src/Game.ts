@@ -1,23 +1,21 @@
-import {Item, SphereXY, PartType, id, Stats} from "./domain";
+import {Item, SphereXY, PartType, id, Stats, Entity} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {SphereMath} from "./SphereMath";
 import {Items} from "./Items";
 import {ItemDB} from "./ItemDB";
 
-type InGamePlayerData = {
+type Player = {
     readonly name: string,
     readonly location: SphereXY,
     readonly stats: Stats
 }
 
-type PlayerDataMap = Immutable.Map<id, InGamePlayerData>
-
 export class Game {
 
     static fromLobby(lobby: Lobby, hostLocation: SphereXY, gameRadius: number): Game {
 
-        const players = lobby.players.map((it) => ({
+        const players = lobby.guests.map((it) => ({
             name: it.name,
             location: {lat: 0, lng: 0},
             stats: {range: 200, coolness: 0}
@@ -47,16 +45,16 @@ export class Game {
     }
 
 
-    constructor(readonly players: PlayerDataMap,
+    constructor(readonly players: Immutable.Map<id, Player>,
                 readonly items: ItemDB) {
 
     }
 
-    private mapPlayers(mapF: (map: PlayerDataMap) => PlayerDataMap): Game {
+    private mapPlayers(mapF: (map: Immutable.Map<id, Player>) => Immutable.Map<id, Player>): Game {
         return new Game(mapF(this.players), this.items)
     }
 
-    private mapPlayer(id: id, mapF: (data: InGamePlayerData) => InGamePlayerData) {
+    private mapPlayer(id: id, mapF: (data: Player) => Player) {
         return this.mapPlayers(it => {
             const data = it.get(id)
 
@@ -68,16 +66,19 @@ export class Game {
         })
     }
 
-    tryGetPlayer(id: id): InGamePlayerData | null {
+    tryGetPlayer(id: id): Player | null {
         return this.players.get(id) ?? null
     }
 
-    findPlayersInCircle(point: SphereXY, radius: number) {
+    private findPlayersInCircle(point: SphereXY, radius: number) {
         return this.players.filter(it => SphereMath.distance(point, it.location) <= radius)
     }
 
-    findPlayersInViewOf(player: InGamePlayerData) {
+    findPlayersInViewOf(player: Player): Entity<Player>[] {
         return this.findPlayersInCircle(player.location, player.stats.range)
+            .map((player, id) => ({...player, id}))
+            .toList()
+            .toArray()
     }
 
     movePlayer(id: id, location: SphereXY) {

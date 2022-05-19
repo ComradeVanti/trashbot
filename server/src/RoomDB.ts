@@ -61,7 +61,7 @@ export class RoomDB {
         if (lobby) {
             return new RoomDB(
                 this.lobbies.remove(id),
-                this.games.set(id, Game.fromLobby(lobby, hostLocation, 500))
+                this.games.set(id, Game.fromLobby(lobby, hostLocation, 250))
             )
         } else
             return this

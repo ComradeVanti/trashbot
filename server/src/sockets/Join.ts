@@ -33,7 +33,7 @@ export module Join {
             return roomDB
         }
 
-        const [roomWithPlayer, playerId] = room.addPlayer(request.playerName)
+        const [roomWithPlayer, playerId] = room.addGuest({name: request.playerName})
         const dbWithPlayer = roomDB.updateLobby(request.roomId, roomWithPlayer)
 
         client.sendToRoom(request.roomId, "lobby/changed", {playerId, action: "JOINED"})

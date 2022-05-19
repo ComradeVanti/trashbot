@@ -14,6 +14,8 @@ export type Stats = {
     coolness: number
 }
 
+export type Entity<T> = T & { id: id }
+
 export enum PartType {
     Arms,
     Legs,

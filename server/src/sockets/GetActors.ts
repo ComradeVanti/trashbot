@@ -40,10 +40,8 @@ export module GetActors {
         }
 
         const players = game.findPlayersInViewOf(player)
-            .remove(request.playerId)
-            .map((data, id) => ({playerId: id, location: data.location}))
-            .toList()
-            .toArray()
+            .filter(it => it.id !== request.playerId)
+            .map(it => ({playerId: it.id, location: it.location}))
 
         const items = game.items.getItems()
 
