@@ -19,6 +19,7 @@ export const gameStore = defineStore("game", {
     playerId: 1230,
     playerName: "playerName",
     roomId: 1230,
+    isHost: false,
     startPoint: {
       lat: 0,
       lng: 0,
@@ -36,6 +37,9 @@ export const gameStore = defineStore("game", {
     },
     setStartPoint(position: { latitude: number; longitude: number }) {
       this.startPoint = { lat: position.latitude, lng: position.longitude };
+    },
+    updateIsHost() {
+      this.isHost = true;
     },
   },
   getters: {

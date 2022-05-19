@@ -82,6 +82,7 @@ export default {
     },
 
     createLobby() {
+      this.store.updateIsHost();
       this.savePlayerName();
       this.sendHost();
       localStorage.setItem("playerId", this.playerId);

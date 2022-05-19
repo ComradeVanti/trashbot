@@ -10,7 +10,10 @@
   </div>
 
   <!-- nur für Host -->
-  <button-comp @click="sendAllPlayers()">Start Game</button-comp>
+  <button-comp v-if="this.store.isHost" @click="sendAllPlayers()"
+    >Start Game</button-comp
+  >
+  <span v-if="!this.store.isHost">Warte bis der Host das Spiel startet</span>
 
   <toast-msg
     id="wait"
