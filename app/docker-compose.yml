@@ -5,10 +5,11 @@ services:
     image: node:lts
     working_dir: /var/www/html/app/
     entrypoint: /bin/bash
+    command: npm run build
     expose:
       - 8003
     volumes:
-      - ./app/dist:/var/www/html/
+      - ./app:/var/www/html/app
     tty: true
     networks:
       - mkl_external
