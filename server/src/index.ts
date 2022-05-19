@@ -12,7 +12,7 @@ import { Move } from "./sockets/Move";
 import * as dotenv from "dotenv";
 
 dotenv.config();
-const port = process.env.PORT || 3000;
+const port = parseInt(process.env.PORT || "3000");
 
 const app = express();
 const httpServer = createServer(app);
