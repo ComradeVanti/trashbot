@@ -85,6 +85,7 @@ export default {
 
   created() {
     this.getCurrPos();
+    this.checkIfUserIsLoggedIn();
   },
 
   mounted() {
@@ -159,6 +160,17 @@ export default {
       // eslint-disable-next-line no-undef
       const action = new bootstrap.Toast(toast);
       action.show();
+    },
+    checkIfUserIsLoggedIn() {
+      if (!localStorage.getItem("playerId")) {
+        console.log("not");
+        this.$router.push("/");
+      } else {
+        console.log("loggedin");
+        this.store.savePlayerId(localStorage.getItem("playerId"));
+        this.store.savePlayer(localStorage.getItem("playerName"));
+        this.store.saveRoomId(localStorage.getItem("roomId"));
+      }
     },
   },
 };
