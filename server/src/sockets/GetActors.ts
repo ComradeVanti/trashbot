@@ -45,10 +45,9 @@ export module GetActors {
             .toList()
             .toArray()
 
-        const response: Response = {
-            players,
-            items: game.items.getItems()
-        }
+        const items = game.items.getItems()
+
+        const response: Response = {players, items}
         client.send("me/actors", response)
         return roomDB
     }
