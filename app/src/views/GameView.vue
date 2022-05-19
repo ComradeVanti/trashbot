@@ -13,7 +13,7 @@
           minZoom: '18',
         }"
       >
-        <user-pin @openWindow="openWindow(playerId)" />
+        <user-pin @openWindow="openInfoWindow(playerId)" />
         <playground-circle />
 
         <GMapCluster>
@@ -21,7 +21,7 @@
             v-for="player in players"
             :key="player['id']"
             :position="player['location']"
-            @openWindow="openWindow(player['id'])"
+            @openWindow="openInfoWindow(player['id'])"
           />
         </GMapCluster>
 
@@ -43,7 +43,7 @@
   >
 
   <item-window :userId="selectedUser"></item-window>
-  <info-window :userId="selectedUser" />
+  <info-window :robotParts="robot" />
 
   <toast-msg
     id="locationError"
@@ -92,7 +92,24 @@ export default {
       userStore,
       locationStore,
       accuracy: 0,
-      selectedUser: null,
+      robot: {
+        head: {
+          coolness: null,
+          range: null,
+        },
+        body: {
+          coolness: null,
+          range: null,
+        },
+        arms: {
+          coolness: null,
+          range: null,
+        },
+        legs: {
+          coolness: null,
+          range: null,
+        },
+      },
       ASK_SEC: 5,
 
       players: [],
@@ -145,6 +162,15 @@ export default {
       } else {
         this.itemInRange = false;
       }
+    },
+
+    // response to open info window
+    "me/robot": function (data) {
+      console.log(data.robot);
+
+      this.robot = data.robot;
+      const dialog = document.querySelector("#detailPage.modal");
+      dialog.style.display = "flex";
     },
   },
 
@@ -210,10 +236,11 @@ export default {
       }
     },
 
-    openWindow(id) {
-      this.selectedUser = id;
-      const dialog = document.querySelector("#detailPage.modal");
-      dialog.style.display = "flex";
+    openInfoWindow(id) {
+      this.$socket.emit("game/robot", {
+        playerId: id,
+        roomId: parseInt(this.roomId),
+      });
     },
 
     openItemWindow(id) {

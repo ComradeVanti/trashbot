@@ -8,7 +8,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ userId }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ playerName }}</h5>
           <div
             class="interaction close"
             aria-label="Close"
@@ -29,7 +29,7 @@
                     class="robot-img head"
                   />
                 </th>
-                <td>Mark</td>
+                <td>Coolness: {{ robotParts.head.coolness }}</td>
               </tr>
               <tr>
                 <th scope="row">
@@ -39,7 +39,7 @@
                     class="robot-img body"
                   />
                 </th>
-                <td>Jacob</td>
+                <td>Coolness: {{ robotParts.body.coolness }}</td>
               </tr>
               <tr>
                 <th scope="row">
@@ -49,7 +49,7 @@
                     class="robot-img arm"
                   />
                 </th>
-                <td>Larry</td>
+                <td>Coolness: {{ robotParts.arms.coolness }}</td>
               </tr>
               <tr>
                 <th scope="row">
@@ -59,7 +59,7 @@
                     class="robot-img leg"
                   />
                 </th>
-                <td>Larry</td>
+                <td>Coolness: {{ robotParts.legs.coolness }}</td>
               </tr>
             </tbody>
           </table>
@@ -75,7 +75,7 @@ import { gameStore } from "../stores/index.ts";
 
 export default {
   name: "InfoWindow",
-  props: ["userId"],
+  props: ["robotParts"],
   computed: {
     ...mapState(gameStore, {
       playerName: "playerName",
