@@ -19,6 +19,10 @@ export const gameStore = defineStore("game", {
     playerId: 1230,
     playerName: "playerName",
     roomId: 1230,
+    startPoint: {
+      lat: 0,
+      lng: 0,
+    },
   }),
   actions: {
     savePlayer(updatedName: string) {
@@ -30,9 +34,13 @@ export const gameStore = defineStore("game", {
     saveRoomId(lobbyCode: number) {
       this.roomId = lobbyCode;
     },
+    setStartPoint(position: { latitude: number; longitude: number }) {
+      this.startPoint = { lat: position.latitude, lng: position.longitude };
+    },
   },
   getters: {
     updatedName: (state) => state.playerName,
     updatedId: (state) => state.playerId,
+    updatedstartPoint: (state) => state.startPoint,
   },
 });

@@ -14,6 +14,7 @@
         }"
       >
         <user-pin @openWindow="openWindow(playerId)" />
+        <playground-circle />
 
         <GMapCluster>
           <enemy-pin
@@ -56,10 +57,18 @@ import EnemyPin from "../components/EnemyPin.vue";
 import ItemPin from "../components/ItemPin.vue";
 import ToastMsg from "../components/ToastMsg.vue";
 import InfoWindow from "../components/InfoWindow.vue";
+import PlaygroundCircle from "../components/PlaygroundCircle.vue";
 
 export default {
   name: "GameView",
-  components: { UserPin, EnemyPin, ItemPin, ToastMsg, InfoWindow },
+  components: {
+    UserPin,
+    EnemyPin,
+    ItemPin,
+    ToastMsg,
+    InfoWindow,
+    PlaygroundCircle,
+  },
   data() {
     const locationStore = geoStore();
     const userStore = gameStore();

@@ -109,6 +109,7 @@ export default {
           (position) => {
             console.log(position);
             this.useGeoStore.updatePosition(position.coords);
+            this.store.setStartPoint(position.coords);
           },
           () => {
             this.locationError();
