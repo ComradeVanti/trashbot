@@ -165,3 +165,18 @@ Server -> Client `me/actors`
     ]
 }
 ```
+
+#### Item in pickup-range
+
+When the player sends their location to the server it may tell the player 
+that they are now in range to pick up an item
+
+Server -> Client `me/item-in-range`
+
+```js
+{
+    id: number,
+    type: number
+    stats: Object
+}
+```

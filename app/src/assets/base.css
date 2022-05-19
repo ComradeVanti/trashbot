@@ -23,9 +23,9 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: rgba(61,59,48, 1);
-  --color-background-soft: rgba(61,59,48, 1);
-  --color-background-mute: rgba(61,59,48, 1);
+  --color-background: rgb(87, 90, 104);
+  --color-background-soft: rgba(87, 90, 104);
+  --color-background-mute: rgba(87, 90, 104);
 
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);

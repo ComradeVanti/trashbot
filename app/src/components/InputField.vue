@@ -34,4 +34,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.form-control{
+  background: #D8DAD9;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+.form-control,input{
+  background: #D8DAD9;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 17px;
+  color: white;
+  text-align: center;
+}
+</style>

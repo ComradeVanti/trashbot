@@ -45,7 +45,7 @@ export module GetActors {
             .filter(it => it.id !== request.playerId)
             .map(it => ({id: it.id, location: it.location}))
 
-        const items: ThingAtPlace[] = game.items.getItems()
+        const items: ThingAtPlace[] = game.items.itemsWithId
             .map(it => ({id: it.id, location: it.location}))
 
         const response: Response = {players, items}
