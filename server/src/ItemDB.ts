@@ -46,7 +46,7 @@ export class ItemDB {
 
     addKey(obj: any, key: string, value: any): any {
         const withKey = JSON.parse(JSON.stringify(obj))
-        withKey.key = value
+        withKey[key] = value
         return withKey
     }
 
