@@ -215,3 +215,14 @@ Server -> Client `me/robot`
 ```js
 { robot: Object }
 ```
+
+#### Game end
+
+The server keeps track of the game time. Once it is over, it will send this 
+message to all players to indicate to move to the results page.
+
+Server -> Clients `game/done`
+
+```js
+{}
+```

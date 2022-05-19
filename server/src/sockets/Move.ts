@@ -23,12 +23,13 @@ export module Move {
                 .map(player => {
                     const gameWithMovedPlayer = game.movePlayer(request.playerId, request.location)
 
-                    const pickupItems = gameWithMovedPlayer.findItemsInPickupRange(player)
-                    const message = pickupItems.map(it => ({
-                        id: it.id,
-                        type: it.type,
-                        states: it.stats
-                    }))
+                    const message = gameWithMovedPlayer
+                        .findItemsInPickupRange(player)
+                        .map(it => ({
+                            id: it.id,
+                            type: it.type,
+                            states: it.stats
+                        }))
                     client.send("me/items-in-range", message)
 
                     return gameWithMovedPlayer
