@@ -2,7 +2,7 @@ import {id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {Lobby} from "../Lobby";
 import {SocketClient} from "./SocketClient";
-import {UniversalErrors} from "./UniversalErrors";
+import {UniversalError} from "./UniversalError";
 
 export module Host {
 
@@ -21,7 +21,7 @@ export module Host {
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
         if (request.playerName === undefined) {
-            client.sendError("server/host", UniversalErrors.BAD_MESSAGE)
+            client.sendError("server/host", UniversalError.BAD_MESSAGE)
             return roomDB
         }
 

@@ -1,7 +1,7 @@
 import {SphereXY, id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {SocketClient} from "./SocketClient";
-import {UniversalErrors} from "./UniversalErrors";
+import {UniversalError} from "./UniversalError";
 
 export module Ready {
 
@@ -15,7 +15,7 @@ export module Ready {
 
     export function handle(request: Request, roomDB: RoomDB, client: SocketClient): RoomDB {
         if (request.playerId === undefined || request.roomId === undefined || request.location === undefined) {
-            client.sendError("lobby/ready", UniversalErrors.BAD_MESSAGE)
+            client.sendError("lobby/ready", UniversalError.BAD_MESSAGE)
             return roomDB
         }
 

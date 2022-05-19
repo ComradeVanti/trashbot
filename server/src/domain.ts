@@ -14,6 +14,13 @@ export type Stats = {
     coolness: number
 }
 
+export type Robot = {
+    head: Stats,
+    body: Stats,
+    arms: Stats,
+    legs: Stats
+}
+
 export type Entity<T> = T & { id: id }
 
 export enum PartType {
@@ -28,3 +35,4 @@ export type Item = {
     stats: Stats,
     type: PartType
 }
+

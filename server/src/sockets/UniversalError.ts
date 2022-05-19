@@ -1,7 +1,8 @@
-export enum UniversalErrors {
+export enum UniversalError {
     ROOM_NOT_FOUND = 0,
     PLAYER_NOT_FOUND = 1,
     PLAYER_NOT_AUTHORIZED = 2,
     PLAYER_NOT_IN_ROOM = 3,
-    BAD_MESSAGE = 4
+    BAD_MESSAGE = 4,
+    ITEM_NOT_FOUND
 }
