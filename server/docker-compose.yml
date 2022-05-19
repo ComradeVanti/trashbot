@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     restart: unless-stopped
-    command: 'npm run git pull'
+    command: 'npm run live'
     cpus: 3
     networks:
       - mkl_external
