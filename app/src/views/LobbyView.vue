@@ -2,21 +2,15 @@
   <div>
     <h1>Lobby</h1>
     <div class="rectangle"></div>
-    <div class="recPLayers">
-      <p>{{ store.playerName }}</p>
-    </div>
+
     <div class="recUser">
       <p>Room Code: {{ store.roomId }}</p>
     </div>
     <h2>Players:</h2>
-
-    <div>
-      <div v-for="(player, index) in allPlayers" v-bind:key="index">
-        {{ player }}
-      </div>
+    <div class="recPLayers">
+      <p>{{ store.playerName }}</p>
     </div>
 
-    <!-- nur für Host -->
     <button-comp v-if="this.store.isHost" @click="sendAllPlayers()"
       >Start Game</button-comp
     >
