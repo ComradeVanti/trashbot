@@ -12,6 +12,7 @@ export default defineConfig({
     },
   },
   server: {
+    port: parseInt(process.env.PORT),
     proxy: {
       "/api": {
         target: "http://localhost:3000",
@@ -19,6 +20,5 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
-    port: 3001,
   },
 });

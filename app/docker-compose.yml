@@ -2,12 +2,14 @@ version: "3.8"
 services:
   app:
     container_name: trashbot-app
-    image: trashbot-app:1.0.0
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    restart: unless-stopped
-    command: 'npm run dev'
+    image: node:lts
+    working_dir: /var/www/html/app/
+    entrypoint: /bin/bash
+    # expose:
+    #   - 8000
+    volumes:
+      - ./frontend/:/var/www/html/app
+    tty: true
     networks:
       - mkl_external
     labels:
@@ -16,9 +18,9 @@ services:
       - "traefik.http.routers.devapptrash.entrypoints=web-secure"
       - "traefik.http.routers.devapptrash.tls=true"
       - "traefik.http.routers.devapptrash.tls.certresolver=letsencrypt"
-      - "traefik.http.services.devapptrash.loadbalancer.server.port=3001"
+      - "traefik.http.services.devapptrash.loadbalancer.server.port=8003"
   server:
-    container_name: striddle-api
+    container_name: trashbot-api
     image: trashbot-api:1.0.0
     build:
       context: .
