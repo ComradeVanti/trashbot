@@ -36,6 +36,8 @@ export class Game {
         function makeItems(): Item[] {
             return Array.prototype.concat.apply([], [
                 makeItemsOfType(PartType.Arms, playerCount),
+                makeItemsOfType(PartType.Body, playerCount),
+                makeItemsOfType(PartType.Legs, playerCount),
                 makeItemsOfType(PartType.Head, playerCount)
             ])
         }
