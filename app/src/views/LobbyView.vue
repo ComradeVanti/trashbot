@@ -69,7 +69,7 @@ export default {
     "lobby/players": function (data) {
       this.allPlayers = data.players.map((it) => it.name);
     },
-    "lobby/ready": function () {
+    "game/start": function () {
       this.$router.push("game");
     },
     "lobby/changed": function () {
