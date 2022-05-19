@@ -99,11 +99,7 @@ export default {
   },
 
   mounted() {
-    const seconds = 5;
-
-    this.timeoutId = window.setInterval(() => {
-      this.locate();
-    }, seconds * 1000);
+    this.locate();
   },
 
   sockets: {
@@ -127,7 +123,7 @@ export default {
 
     getCurrPos() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
+        navigator.geolocation.watchPosition(
           (position) => {
             this.store.updatePosition(position.coords);
             this.accuracy = position.coords.accuracy;
