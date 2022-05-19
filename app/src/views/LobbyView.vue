@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="rectangle">
+    <div class="content">
       <div class="container">
         <h1>Lobby</h1>
         <div class="rectUser">
@@ -219,7 +219,7 @@ p {
   margin-bottom: 10px;
 }
 
-.rectangle {
+.content {
   position: absolute;
   width: 90vw;
   height: 90vh;
