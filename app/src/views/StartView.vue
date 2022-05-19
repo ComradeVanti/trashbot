@@ -14,7 +14,7 @@
   ></input-field>
 
   <br />
-  <button-comp @click="createLobby()">Host</button-comp>
+  <button-comp class="test" @click="createLobby()">Host</button-comp>
   <br />
   <br />
   <!-- nur für Player -->
@@ -92,3 +92,10 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.test {
+  background-color: red;
+}
+</style>

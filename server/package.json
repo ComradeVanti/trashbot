@@ -4,7 +4,8 @@
   "description": "The trashiest server in the world",
   "scripts": {
     "run": "ts-node src/index.ts",
-    "watch": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts"
+    "watch": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
+    "live": "ts-node ./index.ts"
   },
   "main": "index.js",
   "keywords": [],
