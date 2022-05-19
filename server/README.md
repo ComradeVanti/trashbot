@@ -28,6 +28,7 @@ UNIVERSAL ERROR CODES:
 - 2 = Player does not have permission for this action
 - 3 = Player does not have access to the room
 - 4 = The message was missing some important property
+- 5 = Item does not exist
 
 #### Host
 
@@ -142,7 +143,21 @@ Server -> Client `me/items-in-range`
 }[]
 ```
 
+#### Pick up item
 
+Send the id of an item to the server to pick it up.
+
+Client -> Server `game/pick-up-item`
+
+```js
+{ playerId: number, roomId: number, itemId: number }
+```
+
+If successful the server will not answer.
+
+ERRORS
+
+- 10 = You are not in range to pick up this item
 
 #### Get actors
 

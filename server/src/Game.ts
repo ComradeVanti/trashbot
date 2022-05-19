@@ -1,24 +1,34 @@
-import {Item, SphereXY, PartType, id, Stats, Entity} from "./domain";
+import {Entity, id, Item, PartType, Robot, SphereXY, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {SphereMath} from "./SphereMath";
 import {Items} from "./Items";
 import {ItemDB} from "./ItemDB";
+import {UniversalError} from "./sockets/UniversalError";
+import {Result} from "./Result";
+
 
 type Player = {
     readonly name: string,
     readonly location: SphereXY,
-    readonly stats: Stats
+    readonly robot: Robot,
+}
+
+const baseRobot: Robot = {
+    head: {range: 200, coolness: 0},
+    body: {range: 200, coolness: 0},
+    arms: {range: 200, coolness: 0},
+    legs: {range: 200, coolness: 0},
 }
 
 export class Game {
 
     static fromLobby(lobby: Lobby, hostLocation: SphereXY, gameRadius: number): Game {
 
-        const players = lobby.guests.map((it) => ({
+        const players: Immutable.Map<id, Player> = lobby.guests.map((it) => ({
             name: it.name,
             location: {lat: 0, lng: 0},
-            stats: {range: 200, coolness: 0}
+            robot: baseRobot
         }))
 
         const playerCount = players.count()
@@ -54,6 +64,14 @@ export class Game {
         return new Game(mapF(this.players), this.items)
     }
 
+    private mapItems(mapF: (db: ItemDB) => ItemDB | UniversalError): Game | UniversalError {
+        const newItemsOrError = mapF(this.items)
+        if (typeof newItemsOrError === "number")
+            return newItemsOrError
+        else
+            return new Game(this.players, newItemsOrError)
+    }
+
     private mapPlayer(id: id, mapF: (data: Player) => Player) {
         return this.mapPlayers(it => {
             const data = it.get(id)
@@ -66,8 +84,9 @@ export class Game {
         })
     }
 
-    tryGetPlayer(id: id): Player | null {
-        return this.players.get(id) ?? null
+    tryGetPlayer(id: id): Result<Player> {
+        const player = this.players.get(id)
+        return player ? Result.ok(player) : Result.fail(UniversalError.PLAYER_NOT_FOUND)
     }
 
     private findPlayersInCircle(point: SphereXY, radius: number) {
@@ -75,18 +94,39 @@ export class Game {
     }
 
     findPlayersInViewOf(player: Player): Entity<Player>[] {
-        return this.findPlayersInCircle(player.location, player.stats.range)
+        return this.findPlayersInCircle(player.location, player.robot.head.range)
             .map((player, id) => ({...player, id}))
             .toList()
             .toArray()
     }
 
     movePlayer(id: id, location: SphereXY) {
-        return this.mapPlayer(id, it => ({name: it.name, location, stats: it.stats}))
+        return this.mapPlayer(id, it => ({name: it.name, location, robot: it.robot}))
     }
 
     findItemsInPickupRange(player: Player) {
         return this.items.getInCircle(player.location, 10)
+    }
+
+    tryMapPlayer(id: id, mapF: (player: Player) => Player): Result<Game> {
+        return this.tryGetPlayer(id)
+            .map(mapF)
+            .map(player => this.mapPlayers(it => it.set(id, player)))
+    }
+
+    tryBindPlayer(id: id, mapF: (player: Player) => Result<Player>): Result<Game> {
+        return this.tryGetPlayer(id)
+            .bind(mapF)
+            .map(player => this.mapPlayers(it => it.set(id, player)))
+    }
+
+    tryGetItem(id: id): Result<Item> {
+        return this.items.tryGetItem(id)
+    }
+
+    tryDespawnItem(id: id): Result<Game> {
+        return this.items.tryRemove(id)
+            .map(items => new Game(this.players, items))
     }
 
 }

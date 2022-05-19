@@ -1,10 +1,17 @@
 import Immutable from "immutable";
-import {SphereXY, id} from "./domain";
+import {id, SphereXY} from "./domain";
 import {Lobby} from "./Lobby";
 import {Game} from "./Game";
+import {UniversalError} from "./sockets/UniversalError";
+import {Result} from "./Result";
 
 type LobbyMap = Immutable.Map<id, Lobby>
 type GameMap = Immutable.Map<id, Game>
+
+export enum RoomDBError {
+    GAME_NOT_FOUND
+}
+
 
 export class RoomDB {
 
@@ -44,8 +51,9 @@ export class RoomDB {
         return this.lobbies.get(id) ?? null
     }
 
-    tryGetGame(id: id): Game | null {
-        return this.games.get(id) ?? null
+    tryGetGame(id: id): Result<Game> {
+        const game = this.games.get(id)
+        return game ? Result.ok(game) : Result.fail(UniversalError.ROOM_NOT_FOUND)
     }
 
     updateLobby(id: id, lobby: Lobby): RoomDB {
@@ -65,6 +73,12 @@ export class RoomDB {
             )
         } else
             return this
+    }
+
+    tryBindGame(id: id, mapF: (game: Game) => Result<Game>): Result<RoomDB> {
+        return this.tryGetGame(id)
+            .bind(mapF)
+            .map(game => this.updateGame(id, game))
     }
 
 }

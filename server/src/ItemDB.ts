@@ -1,6 +1,8 @@
 import Immutable from "immutable";
 import {Entity, id, Item, SphereXY} from "./domain";
 import {SphereMath} from "./SphereMath";
+import {UniversalError} from "./sockets/UniversalError";
+import {Result} from "./Result";
 
 export class ItemDB {
 
@@ -24,6 +26,11 @@ export class ItemDB {
         private readonly items: Immutable.Map<id, Item>) {
     }
 
+
+    private mapItems(mapF: (map: Immutable.Map<id, Item>) => Immutable.Map<id, Item>): ItemDB {
+        return new ItemDB(mapF(this.items))
+    }
+
     private hasItemWith(id: id) {
         return this.items.has(id)
     }
@@ -38,11 +45,12 @@ export class ItemDB {
 
     add(item: Item): [ItemDB, id] {
         const id = this.generateFreeId()
-        return [new ItemDB(this.items.set(id, item)), id]
+        return [this.mapItems(it => it.set(id, item)), id]
     }
 
-    tryGetItem(id: id): Item | null {
-        return this.items.get(id) ?? null
+    tryGetItem(id: id):Result<Item>{
+        const item = this.items.get(id)
+        return item ? Result.ok(item) : Result.fail(UniversalError.ITEM_NOT_FOUND)
     }
 
     get itemsWithId(): Entity<Item>[] {
@@ -53,6 +61,11 @@ export class ItemDB {
 
     getInCircle(point: SphereXY, radius: number) {
         return this.itemsWithId.filter(it => SphereMath.distance(it.location, point) <= radius)
+    }
+
+    tryRemove(id: id): Result<ItemDB> {
+        if (this.items.has(id)) return Result.ok(this.mapItems(it => it.remove(id)))
+        return Result.fail(UniversalError.ITEM_NOT_FOUND)
     }
 
 }
