@@ -89,6 +89,10 @@ export default {
 
   mounted() {
     this.locate();
+
+    window.setInterval(() => {
+      this.askEnemy();
+    }, this.ASK_SEC * 1000);
   },
 
   sockets: {
@@ -121,10 +125,6 @@ export default {
               this.accuracyInfo();
             }
 
-            this.$socket.emit("game/get-actors", {
-              playerId: this.playerId,
-              roomId: this.roomId,
-            });
             this.$socket.emit("game/location", {
               playerId: this.playerId,
               roomId: this.roomId,
@@ -142,6 +142,11 @@ export default {
         this.locationError();
       }
     },
+    askEnemy() {
+      this.$socket.emit("game/get-actors", {
+        playerId: this.playerId,
+        roomId: this.roomId,
+      });
     },
 
     accuracyInfo() {
