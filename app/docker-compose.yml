@@ -5,8 +5,8 @@ services:
     image: node:lts
     working_dir: /var/www/html/app/
     entrypoint: /bin/bash
-    # expose:
-    #   - 8000
+    expose:
+      - 8003
     volumes:
       - ./frontend/:/var/www/html/app
     tty: true
