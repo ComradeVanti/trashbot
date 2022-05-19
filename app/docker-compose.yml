@@ -8,7 +8,7 @@ services:
     expose:
       - 8003
     volumes:
-      - ./frontend/:/var/www/html/app
+      - ./app/:/var/www/html/app
     tty: true
     networks:
       - mkl_external
