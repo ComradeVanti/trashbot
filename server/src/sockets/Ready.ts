@@ -1,4 +1,4 @@
-import {Location, id} from "../domain"
+import {SphereXY, id} from "../domain"
 import {RoomDB} from "../RoomDB";
 import {SocketClient} from "./SocketClient";
 import {UniversalErrors} from "./UniversalErrors";
@@ -8,7 +8,7 @@ export module Ready {
     type Request = {
         playerId: id | undefined,
         roomId: id | undefined,
-        location: Location | undefined
+        location: SphereXY | undefined
     }
 
     type Response = {}

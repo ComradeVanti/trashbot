@@ -1,4 +1,4 @@
-import {Item, Location, PartType, Stats} from "./domain";
+import {Item, SphereXY, PartType, Stats} from "./domain";
 
 export module Items {
 
@@ -8,7 +8,7 @@ export module Items {
         }
     }
 
-    export function makeItemOfType(location: Location, type: PartType): Item {
+    export function makeItemOfType(location: SphereXY, type: PartType): Item {
         return {
             location,
             stats: makeStatsFor(type),
