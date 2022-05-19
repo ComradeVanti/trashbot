@@ -35,10 +35,14 @@
     <timer-component />
   </div>
 
-  <button-comp v-if="itemInRange == true" class="pickUpItem"
+  <button-comp
+    v-if="itemInRange == true"
+    class="pickUpItem"
+    @click="openItemWindow()"
     >Item aufheben</button-comp
   >
 
+  <item-window :userId="selectedUser"></item-window>
   <info-window :userId="selectedUser" />
 
   <toast-msg
@@ -65,6 +69,7 @@ import InfoWindow from "../components/InfoWindow.vue";
 import PlaygroundCircle from "../components/PlaygroundCircle.vue";
 import TimerComponent from "../components/TimerComponent.vue";
 import ButtonComp from "@/components/ButtonComp.vue";
+import ItemWindow from "@/components/ItemWindow.vue";
 
 export default {
   name: "GameView",
@@ -77,6 +82,7 @@ export default {
     PlaygroundCircle,
     TimerComponent,
     ButtonComp,
+    ItemWindow,
   },
   data() {
     const locationStore = geoStore();
@@ -214,6 +220,13 @@ export default {
       this.selectedUser = id;
       const dialog = document.querySelector("#detailPage.modal");
       dialog.style.display = "flex";
+    },
+
+    openItemWindow(id) {
+      console.log("test");
+      this.selectedUser = id;
+      const itemDialog = document.querySelector("#itemPage.modal");
+      itemDialog.style.display = "flex";
     },
   },
 };
