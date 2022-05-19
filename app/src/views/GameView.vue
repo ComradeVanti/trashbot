@@ -18,7 +18,7 @@
         <GMapCluster>
           <enemy-pin
             v-for="player in players"
-            :key="player['playerId']"
+            :key="player['id']"
             :position="player['location']"
           />
         </GMapCluster>
