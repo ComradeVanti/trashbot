@@ -43,6 +43,16 @@ export default {
   color: white;
   text-align: center;
 }
+
+.form-control .input-group.mb-3 {
+  margin-bottom: 0 !important;
+}
+
+.input-group.mb-3.nameField {
+  margin-top: 20px;
+  margin-bottom: 0 !important;
+}
+
 .form-control,input{
   background: #D8DAD9;
   border-radius: 40px;
