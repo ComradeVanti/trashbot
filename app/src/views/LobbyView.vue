@@ -5,26 +5,26 @@
       msg="Wir konnten keinen Standort finden! Überprüfe deine Standorteinstellungen."
       bgColor="danger"
     />
-    <div class="content">
+    <div class="column">
       <h1>Lobby</h1>
       <div class="rectUser box">
         <p>Room Code: {{ store.roomId }}</p>
       </div>
       <h2>Players:</h2>
-      <div class="rectPlayers">
+      <div class="rectPlayers box">
         <p v-for="(player, idx) in allPlayers" :key="idx">
           <span>{{ player }}</span>
         </p>
       </div>
 
       <button-comp
-        class="startBtn"
+        class="startBtn btn-primary"
         v-if="this.store.isHost"
         @click="sendAllPlayers()"
-        >Start
+      >Start
       </button-comp>
       <span v-if="!this.store.isHost"
-        >Warte bis der Host das Spiel startet</span
+      >Warte bis der Host das Spiel startet</span
       >
     </div>
   </div>
@@ -49,7 +49,7 @@ export default {
       allPlayers: [],
       playerName: "",
       roomId: "",
-      positionFound: false,
+      positionFound: false
     };
   },
   created() {
@@ -59,19 +59,19 @@ export default {
   },
 
   sockets: {
-    "lobby/players": function (data) {
+    "lobby/players": function(data) {
       this.allPlayers = data.players.map((it) => it.name);
     },
-    "game/start": function (data) {
+    "game/start": function(data) {
       this.store.updateTime(data.minutes);
       this.$router.push("game");
     },
-    "lobby/changed": function () {
+    "lobby/changed": function() {
       this.getAllPlayers();
     },
-    "me/error": function (data) {
+    "me/error": function(data) {
       console.log("errCode: " + data.errorCode);
-    },
+    }
   },
   methods: {
     checkIfUserIsLoggedIn() {
@@ -90,7 +90,7 @@ export default {
 
       this.$socket.emit("lobby/players", {
         playerId: this.store.playerId,
-        roomId: parseInt(this.store.roomId),
+        roomId: parseInt(this.store.roomId)
       });
     },
 
@@ -105,8 +105,8 @@ export default {
             roomId: parseInt(this.store.roomId),
             location: {
               lat: pos.lat,
-              lng: pos.lng,
-            },
+              lng: pos.lng
+            }
           });
 
           this.$router.push("game");
@@ -145,8 +145,8 @@ export default {
       // eslint-disable-next-line no-undef
       const action = new bootstrap.Toast(toast);
       action.show();
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -160,40 +160,23 @@ h2 {
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
-  font-size: 26px;
   text-align: center;
-  margin-top: 10px;
+  margin-top: var(--dim-small);
 }
 
 .rectUser {
-  width: 70vw;
-  height: 65px;
-  margin-top: var(--dim-large)
+  margin-top: var(--dim-large);
+  padding: var(--dim-small);
 }
 
 .rectPlayers {
-  width: 70vw;
-  height: 36vh;
-  background: #575a68;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
   flex-grow: 1;
   overflow: scroll;
+  padding: var(--dim-small);
 }
 
 .startBtn {
-  margin-top: 15px;
-  width: 127px;
-  margin-bottom: 10px;
+  margin: var(--dim-regular) auto 0;
 }
 
-.content {
-  background: #ffffff;
-  box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 41px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
 </style>

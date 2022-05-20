@@ -1,17 +1,21 @@
 /* semantic color variables for this project */
 :root {
     --col-background: #575a68;
+    --col-on-background: #ffffff;
+
+    --col-background-var: #d8d4d9;
+    --col-on-background-var: #575a68;
+
+    --col-title: #5a81bc;
+
     --col-content: #ffffff;
     --col-shadow: rgba(0, 0, 0, 0.25);
-    --col-btn-primary: #59C2EA;
-    --col-on-btn-primary: #ffffff;
-    --col-btn-secondary: #ed6449;
-    --col-on-btn-secondary: #ffffff;
-    --col-input-background: #d8d4d9;
-    --col-input: #575a68;
-    --col-box: #575a68;
-    --col-on-box: #ffffff;
-    --col-title: #5a81bc;
+
+    --col-primary: #59C2EA;
+    --col-on-primary: #ffffff;
+
+    --col-secondary: #ed6449;
+    --col-on-secondary: #ffffff;
 
     --dim-corners: 40px;
     --dim-small: 10px;
@@ -24,7 +28,7 @@
 
     --fnt-sze-title-main: 54px;
     --fnt-sze-title: 62px;
-    --fnt-sze-label: 20px;
+    --fnt-sze-regular: 25px;
 
     --fnt-title: "Play", sans-serif;
     --fnt-regular: 'Roboto', sans-serif;
@@ -71,11 +75,15 @@ h1, h2, h3 {
 }
 
 .box {
-    background-color: var(--col-box);
+    background-color: var(--col-background);
     border-radius: var(--dim-corners);
     box-shadow: var(--sdw-inside);
 }
 
-.box p {
-    color: var(--col-on-box);
+.box * {
+    color: var(--col-on-background);
+}
+
+p {
+    font-size: var(--fnt-sze-regular);
 }

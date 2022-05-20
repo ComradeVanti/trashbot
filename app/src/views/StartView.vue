@@ -23,7 +23,7 @@
       <div class="containerJoinBtn">
         <input-field
           aria-label="Lobby-Code"
-          placeholder="Lobby-Code"
+          placeholder="Code"
           v-model="lobbyCode"
           class="codeField"
           @input="(event) => (lobbyCode = event.target.value)"

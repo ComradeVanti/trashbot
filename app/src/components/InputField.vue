@@ -38,17 +38,17 @@ export default {
 input {
   width: 100%;
   border: 0;
-  background: var(--col-input-background);
+  background: var(--col-background-var);
   font-weight: 700;
-  font-size: var(--fnt-sze-label);
-  color: var(--col-input);
+  font-size: var(--fnt-sze-regular);
+  color: var(--col-on-background-var);
   border-radius: var(--dim-corners);
   text-align: center;
   padding: var(--dim-small) var(--dim-regular);
 }
 
 input::placeholder {
-  color: var(--col-input);
+  color: var(--col-on-background-var);
 }
 
 </style>

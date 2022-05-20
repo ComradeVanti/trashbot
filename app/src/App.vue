@@ -21,6 +21,7 @@ import { RouterView } from "vue-router";
   background: var(--col-content);
   box-shadow: var(--sdw-inside);
   border-radius: var(--dim-corners);
+  padding: var(--dim-regular);
 }
 
 </style>

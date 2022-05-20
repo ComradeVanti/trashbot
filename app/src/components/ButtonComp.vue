@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="btn">
+  <button type="button">
     <slot></slot>
   </button>
 </template>
@@ -8,9 +8,9 @@
 </script>
 
 <style>
-.btn {
+button {
   font-weight: 700;
-  font-size: var(--fnt-sze-label);
+  font-size: var(--fnt-sze-regular);
   box-shadow: var(--sdw-regular);
   border-radius: var(--dim-corners);
   padding: var(--dim-small) var(--dim-regular);
@@ -19,13 +19,13 @@
 }
 
 .btn-primary {
-  background: var(--col-btn-primary);
-  color: var(--col-on-btn-primary);
+  background: var(--col-primary);
+  color: var(--col-on-primary);
 }
 
 .btn-secondary {
-  background: var(--col-btn-secondary);
-  color: var(--col-on-btn-secondary);
+  background: var(--col-secondary);
+  color: var(--col-on-secondary);
 }
 
 </style>
