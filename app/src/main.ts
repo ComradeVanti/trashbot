@@ -18,7 +18,7 @@ app.use(createPinia());
 app.use(
   new VueSocketIO({
     debug: true,
-    connection: process.env.BASE_URL,
+    connection: "https://trashbot.api.mobile.media.fhstp.ac.at",
   })
 );
 
