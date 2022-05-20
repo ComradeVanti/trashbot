@@ -64,6 +64,9 @@
             </tbody>
           </table>
         </div>
+        <div>
+          <p>Gesamte Coolness: {{ getCoolness() }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -86,6 +89,15 @@ export default {
     closeWindow() {
       const dialog = document.querySelector("#detailPage.modal");
       dialog.style.display = "none";
+    },
+
+    getCoolness() {
+      return (
+        this.robotParts.head.coolness +
+        this.robotParts.body.coolness +
+        this.robotParts.arms.coolness +
+        this.robotParts.legs.coolness
+      );
     },
   },
 };
