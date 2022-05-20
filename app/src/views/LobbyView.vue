@@ -19,13 +19,11 @@
 
       <button-comp
         class="startBtn btn-primary"
-        v-if="this.store.isHost"
+        v-if="isHost == 'true'"
         @click="sendAllPlayers()"
         >Start
       </button-comp>
-      <span v-if="!this.store.isHost"
-        >Warte bis der Host das Spiel startet</span
-      >
+      <span v-if="isHost == 'false'">Warte bis der Host das Spiel startet</span>
     </div>
   </div>
 </template>
@@ -46,6 +44,7 @@ export default {
     return {
       useGeoStore,
       store,
+      isHost: false,
       allPlayers: [],
       playerName: "",
       roomId: "",
@@ -56,6 +55,8 @@ export default {
     this.getAllPlayers();
     this.getCurrPos();
     this.checkIfUserIsLoggedIn();
+    this.isHost = localStorage.getItem("isHost");
+    console.log(localStorage.getItem("isHost"));
   },
 
   sockets: {

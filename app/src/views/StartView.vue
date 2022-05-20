@@ -19,7 +19,9 @@
       ></input-field>
       <!-- nur für Player -->
 
-      <button-comp class="btn-secondary" @click="createLobby()">Host</button-comp>
+      <button-comp class="btn-secondary" @click="createLobby()"
+        >Host</button-comp
+      >
       <div class="containerJoinBtn">
         <input-field
           aria-label="Lobby-Code"
@@ -28,7 +30,9 @@
           class="codeField"
           @input="(event) => (lobbyCode = event.target.value)"
         ></input-field>
-        <button-comp class="joinButton btn-primary" @click="joinLobby()">Join</button-comp>
+        <button-comp class="joinButton btn-primary" @click="joinLobby()"
+          >Join</button-comp
+        >
       </div>
     </div>
   </div>
@@ -46,26 +50,24 @@ export default {
     const store = gameStore();
 
     return {
-      store
+      store,
     };
   },
   sockets: {
-    connect: function() {
+    connect: function () {
       console.log("socket connected");
     },
-    "me/host": function(data) {
-      console.log(data);
+    "me/host": function (data) {
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/join": function(data) {
-      console.log(data);
+    "me/join": function (data) {
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/error": function(data) {
+    "me/error": function (data) {
       console.log(data.errorCode);
-    }
+    },
   },
   methods: {
     savePlayerName() {
@@ -81,40 +83,43 @@ export default {
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
     },
-    sendHost: function() {
+    sendHost: function () {
       this.$socket.emit("server/host", { playerName: this.playerName });
     },
-    sendPlayer: function() {
+    sendPlayer: function () {
       this.$socket.emit(`server/join`, {
         playerName: this.playerName,
-        roomId: parseInt(this.lobbyCode)
+        roomId: parseInt(this.lobbyCode),
       });
     },
 
     createLobby() {
+      localStorage.setItem("isHost", true);
       this.store.updateIsHost();
+
       this.savePlayerName();
       this.sendHost();
       localStorage.setItem("playerId", this.playerId);
     },
 
     joinLobby() {
+      localStorage.setItem("isHost", false);
       console.log(this.lobbyCode);
+
       this.savePlayerName();
       this.sendPlayer();
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
-    }
+    },
   },
   created() {
     console.log(import.meta.env.BASE_URL);
     localStorage.clear();
-  }
+  },
 };
 </script>
 
 <style scoped>
-
 .blob {
   position: absolute;
   width: 120%;
@@ -123,7 +128,7 @@ export default {
 }
 
 h1.main-title {
-  margin-top:  var(--dim-regular);
+  margin-top: var(--dim-regular);
   font-size: var(--fnt-sze-title-main);
   line-height: 88.7%;
 }
@@ -168,5 +173,4 @@ h1.main-title {
   margin-top: var(--dim-regular);
   align-items: center;
 }
-
 </style>
