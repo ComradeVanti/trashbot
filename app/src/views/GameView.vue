@@ -39,7 +39,7 @@
     v-if="itemInRange == true"
     class="pickUpItem"
     @click="openItemWindow(itemsInRange[0].id)"
-    >Item aufheben</button-comp
+    >Item ansehen</button-comp
   >
 
   <item-window v-if="itemInRange == true" :itemInfo="itemInfo"></item-window>
