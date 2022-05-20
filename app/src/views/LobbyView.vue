@@ -47,6 +47,10 @@ export default {
       isHost: false,
       allPlayers: [],
       playerName: "",
+      position: {
+        lat: 0,
+        lng: 0,
+      },
       roomId: "",
       positionFound: false,
     };
@@ -100,14 +104,14 @@ export default {
       console.log("Hi");
       this.getCurrPos(() => {
         if (this.positionFound) {
-          const pos = { ...this.useGeoStore.position };
+          console.log(this.position);
 
           this.$socket.emit("lobby/ready", {
             playerId: this.store.playerId,
             roomId: parseInt(this.store.roomId),
             location: {
-              lat: pos.lat,
-              lng: pos.lng,
+              lat: this.position.latitude,
+              lng: this.position.longitude,
             },
           });
 
@@ -124,6 +128,7 @@ export default {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             this.useGeoStore.updatePosition(position.coords);
+            this.position = position.coords;
             this.store.setStartPoint(position.coords);
             this.positionFound = true;
             _callback();

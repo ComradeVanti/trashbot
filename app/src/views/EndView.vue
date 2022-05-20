@@ -18,10 +18,6 @@
           </tbody>
         </table>
       </div>
-
-      <button-comp class="startBtn btn-primary" @click="newGame()">
-        Neues Spiel
-      </button-comp>
     </div>
   </div>
 </template>
@@ -30,11 +26,8 @@
 import { mapState } from "pinia";
 import { gameStore } from "../stores/index.ts";
 
-import ButtonComp from "@/components/ButtonComp.vue";
-
 export default {
   name: "EndView",
-  components: { ButtonComp },
   data() {
     return {
       robots: [
@@ -100,10 +93,10 @@ export default {
     getCoolness(idx) {
       const robot = this.robots[idx];
       return (
-        robot.robot.head.coolness +
-        robot.robot.body.coolness +
-        robot.robot.arms.coolness +
-        robot.robot.legs.coolness
+        Math.round(robot.robot.head.coolness) +
+        Math.round(robot.robot.body.coolness) +
+        Math.round(robot.robot.arms.coolness) +
+        Math.round(robot.robot.legs.coolness)
       );
     },
   },
@@ -111,7 +104,6 @@ export default {
 </script>
 
 <style scoped>
-
 .rectPlayers {
   padding: var(--dim-regular);
   flex-grow: 1;
@@ -122,5 +114,4 @@ export default {
   margin-top: var(--dim-regular);
   width: 100%;
 }
-
 </style>
