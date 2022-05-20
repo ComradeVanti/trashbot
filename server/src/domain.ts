@@ -6,6 +6,7 @@ export type errorCode = number
 
 export const GAME_TIME_MINUTES = 10
 export const GAME_RADIUS = 150
+export const PICKUP_RANGE = 40;
 
 export type SphereXY = {
     lat: degree
