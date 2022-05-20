@@ -38,11 +38,11 @@
   <button-comp
     v-if="itemInRange == true"
     class="pickUpItem"
-    @click="openItemWindow()"
+    @click="openItemWindow(itemsInRange[0].id)"
     >Item aufheben</button-comp
   >
 
-  <item-window :userId="selectedUser"></item-window>
+  <item-window v-if="itemInRange == true" :itemInfo="itemInfo"></item-window>
   <info-window :robotParts="robot" />
 
   <toast-msg
@@ -111,6 +111,14 @@ export default {
           range: null,
         },
       },
+      itemInfo: {
+        id: 1,
+        type: null,
+        states: {
+          range: null,
+          coolness: null,
+        },
+      },
       ASK_SEC: 5,
 
       players: [],
@@ -156,14 +164,16 @@ export default {
 
     "me/items-in-range": function (data) {
       // todo: add logic for multiple items
+      console.log(data);
       if (data[0] && data.length > 0) {
         data.forEach((item) => {
-          this.itemsInRange.push(item.id);
+          this.itemsInRange.push(item);
         });
         this.itemInRange = true;
       } else {
         this.itemInRange = false;
       }
+      this.itemInfo = data;
     },
 
     // response to open info window
@@ -251,7 +261,9 @@ export default {
 
     openItemWindow(id) {
       console.log("test");
-      this.selectedUser = id;
+      console.log(this.itemsInRange);
+      this.itemsInRange[0].id = id;
+      localStorage.setItem("itemInfo", JSON.stringify(this.itemsInRange));
       const itemDialog = document.querySelector("#itemPage.modal");
       itemDialog.style.display = "flex";
     },
