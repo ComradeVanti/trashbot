@@ -120,7 +120,7 @@ Client -> Server `lobby/ready`
 Server -> Client `game/start`
 
 ```js
-{ minutes: number }
+{ minutes: number, gameCenter: {lat: number, lng: number} }
 ```
 
 #### Send player location
