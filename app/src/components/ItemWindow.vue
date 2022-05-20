@@ -31,7 +31,6 @@
               </tr>
             </tbody>
           </table>
-          <button-comp @click="saveItem()">Item aufheben</button-comp>
         </div>
       </div>
     </div>
@@ -41,10 +40,8 @@
 <script>
 import { mapState } from "pinia";
 import { gameStore } from "../stores/index.ts";
-import ButtonComp from "./ButtonComp.vue";
 
 export default {
-  components: { ButtonComp },
   name: "ItemWindow",
   data() {
     return {};
@@ -75,14 +72,6 @@ export default {
   },
 
   methods: {
-    saveItem() {
-      this.$socket.emit("game/pick-up-item", {
-        playerId: parseInt(localStorage.getItem("playerId")),
-        roomId: parseInt(localStorage.getItem("roomId")),
-        itemId: this.itemInfo[0].id,
-      });
-      this.closeWindow();
-    },
     closeWindow() {
       console.log(this.itemInfo);
       const itemDialog = document.querySelector("#itemPage.modal");
