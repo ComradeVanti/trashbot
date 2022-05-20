@@ -10,10 +10,7 @@
     <div class="form">
       <h1>MATERIAL BOT</h1>
       <div class="robo-image-container">
-        <img
-          src="/src/assets/img/MainRobot.png"
-          alt="Robot"
-        />
+        <img src="/src/assets/img/MainRobot.png" alt="Robot" />
       </div>
       <input-field
         aria-label="Name"
@@ -24,10 +21,7 @@
       ></input-field>
       <!-- nur für Player -->
 
-      <button-comp class="hostButton" @click="createLobby()"
-      >Host
-      </button-comp
-      >
+      <button-comp class="hostButton" @click="createLobby()">Host </button-comp>
       <div class="containerJoinBtn">
         <input-field
           aria-label="Lobby-Code"
@@ -36,10 +30,7 @@
           class="codeField"
           @input="(event) => (lobbyCode = event.target.value)"
         ></input-field>
-        <button-comp class="joinButton" @click="joinLobby()"
-        >Join
-        </button-comp
-        >
+        <button-comp class="joinButton" @click="joinLobby()">Join </button-comp>
       </div>
     </div>
   </div>
@@ -57,26 +48,26 @@ export default {
     const store = gameStore();
 
     return {
-      store
+      store,
     };
   },
   sockets: {
-    connect: function() {
+    connect: function () {
       console.log("socket connected");
     },
-    "me/host": function(data) {
+    "me/host": function (data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/join": function(data) {
+    "me/join": function (data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/error": function(data) {
+    "me/error": function (data) {
       console.log(data.errorCode);
-    }
+    },
   },
   methods: {
     savePlayerName() {
@@ -92,13 +83,13 @@ export default {
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
     },
-    sendHost: function() {
+    sendHost: function () {
       this.$socket.emit("server/host", { playerName: this.playerName });
     },
-    sendPlayer: function() {
+    sendPlayer: function () {
       this.$socket.emit(`server/join`, {
         playerName: this.playerName,
-        roomId: parseInt(this.lobbyCode)
+        roomId: parseInt(this.lobbyCode),
       });
     },
 
@@ -115,27 +106,24 @@ export default {
       this.sendPlayer();
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
-    }
+    },
   },
   created() {
     console.log(import.meta.env.BASE_URL);
     localStorage.clear();
-  }
+  },
 };
 </script>
 
 <style scoped>
-
 h1 {
   font-family: "Play", sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 54px;
   line-height: 88.7%;
   text-align: center;
   color: #5a81bc;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 20px;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
 }
 
 .content {
@@ -158,20 +146,21 @@ h1 {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0 20px;
+  align-items: stretch;
+  padding: 20px;
+  height: 100%;
 }
 
 .robo-image-container {
   height: 40vh;
+  width: 100%;
 }
 
 .robo-image-container img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
-
 
 .blob {
   width: 105%;
@@ -181,34 +170,26 @@ h1 {
 
 .hostButton {
   background: #ed6449;
-  z-index: 5;
-  align-self: stretch;
   margin-top: 20px;
 }
 
 .joinButton {
   background: #59c2ea;
   z-index: 5;
-  width: 40%;
+  min-width: 40%;
   margin-left: 10px;
-}
-
-.nameField {
-  height: 53px;
-  z-index: 5;
-}
-
-.codeField {
-  height: 53px;
-  z-index: 5;
-  width: 60%;
 }
 
 .containerJoinBtn {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: stretch;
   margin-top: 20px;
+  align-items: center;
 }
+
+.nameField {
+  margin-top: auto;
+}
+
 </style>
