@@ -100,10 +100,10 @@ export default {
     getCoolness(idx) {
       const robot = this.robots[idx];
       return (
-        robot.robot.head.coolness +
-        robot.robot.body.coolness +
-        robot.robot.arms.coolness +
-        robot.robot.legs.coolness
+        Math.round(robot.robot.head.coolness) +
+        Math.round(robot.robot.body.coolness) +
+        Math.round(robot.robot.arms.coolness) +
+        Math.round(robot.robot.legs.coolness)
       );
     },
   },
@@ -111,7 +111,6 @@ export default {
 </script>
 
 <style scoped>
-
 .rectPlayers {
   padding: var(--dim-regular);
   flex-grow: 1;
@@ -122,5 +121,4 @@ export default {
   margin-top: var(--dim-regular);
   width: 100%;
 }
-
 </style>
