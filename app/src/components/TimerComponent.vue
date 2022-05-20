@@ -61,11 +61,13 @@ export default {
   padding: var(--dim-small) var(--dim-regular);
   border-radius: var(--dim-corners);
   z-index: 1000000;
+  width: 105px; 
 }
 
 #time {
   text-align: center;
   color: var(--col-on-background);
-  margin: auto;
+  width: 100%;
+  display: block;
 }
 </style>
