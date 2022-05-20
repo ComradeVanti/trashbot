@@ -54,9 +54,8 @@ export default {
 <style>
 #timer {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
-  margin: var(--dim-regular);
   background-color: var(--col-background);
   padding: var(--dim-small) var(--dim-regular);
   border-radius: var(--dim-corners);

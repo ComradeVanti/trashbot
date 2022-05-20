@@ -37,7 +37,7 @@
 
   <button-comp
     v-if="itemInRange == true"
-    class="pickUpItem"
+    class="pickUpItem btn-primary"
     @click="openItemWindow(itemsInRange[0].id)"
     >Item ansehen</button-comp
   >
@@ -293,6 +293,6 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
-  width: 50%;
+  width: 60%;
 }
 </style>

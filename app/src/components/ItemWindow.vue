@@ -31,7 +31,7 @@
               </tr>
             </tbody>
           </table>
-          <button-comp @click="saveItem()">Item aufheben</button-comp>
+          <button-comp class="pickUpBtn btn-primary" @click="saveItem()">Item aufheben</button-comp>
         </div>
       </div>
     </div>
@@ -99,6 +99,11 @@ export default {
   color: var(--col-on-background);
   border-radius: var(--dim-corners);
   padding: var(--dim-regular);
+  align-items: center;
+}
+
+.modal-header {
+  width: 100%;
 }
 
 .bi-x-circle::before {
@@ -110,6 +115,10 @@ export default {
 }
 
 td {
+  color: var(--col-on-background);
+}
+
+th {
   color: var(--col-on-background);
 }
 
@@ -136,5 +145,9 @@ table th {
 }
 .robot-img {
   height: 40px;
+}
+
+.pickUpBtn {
+  width: 250px;
 }
 </style>
