@@ -45,8 +45,8 @@ export default ({ mode }) => {
       port: parseInt(process.env.VITE_PORT),
       proxy: {
         "/api": {
-          target: "http://localhost:3000",
-          //target: process.env.VITE_BASEURL,
+          // target: "http://localhost:3000",
+          target: process.env.VITE_BASEURL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
