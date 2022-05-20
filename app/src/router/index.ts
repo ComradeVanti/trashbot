@@ -4,6 +4,7 @@ import GameView from "../views/GameView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import LobbyView from "../views/LobbyView.vue";
 import RuleSetView from "../views/RuleSetView.vue";
+import EndView from "../views/EndView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: "/rules",
       name: "rules",
       component: RuleSetView,
+    },
+    {
+      path: "/end",
+      name: "end",
+      component: EndView,
     },
   ],
 });
