@@ -118,14 +118,12 @@ export default {
 <style scoped>
 h1 {
   font-family: "Play", sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 54px;
   line-height: 88.7%;
   text-align: center;
   color: #5a81bc;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 20px;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
 }
 
 .content {
@@ -148,18 +146,20 @@ h1 {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0 20px;
+  align-items: stretch;
+  padding: 20px;
+  height: 100%;
 }
 
 .robo-image-container {
   height: 40vh;
+  width: 100%;
 }
 
 .robo-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .blob {
@@ -170,34 +170,26 @@ h1 {
 
 .hostButton {
   background: #ed6449;
-  z-index: 5;
-  align-self: stretch;
   margin-top: 20px;
 }
 
 .joinButton {
   background: #59c2ea;
   z-index: 5;
-  width: 40%;
+  min-width: 40%;
   margin-left: 10px;
-}
-
-.nameField {
-  height: 53px;
-  z-index: 5;
-}
-
-.codeField {
-  height: 53px;
-  z-index: 5;
-  width: 60%;
 }
 
 .containerJoinBtn {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: stretch;
   margin-top: 20px;
+  align-items: center;
 }
+
+.nameField {
+  margin-top: auto;
+}
+
 </style>

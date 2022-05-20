@@ -1,8 +1,7 @@
 <template>
-  <div class="input-group mb-3">
+  <div class="input-group">
     <input
       type="text"
-      class="form-control"
       :placeholder="placeholder"
       :aria-label="label"
       aria-describedby="basic-addon1"
@@ -35,30 +34,16 @@ export default {
 </script>
 
 <style>
-.form-control{
+
+input {
+  width: 100%;
+  border: 0;
   background: #D8DAD9;
-  border-radius: 40px;
-  font-weight: 700;
-  font-size: 20px;
-  color: white;
-  text-align: center;
-}
-
-.form-control .input-group.mb-3 {
-  margin-bottom: 0 !important;
-}
-
-.input-group.mb-3.nameField {
-  margin-top: 20px;
-  margin-bottom: 0 !important;
-}
-
-.form-control,input{
-  background: #D8DAD9;
-  border-radius: 40px;
   font-weight: 700;
   font-size: 17px;
+  border-radius: 40px;
   color: white;
   text-align: center;
+  padding: 10px 20px;
 }
 </style>
