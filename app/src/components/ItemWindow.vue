@@ -94,12 +94,32 @@ export default {
 </script>
 
 <style>
+.modal-content {
+  background-color: var(--col-background);
+  color: var(--col-on-background);
+  border-radius: var(--dim-corners);
+  padding: var(--dim-regular);
+}
+
+.bi-x-circle::before {
+  color: var(--col-on-background);
+}
+
 .fade:not(.show) {
   opacity: 1;
 }
 
+td {
+  color: var(--col-on-background);
+}
+
+p {
+  text-align: center;
+}
+
 .modal {
   justify-content: center;
+  
 }
 .modal-dialog {
   width: 80vw;
