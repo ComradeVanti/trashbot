@@ -1,22 +1,28 @@
 <template>
-  <div id="timer">
-    <span id="time">05:00</span>
-  </div>
+  <div id="timer"></div>
 </template>
 
 <script>
+import { mapState } from "pinia";
+import { gameStore } from "../stores/index.ts";
+
 export default {
   name: "TimerComponent",
-  mounted() {
-    var fiveMinutes = 60 * 5;
-    var display = document.querySelector("#time");
+  props: ["time"],
 
-    console.log(display);
-
-    this.startTimer(fiveMinutes, display);
+  computed: {
+    ...mapState(gameStore, {
+      time: "time",
+    }),
   },
+
   methods: {
-    startTimer(duration, display) {
+    startTimer() {
+      console.log(this.time);
+
+      var duration = 60 * this.time;
+      var display = document.querySelector("#timer");
+
       var timer = duration,
         minutes,
         seconds;
@@ -28,12 +34,18 @@ export default {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.innerHTML = minutes + ":" + seconds;
+        display.innerHTML = `<span id="time">${minutes}:${seconds}</span>`;
 
         if (--timer < 0) {
           timer = duration;
         }
       }, 1000);
+    },
+  },
+
+  watch: {
+    time: function () {
+      this.startTimer();
     },
   },
 };
@@ -47,13 +59,13 @@ export default {
   margin: 20px;
 
   z-index: 1000000;
-
-  padding: 10px 30px;
-  border-radius: 30px;
-  background-color: white;
   display: flex;
 }
 #time {
+  padding: 10px 30px;
+  border-radius: 30px;
+  background-color: white;
+
   text-align: center;
   margin: auto;
 }

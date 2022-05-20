@@ -20,6 +20,7 @@ export const gameStore = defineStore("game", {
     playerName: "playerName",
     roomId: 1230,
     isHost: false,
+    time: 0, // in min
     startPoint: {
       lat: 0,
       lng: 0,
@@ -41,10 +42,14 @@ export const gameStore = defineStore("game", {
     updateIsHost() {
       this.isHost = true;
     },
+    updateTime(time: number) {
+      this.time = time;
+    },
   },
   getters: {
     updatedName: (state) => state.playerName,
     updatedId: (state) => state.playerId,
     updatedstartPoint: (state) => state.startPoint,
+    updatedTime: (state) => state.time,
   },
 });

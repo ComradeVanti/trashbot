@@ -67,7 +67,8 @@ export default {
     "lobby/players": function(data) {
       this.allPlayers = data.players.map((it) => it.name);
     },
-    "game/start": function() {
+    "game/start": function (data) {
+      this.store.updateTime(data.minutes);
       this.$router.push("game");
     },
     "lobby/changed": function() {
