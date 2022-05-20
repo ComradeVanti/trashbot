@@ -11,7 +11,7 @@ export module SphereMath {
     }
 
     function metersToLngDegreesAt(m: number, lat: number) {
-        return ((m / GEOGRAPHIC_MILE) / 60 / Math.cos(lat))
+        return m / (GEOGRAPHIC_MILE * 60 * Math.cos(lat))
     }
 
     function degreesToRadians(degrees: number) {
