@@ -9,6 +9,9 @@
     --col-on-btn-secondary: #ffffff;
     --col-input-background: #d8d4d9;
     --col-input: #575a68;
+    --col-box: #575a68;
+    --col-on-box: #ffffff;
+    --col-title: #5a81bc;
 
     --dim-corners: 40px;
     --dim-small: 10px;
@@ -23,12 +26,14 @@
     --fnt-sze-title: 62px;
     --fnt-sze-label: 20px;
 
-    --fnt-btn: 'Roboto', sans-serif;
+    --fnt-title: "Play", sans-serif;
+    --fnt-regular: 'Roboto', sans-serif;
 }
 
 *,
 *::before,
 *::after {
+    font: var(--fnt-regular);
     box-sizing: border-box;
     margin: 0;
     position: relative;
@@ -54,10 +59,23 @@ body {
 }
 
 h1 {
-    font-family: "Play", sans-serif;
-    font-weight: 700;
     font-size: var(--fnt-sze-title);
-    text-align: center;
-    color: #5a81bc;
     text-shadow: var(--sdw-regular);
+}
+
+h1, h2, h3 {
+    font-family: var(--fnt-title);
+    font-weight: 700;
+    color: var(--col-title);
+    text-align: center;
+}
+
+.box {
+    background-color: var(--col-box);
+    border-radius: var(--dim-corners);
+    box-shadow: var(--sdw-inside);
+}
+
+.box p {
+    color: var(--col-on-box);
 }
