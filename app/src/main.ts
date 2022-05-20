@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, provide } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
@@ -18,7 +18,7 @@ app.use(createPinia());
 app.use(
   new VueSocketIO({
     debug: true,
-    connection: "http://localhost:3000",
+    connection: import.meta.env.VITE_BASEURL,
   })
 );
 
