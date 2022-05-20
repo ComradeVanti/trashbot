@@ -14,13 +14,8 @@ export class ItemDB {
         return Math.floor(Math.random() * this.ID_DIFF) + this.MIN_ITEM_ID
     }
 
-    static fromItems(items: Item[]) {
-        let db = new ItemDB(Immutable.Map())
+    static EMPTY = new ItemDB(Immutable.Map())
 
-        items.forEach(it => db = db.add(it)[0])
-
-        return db
-    }
 
     constructor(
         private readonly items: Immutable.Map<id, Item>) {

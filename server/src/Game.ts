@@ -1,4 +1,4 @@
-import {Entity, GAME_RADIUS, id, Item, PartType, Robot, SphereXY, Stats} from "./domain";
+import {Entity, GAME_RADIUS, id, Item, PartType, Robot, SphereXY} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {SphereMath} from "./SphereMath";
@@ -16,9 +16,9 @@ type Player = {
 
 const baseRobot: Robot = {
     head: {range: 200, coolness: 0},
-    body: {range: 200, coolness: 0},
-    arms: {range: 200, coolness: 0},
-    legs: {range: 200, coolness: 0},
+    body: {range: 0, coolness: 0},
+    arms: {range: 0, coolness: 0},
+    legs: {range: 0, coolness: 0},
 }
 
 export class Game {
@@ -33,35 +33,27 @@ export class Game {
 
         const playerCount = players.count()
 
-        function randomLocation() {
-            return SphereMath.randomPointInCircle(hostLocation, GAME_RADIUS)
+        let game = new Game(players, ItemDB.EMPTY, hostLocation)
+
+        for (let i = 0; i < playerCount * 2; i++) {
+            game = game.addItemOfType(PartType.Head)
+            game = game.addItemOfType(PartType.Body)
+            game = game.addItemOfType(PartType.Arms)
+            game = game.addItemOfType(PartType.Legs)
         }
 
-        function makeItemsOfType(type: PartType, count: number) {
-            return Array.from({length: count}, () => (Items.makeItemOfType(randomLocation(), type)))
-        }
-
-        function makeItems(): Item[] {
-            return Array.prototype.concat.apply([], [
-                makeItemsOfType(PartType.Arms, playerCount),
-                makeItemsOfType(PartType.Body, playerCount),
-                makeItemsOfType(PartType.Legs, playerCount),
-                makeItemsOfType(PartType.Head, playerCount)
-            ])
-        }
-
-
-        return new Game(players, ItemDB.fromItems(makeItems()))
+        return game
     }
 
 
     constructor(readonly players: Immutable.Map<id, Player>,
-                readonly items: ItemDB) {
+                readonly items: ItemDB,
+                readonly center: SphereXY) {
 
     }
 
     private mapPlayers(mapF: (map: Immutable.Map<id, Player>) => Immutable.Map<id, Player>): Game {
-        return new Game(mapF(this.players), this.items)
+        return new Game(mapF(this.players), this.items, this.center)
     }
 
 
@@ -85,6 +77,14 @@ export class Game {
         })
     }
 
+    private randomLocation() {
+        return SphereMath.randomPointInCircle(this.center, GAME_RADIUS)
+    }
+
+    private makeItemOfType(type: PartType) {
+        return Items.makeItemOfType(this.randomLocation(), type)
+    }
+
     tryGetPlayer(id: id): Result<Player> {
         const player = this.players.get(id)
         return player ? Result.ok(player) : Result.fail(UniversalError.PLAYER_NOT_FOUND)
@@ -99,6 +99,11 @@ export class Game {
             .map((player, id) => ({...player, id}))
             .toList()
             .toArray()
+    }
+
+    addItemOfType(type: PartType) {
+        const item = this.makeItemOfType(type)
+        return new Game(this.players, this.items.add(item)[0], this.center)
     }
 
     movePlayer(id: id, location: SphereXY) {
@@ -127,7 +132,7 @@ export class Game {
 
     tryDespawnItem(id: id): Result<Game> {
         return this.items.tryRemove(id)
-            .map(items => new Game(this.players, items))
+            .map(items => new Game(this.players, items, this.center))
     }
 
 }

@@ -35,6 +35,9 @@ export module PickUp {
                 player => game.tryGetItem(request.itemId).map(
                     item => ({name: player.name, location: player.location, robot: addPart(player.robot, item)})
                 ))
+                .bind(game => game.tryGetItem(request.itemId).map(
+                    item => game.addItemOfType(item.type)
+                ))
                 .bind(game => game.tryDespawnItem(request.itemId)))
             .handleError(error => client.sendError("game/pick-up-item", error), roomDB)
     }
