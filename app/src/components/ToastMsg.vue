@@ -54,8 +54,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 20px 30px;
-
+  border-radius: 40px;
   z-index: 1000000;
 }
 </style>
