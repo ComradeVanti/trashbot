@@ -26,9 +26,8 @@
         class="startBtn"
         v-if="this.store.isHost"
         @click="sendAllPlayers()"
-      >Start
-      </button-comp
-      >
+        >Start
+      </button-comp>
       <span v-if="!this.store.isHost"
         >Warte bis der Host das Spiel startet</span
       >
@@ -54,7 +53,7 @@ export default {
       store,
       allPlayers: [],
       playerName: "",
-      roomId: ""
+      roomId: "",
     };
   },
   created() {
@@ -64,19 +63,19 @@ export default {
   },
 
   sockets: {
-    "lobby/players": function(data) {
+    "lobby/players": function (data) {
       this.allPlayers = data.players.map((it) => it.name);
     },
     "game/start": function (data) {
       this.store.updateTime(data.minutes);
       this.$router.push("game");
     },
-    "lobby/changed": function() {
+    "lobby/changed": function () {
       this.getAllPlayers();
     },
-    "me/error": function(data) {
+    "me/error": function (data) {
       console.log("errCode: " + data.errorCode);
-    }
+    },
   },
   methods: {
     checkIfUserIsLoggedIn() {
@@ -95,7 +94,7 @@ export default {
 
       this.$socket.emit("lobby/players", {
         playerId: this.store.playerId,
-        roomId: parseInt(this.store.roomId)
+        roomId: parseInt(this.store.roomId),
       });
     },
 
@@ -108,8 +107,8 @@ export default {
           roomId: parseInt(this.store.roomId),
           location: {
             lat: pos.lat,
-            lng: pos.lng
-          }
+            lng: pos.lng,
+          },
         });
 
         this.$router.push("game");
@@ -144,8 +143,8 @@ export default {
       // eslint-disable-next-line no-undef
       const action = new bootstrap.Toast(toast);
       action.show();
-    }
-  }
+    },
+  },
 };
 </script>
 
