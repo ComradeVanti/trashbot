@@ -18,7 +18,8 @@ app.use(createPinia());
 app.use(
   new VueSocketIO({
     debug: true,
-    connection: import.meta.env.VITE_BASEURL,
+    // connection: import.meta.env.VITE_BASEURL,
+    connection: "http://localhost:3000",
   })
 );
 
