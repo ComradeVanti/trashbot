@@ -7,7 +7,7 @@
     />
     <div class="content">
       <h1>Lobby</h1>
-      <div class="rectUser">
+      <div class="rectUser box">
         <p>Room Code: {{ store.roomId }}</p>
       </div>
       <h2>Players:</h2>
@@ -151,29 +151,13 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-family: "Play", sans-serif;
-  font-weight: 700;
-  font-size: 54px;
-  line-height: 88.7%;
-  text-align: center;
-  color: #5a81bc;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 30px;
-}
 
 h2 {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 700;
   font-size: 26px;
-  text-align: center;
-  color: #5a81bc;
-  margin-top: 20px;
+  margin-top: var(--dim-regular);
 }
 
 p {
-  color: #ffffff;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-size: 26px;
@@ -184,10 +168,7 @@ p {
 .rectUser {
   width: 70vw;
   height: 65px;
-  background: #575a68;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
-  margin-top: 30px;
+  margin-top: var(--dim-large)
 }
 
 .rectPlayers {

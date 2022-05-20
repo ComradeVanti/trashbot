@@ -15,21 +15,21 @@ export default {
   name: "InputField",
   data() {
     return {
-      text: "",
+      text: ""
     };
   },
 
   props: {
     placeholder: {
       type: String,
-      default: "",
+      default: ""
     },
     label: {
       type: String,
-      default: "text",
-    },
+      default: "text"
+    }
   },
-  emits: ["textChanged", "keyup"],
+  emits: ["textChanged", "keyup"]
 };
 </script>
 
@@ -38,12 +38,17 @@ export default {
 input {
   width: 100%;
   border: 0;
-  background: #D8DAD9;
+  background: var(--col-input-background);
   font-weight: 700;
-  font-size: 17px;
-  color: var(--color-background);
-  border-radius: 40px;
+  font-size: var(--fnt-sze-label);
+  color: var(--col-input);
+  border-radius: var(--dim-corners);
   text-align: center;
-  padding: 10px 20px;
+  padding: var(--dim-small) var(--dim-regular);
 }
+
+input::placeholder {
+  color: var(--col-input);
+}
+
 </style>

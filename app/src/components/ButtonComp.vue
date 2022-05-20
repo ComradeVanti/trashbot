@@ -1,20 +1,31 @@
 <template>
-  <button type="button" class="btn btn-primary"><slot></slot></button>
+  <button type="button" class="btn">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
 </script>
 
 <style>
-.btn.btn-primary{
+.btn {
   font-weight: 700;
-  font-size: 20px;
-  background: #59C2EA;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-  font-family: 'Roboto' sans-serif;
-  font-style: normal;
-  padding: 10px 20px;
+  font-size: var(--fnt-sze-label);
+  box-shadow: var(--sdw-regular);
+  border-radius: var(--dim-corners);
+  padding: var(--dim-small) var(--dim-regular);
   border: none;
+  width: var(--dim-btn);
 }
+
+.btn-primary {
+  background: var(--col-btn-primary);
+  color: var(--col-on-btn-primary);
+}
+
+.btn-secondary {
+  background: var(--col-btn-secondary);
+  color: var(--col-on-btn-secondary);
+}
+
 </style>
