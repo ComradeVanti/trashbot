@@ -1,13 +1,8 @@
 <template>
   <div class="fill-parent">
     <toast-msg
-      id="wait"
-      msg="Gleich können wir starten ... Probiere es in ein paar Sekunden nocheinmal."
-      bgColor="primary"
-    />
-    <toast-msg
       id="locationError"
-      msg="Wir benötigen deinen Standort, dass du spielen kannst!"
+      msg="Wir konnten keinen Standort finden! Überprüfe deine Standorteinstellungen."
       bgColor="danger"
     />
     <div class="content">
@@ -54,6 +49,7 @@ export default {
       allPlayers: [],
       playerName: "",
       roomId: "",
+      positionFound: false,
     };
   },
   created() {
@@ -99,19 +95,24 @@ export default {
     },
 
     sendAllPlayers() {
+      console.log("Hi");
       this.getCurrPos(() => {
-        const pos = { ...this.useGeoStore.position };
+        if (this.positionFound) {
+          const pos = { ...this.useGeoStore.position };
 
-        this.$socket.emit("lobby/ready", {
-          playerId: this.store.playerId,
-          roomId: parseInt(this.store.roomId),
-          location: {
-            lat: pos.lat,
-            lng: pos.lng,
-          },
-        });
+          this.$socket.emit("lobby/ready", {
+            playerId: this.store.playerId,
+            roomId: parseInt(this.store.roomId),
+            location: {
+              lat: pos.lat,
+              lng: pos.lng,
+            },
+          });
 
-        this.$router.push("game");
+          this.$router.push("game");
+        } else {
+          this.locationError();
+        }
       });
     },
 
@@ -120,18 +121,19 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            console.log(position);
             this.useGeoStore.updatePosition(position.coords);
             this.store.setStartPoint(position.coords);
-
+            this.positionFound = true;
             _callback();
           },
           () => {
             this.locationError();
+            this.positionFound = false;
           }
         );
       } else {
         this.locationError();
+        this.positionFound = false;
       }
     },
     locationError() {
