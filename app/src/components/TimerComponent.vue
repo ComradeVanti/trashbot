@@ -12,8 +12,8 @@ export default {
 
   computed: {
     ...mapState(gameStore, {
-      time: "time",
-    }),
+      time: "time"
+    })
   },
 
   methods: {
@@ -27,7 +27,7 @@ export default {
         minutes,
         seconds;
 
-      setInterval(function () {
+      setInterval(function() {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -40,14 +40,14 @@ export default {
           timer = duration;
         }
       }, 1000);
-    },
+    }
   },
 
   watch: {
-    time: function () {
+    time: function() {
       this.startTimer();
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -56,17 +56,16 @@ export default {
   position: absolute;
   bottom: 0;
   right: 0;
-  margin: 20px;
-
+  margin: var(--dim-regular);
+  background-color: var(--col-background);
+  padding: var(--dim-small) var(--dim-regular);
+  border-radius: var(--dim-corners);
   z-index: 1000000;
-  display: flex;
 }
-#time {
-  padding: 10px 30px;
-  border-radius: 30px;
-  background-color: white;
 
+#time {
   text-align: center;
+  color: var(--col-on-background);
   margin: auto;
 }
 </style>

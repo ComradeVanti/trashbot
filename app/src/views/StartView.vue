@@ -117,9 +117,9 @@ export default {
 
 .blob {
   position: absolute;
-  width: 105%;
-  height: 100%;
-  left: -1px;
+  width: 120%;
+  height: 103%;
+  left: -10%;
 }
 
 h1.main-title {

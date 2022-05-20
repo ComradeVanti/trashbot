@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="fill-parent">
     <div id="map-container">
       <GMapMap
         id="map"
@@ -258,18 +258,12 @@ export default {
 };
 </script>
 
-<style>
-.content {
-  height: 100%;
-}
+<style scoped>
 #map-container,
 .vue-map-container {
   height: 100%;
   overflow: hidden;
-  border-radius: 15px;
-
-  box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
+  border-radius: var(--dim-corners);
 }
 #update-btn {
   z-index: 100;
@@ -288,6 +282,10 @@ export default {
   background-color: aliceblue;
   padding: 10px;
   border-radius: 5px;
+}
+
+.content {
+  padding: 0 !important;
 }
 
 .pickUpItem {

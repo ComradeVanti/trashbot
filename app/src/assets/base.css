@@ -34,6 +34,24 @@
     --fnt-regular: 'Roboto', sans-serif;
 }
 
+@media (max-height: 670px) {
+
+    :root {
+
+        --dim-corners: 30px;
+        --dim-small: 7px;
+        --dim-regular: 15px;
+        --dim-large: 30px;
+        --dim-btn: 130px;
+
+        --fnt-sze-title-main: 40px;
+        --fnt-sze-title: 50px;
+        --fnt-sze-regular: 15px;
+
+    }
+
+}
+
 *,
 *::before,
 *::after {
@@ -84,6 +102,6 @@ h1, h2, h3 {
     color: var(--col-on-background);
 }
 
-p {
+p, span {
     font-size: var(--fnt-sze-regular);
 }
