@@ -14,7 +14,7 @@
         }"
       >
         <user-pin @openWindow="openInfoWindow(playerId)" />
-        <playground-circle />
+        <playground-circle :startPoint="startPoint" />
 
         <GMapCluster>
           <enemy-pin
@@ -132,6 +132,7 @@ export default {
       roomId: "roomId",
       playerId: "playerId",
       time: "time",
+      startPoint: "startPoint",
     }),
   },
 

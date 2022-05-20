@@ -69,7 +69,11 @@ export default {
     },
     "game/start": function (data) {
       this.store.updateTime(data.minutes);
-      this.store.setStartPoint(data.gameCenter);
+      const position = {
+        latitude: data.gameCenter.lat,
+        longitude: data.gameCenter.lng,
+      };
+      this.store.setStartPoint(position);
       this.$router.push("game");
     },
     "lobby/changed": function () {

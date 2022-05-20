@@ -15,20 +15,18 @@
 </template>
 
 <script>
-import { gameStore } from "@/stores";
+import { gameStore } from "../stores/index.ts";
 
 export default {
   name: "PlaygroundCircle",
-  data() {
+  props: ["startPoint"],
+
+  setup() {
     const store = gameStore();
 
     return {
       store,
-      startPoint: null,
     };
-  },
-  created() {
-    this.startPoint = this.store.startPoint;
   },
 };
 </script>
