@@ -41,8 +41,8 @@ input {
   background: #D8DAD9;
   font-weight: 700;
   font-size: 17px;
+  color: var(--color-background);
   border-radius: 40px;
-  color: white;
   text-align: center;
   padding: 10px 20px;
 }
