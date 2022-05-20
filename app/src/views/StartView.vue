@@ -152,12 +152,13 @@ h1 {
 }
 
 .robo-image-container {
-  height: 40vh;
   width: 100%;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
 }
 
 .robo-image-container img {
-  width: 100%;
   height: 100%;
   object-fit: contain;
 }
