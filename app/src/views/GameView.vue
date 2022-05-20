@@ -297,10 +297,6 @@ export default {
   border-radius: 5px;
 }
 
-.content {
-  padding: 0 !important;
-}
-
 .pickUpItem {
   z-index: 100;
   position: absolute;

@@ -5,10 +5,9 @@
       msg="Wir konnten keinen Standort finden! Überprüfe deine Standorteinstellungen."
       bgColor="danger"
     />
-    <div class="content">
+    <div class="column">
       <h1>Ranking</h1>
-
-      <div class="rectPlayers">
+      <div class="rectPlayers box">
         <table class="table">
           <tbody>
             <tr v-for="(player, idx) in robots" :key="idx">
@@ -20,7 +19,7 @@
         </table>
       </div>
 
-      <button-comp class="startBtn" @click="newGame()">
+      <button-comp class="startBtn btn-primary" @click="newGame()">
         Neues Spiel
       </button-comp>
     </div>
@@ -112,48 +111,16 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-  font-size: 26px;
-  margin-top: var(--dim-regular);
-}
-
-p {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 26px;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.rectUser {
-  width: 70vw;
-  height: 65px;
-  margin-top: var(--dim-large);
-}
 
 .rectPlayers {
-  width: 70vw;
-  height: 36vh;
-  background: #575a68;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 18px;
+  padding: var(--dim-regular);
   flex-grow: 1;
   overflow: scroll;
 }
 
 .startBtn {
-  margin-top: 15px;
-  width: 60%;
-  margin-bottom: 10px;
+  margin-top: var(--dim-regular);
+  width: 100%;
 }
 
-.content {
-  background: #ffffff;
-  box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 41px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
 </style>
