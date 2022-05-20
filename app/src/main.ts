@@ -18,7 +18,7 @@ app.use(createPinia());
 app.use(
   new VueSocketIO({
     debug: true,
-    connection: process.env.VUE_APP_BASEURL,
+    connection: import.meta.env.VITE_BASEURL,
   })
 );
 
