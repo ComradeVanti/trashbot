@@ -42,11 +42,11 @@ export default ({ mode }) => {
     },
 
     server: {
-      // port: parseInt(process.env.VITE_PORT),
+      port: 3000,
       proxy: {
         "/api": {
-          // target: "http://localhost:3000",
-          target: "trashbot.api.mobile.media.fhstp.ac.at",
+          target: "http://localhost:3000",
+          // target: "trashbot.api.mobile.media.fhstp.ac.at",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
