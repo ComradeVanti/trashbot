@@ -1,14 +1,12 @@
 <template>
-  <div class="content">
-    <div class="bg">
-      <img
-        src="/src/assets/img/BackgroundBlob.png"
-        class="blob"
-        alt="BackgroundBlob"
-      />
-    </div>
+  <div class="column">
+    <img
+      src="/src/assets/img/BackgroundBlob.png"
+      class="blob"
+      alt="BackgroundBlob"
+    />
     <div class="form">
-      <h1>MATERIAL BOT</h1>
+      <h1 class="main-title">MATERIAL BOT</h1>
       <div class="robo-image-container">
         <img src="/src/assets/img/MainRobot.png" alt="Robot" />
       </div>
@@ -21,7 +19,7 @@
       ></input-field>
       <!-- nur für Player -->
 
-      <button-comp class="hostButton" @click="createLobby()">Host </button-comp>
+      <button-comp class="btn-secondary" @click="createLobby()">Host</button-comp>
       <div class="containerJoinBtn">
         <input-field
           aria-label="Lobby-Code"
@@ -30,7 +28,7 @@
           class="codeField"
           @input="(event) => (lobbyCode = event.target.value)"
         ></input-field>
-        <button-comp class="joinButton" @click="joinLobby()">Join </button-comp>
+        <button-comp class="joinButton btn-primary" @click="joinLobby()">Join</button-comp>
       </div>
     </div>
   </div>
@@ -48,26 +46,26 @@ export default {
     const store = gameStore();
 
     return {
-      store,
+      store
     };
   },
   sockets: {
-    connect: function () {
+    connect: function() {
       console.log("socket connected");
     },
-    "me/host": function (data) {
+    "me/host": function(data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/join": function (data) {
+    "me/join": function(data) {
       console.log(data);
       this.saveLobbyCode(data.roomId, data.playerId);
       this.$router.push("lobby");
     },
-    "me/error": function (data) {
+    "me/error": function(data) {
       console.log(data.errorCode);
-    },
+    }
   },
   methods: {
     savePlayerName() {
@@ -83,13 +81,13 @@ export default {
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
     },
-    sendHost: function () {
+    sendHost: function() {
       this.$socket.emit("server/host", { playerName: this.playerName });
     },
-    sendPlayer: function () {
+    sendPlayer: function() {
       this.$socket.emit(`server/join`, {
         playerName: this.playerName,
-        roomId: parseInt(this.lobbyCode),
+        roomId: parseInt(this.lobbyCode)
       });
     },
 
@@ -106,41 +104,28 @@ export default {
       this.sendPlayer();
       localStorage.setItem("roomId", this.lobbyCode);
       localStorage.setItem("playerId", this.playerId);
-    },
+    }
   },
   created() {
     console.log(import.meta.env.BASE_URL);
     localStorage.clear();
-  },
+  }
 };
 </script>
 
 <style scoped>
-h1 {
-  margin-top: 15px;
-  font-family: "Play", sans-serif;
-  font-weight: 700;
-  font-size: 54px;
-  line-height: 88.7%;
-  text-align: center;
-  color: #5a81bc;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
-}
 
-.content {
-  height: 100%;
-  position: relative;
-}
-
-.bg {
-  width: 100%;
-  height: 100%;
+.blob {
   position: absolute;
-  top: 0;
-  left: 0;
-  background: #ffffff;
-  box-shadow: inset 3px 6px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 41px;
+  width: 105%;
+  height: 100%;
+  left: -1px;
+}
+
+h1.main-title {
+  margin-top:  var(--dim-regular);
+  font-size: var(--fnt-sze-title-main);
+  line-height: 88.7%;
 }
 
 .form {
@@ -148,7 +133,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 20px;
+  padding: var(--dim-regular);
   height: 100%;
 }
 
@@ -158,7 +143,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin-top: auto;
-  margin-bottom: 25px;
+  margin-bottom: var(--dim-regular);
 }
 
 .robo-image-container img {
@@ -166,29 +151,21 @@ h1 {
   object-fit: contain;
 }
 
-.blob {
-  width: 105%;
-  height: 100%;
-  left: -1px;
-}
-
-.hostButton {
-  background: #ed6449;
-  margin-top: 20px;
+.btn-secondary {
+  margin-top: var(--dim-regular);
+  width: 100%;
 }
 
 .joinButton {
-  background: #59c2ea;
-  z-index: 5;
   min-width: 40%;
-  margin-left: 10px;
+  margin-left: var(--dim-small);
 }
 
 .containerJoinBtn {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: var(--dim-regular);
   align-items: center;
 }
 
