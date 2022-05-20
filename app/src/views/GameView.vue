@@ -172,6 +172,12 @@ export default {
       const dialog = document.querySelector("#detailPage.modal");
       dialog.style.display = "flex";
     },
+
+    // end game
+    "game/done": function () {
+      console.log("end");
+      this.$router.push("end");
+    },
   },
 
   methods: {
