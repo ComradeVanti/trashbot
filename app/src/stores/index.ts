@@ -25,6 +25,7 @@ export const gameStore = defineStore("game", {
       lat: 0,
       lng: 0,
     },
+    itemInRange: false,
   }),
   actions: {
     savePlayer(updatedName: string) {
@@ -45,11 +46,15 @@ export const gameStore = defineStore("game", {
     updateTime(time: number) {
       this.time = time;
     },
+    updateItemInRange(bool: boolean) {
+      this.itemInRange = bool;
+    },
   },
   getters: {
     updatedName: (state) => state.playerName,
     updatedId: (state) => state.playerId,
     updatedstartPoint: (state) => state.startPoint,
     updatedTime: (state) => state.time,
+    updatedItemInRange: (state) => state.itemInRange,
   },
 });

@@ -47,12 +47,16 @@ export default {
   components: { ButtonComp },
   name: "ItemWindow",
   data() {
-    return {};
+    const userStore = gameStore();
+    return {
+      userStore,
+    };
   },
   props: ["itemInfo"],
   computed: {
     ...mapState(gameStore, {
       playerName: "playerName",
+      inRange: "itemInRange",
     }),
     itemType() {
       console.log(this.itemInfo[0].type);
@@ -84,6 +88,7 @@ export default {
       this.closeWindow();
     },
     closeWindow() {
+      this.userStore.updateItemInRange(false);
       console.log(this.itemInfo);
       const itemDialog = document.querySelector("#itemPage.modal");
       localStorage.removeItem("itemInfo");

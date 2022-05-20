@@ -93,10 +93,10 @@ export default {
 
     getCoolness() {
       return (
-        this.robotParts.head.coolness +
-        this.robotParts.body.coolness +
-        this.robotParts.arms.coolness +
-        this.robotParts.legs.coolness
+        Math.round(this.robotParts.head.coolness) +
+        Math.round(this.robotParts.body.coolness) +
+        Math.round(this.robotParts.arms.coolness) +
+        Math.round(this.robotParts.legs.coolness)
       );
     },
   },

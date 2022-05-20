@@ -36,13 +36,13 @@
   </div>
 
   <button-comp
-    v-if="itemInRange == true"
+    v-if="inRange == true"
     class="pickUpItem btn-primary"
     @click="openItemWindow(itemsInRange[0].id)"
     >Item ansehen</button-comp
   >
 
-  <item-window v-if="itemInRange == true" :itemInfo="itemInfo"></item-window>
+  <item-window v-if="inRange == true" :itemInfo="itemInfo"></item-window>
   <info-window :robotParts="robot" />
 
   <toast-msg
@@ -118,7 +118,7 @@ export default {
 
       players: [],
       items: [],
-      itemInRange: false,
+      // itemInRange: false,
       itemsInRange: [],
     };
   },
@@ -133,6 +133,7 @@ export default {
       playerId: "playerId",
       time: "time",
       startPoint: "startPoint",
+      inRange: "itemInRange",
     }),
   },
 
@@ -165,9 +166,11 @@ export default {
         data.forEach((item) => {
           this.itemsInRange.push(item);
         });
-        this.itemInRange = true;
+        // this.itemInRange = true;
+        this.userStore.updateItemInRange(true);
       } else {
-        this.itemInRange = false;
+        // this.itemInRange = false;
+        this.userStore.updateItemInRange(false);
       }
       this.itemInfo = data;
     },
