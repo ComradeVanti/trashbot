@@ -32,7 +32,7 @@
     </div>
 
     <div id="accuracy">Ungenauigkeit: {{ accuracy }}m</div>
-    <timer-component />
+    <timer-component :time="time" />
   </div>
 
   <button-comp
@@ -127,6 +127,7 @@ export default {
     ...mapState(gameStore, {
       roomId: "roomId",
       playerId: "playerId",
+      time: "time",
     }),
   },
 
@@ -166,8 +167,6 @@ export default {
 
     // response to open info window
     "me/robot": function (data) {
-      console.log(data.robot);
-
       this.robot = data.robot;
       const dialog = document.querySelector("#detailPage.modal");
       dialog.style.display = "flex";
