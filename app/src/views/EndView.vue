@@ -18,10 +18,6 @@
           </tbody>
         </table>
       </div>
-
-      <button-comp class="startBtn btn-primary" @click="newGame()">
-        Neues Spiel
-      </button-comp>
     </div>
   </div>
 </template>
@@ -30,11 +26,8 @@
 import { mapState } from "pinia";
 import { gameStore } from "../stores/index.ts";
 
-import ButtonComp from "@/components/ButtonComp.vue";
-
 export default {
   name: "EndView",
-  components: { ButtonComp },
   data() {
     return {
       robots: [
