@@ -50,11 +50,6 @@
     msg="Standort nicht gefunden. Überprüfe deine Standorteinstellungen."
     bgColor="danger"
   />
-  <toast-msg
-    id="mapAccuracy"
-    msg="Deine aktuelle Position kann bis zu 50m abweichen!"
-    bgColor="primary"
-  />
 </template>
 
 <script>
@@ -198,10 +193,6 @@ export default {
             this.locationStore.updatePosition(position.coords);
             this.accuracy = position.coords.accuracy;
 
-            if (this.accuracy > 50) {
-              this.accuracyInfo();
-            }
-
             this.$socket.emit("game/location", {
               playerId: this.playerId,
               roomId: this.roomId,
@@ -226,9 +217,6 @@ export default {
       });
     },
 
-    accuracyInfo() {
-      this.showToast("mapAccuracy");
-    },
     locationError() {
       this.showToast("locationError");
     },
