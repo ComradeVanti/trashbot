@@ -46,7 +46,7 @@ export default ({ mode }) => {
       proxy: {
         "/api": {
           // target: "http://localhost:3000",
-          target: process.env.VITE_BASEURL,
+          target: "trashbot.api.mobile.media.fhstp.ac.at",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
