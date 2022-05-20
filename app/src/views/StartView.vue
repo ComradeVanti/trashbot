@@ -117,6 +117,7 @@ export default {
 
 <style scoped>
 h1 {
+  margin-top: 15px;
   font-family: "Play", sans-serif;
   font-weight: 700;
   font-size: 54px;
@@ -156,6 +157,8 @@ h1 {
   height: 40vh;
   display: flex;
   justify-content: center;
+  margin-top: auto;
+  margin-bottom: 25px;
 }
 
 .robo-image-container img {
@@ -187,10 +190,6 @@ h1 {
   justify-content: space-between;
   margin-top: 20px;
   align-items: center;
-}
-
-.nameField {
-  margin-top: auto;
 }
 
 </style>
