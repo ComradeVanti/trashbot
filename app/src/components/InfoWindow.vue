@@ -29,7 +29,7 @@
                     class="robot-img head"
                   />
                 </th>
-                <td>Coolness: {{ robotParts.head.coolness }}</td>
+                <td>Coolness: {{ Math.round(robotParts.head.coolness) }}</td>
               </tr>
               <tr>
                 <th scope="row">
@@ -39,7 +39,7 @@
                     class="robot-img body"
                   />
                 </th>
-                <td>Coolness: {{ robotParts.body.coolness }}</td>
+                <td>Coolness: {{ Math.round(robotParts.body.coolness) }}</td>
               </tr>
               <tr>
                 <th scope="row">
@@ -49,7 +49,7 @@
                     class="robot-img arm"
                   />
                 </th>
-                <td>Coolness: {{ robotParts.arms.coolness }}</td>
+                <td>Coolness: {{ Math.round(robotParts.arms.coolness) }}</td>
               </tr>
               <tr>
                 <th scope="row">
@@ -59,7 +59,7 @@
                     class="robot-img leg"
                   />
                 </th>
-                <td>Coolness: {{ robotParts.legs.coolness }}</td>
+                <td>Coolness: {{ Math.round(robotParts.legs.coolness) }}</td>
               </tr>
             </tbody>
           </table>
