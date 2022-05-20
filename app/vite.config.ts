@@ -42,7 +42,7 @@ export default ({ mode }) => {
     },
 
     server: {
-      port: parseInt(process.env.VITE_PORT),
+      // port: parseInt(process.env.VITE_PORT),
       proxy: {
         "/api": {
           // target: "http://localhost:3000",
