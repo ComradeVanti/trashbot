@@ -1,4 +1,4 @@
-import {Entity, GAME_RADIUS, id, Item, PartType, Robot, SphereXY} from "./domain";
+import {Entity, GAME_RADIUS, id, Item, PartType, PICKUP_RANGE, Robot, SphereXY} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {SphereMath} from "./SphereMath";
@@ -111,7 +111,7 @@ export class Game {
     }
 
     findItemsInPickupRange(player: Player) {
-        return this.items.getInCircle(player.location, 10)
+        return this.items.getInCircle(player.location, PICKUP_RANGE)
     }
 
     tryMapPlayer(id: id, mapF: (player: Player) => Player): Result<Game> {
