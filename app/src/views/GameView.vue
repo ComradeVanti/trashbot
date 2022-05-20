@@ -92,6 +92,7 @@ export default {
       userStore,
       locationStore,
       accuracy: 0,
+      timeout: "",
       robot: {
         head: {
           coolness: null,
@@ -137,7 +138,7 @@ export default {
   },
 
   mounted() {
-    window.setInterval(() => {
+    this.timeout = window.setInterval(() => {
       this.askEnemy();
     }, this.ASK_SEC * 1000);
   },
@@ -174,7 +175,7 @@ export default {
 
     // end game
     "game/done": function () {
-      console.log("end");
+      clearInterval(this.timeout);
       this.$router.push("end");
     },
   },
