@@ -254,6 +254,9 @@ export default {
 </script>
 
 <style>
+.content {
+  height: 100%;
+}
 #map-container,
 .vue-map-container {
   height: 100%;
