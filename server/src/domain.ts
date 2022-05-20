@@ -5,6 +5,7 @@ export type degree = number
 export type errorCode = number
 
 export const GAME_TIME_MINUTES = 10
+export const GAME_RADIUS = 250
 
 export type SphereXY = {
     lat: degree

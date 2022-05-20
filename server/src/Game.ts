@@ -1,4 +1,4 @@
-import {Entity, id, Item, PartType, Robot, SphereXY, Stats} from "./domain";
+import {Entity, GAME_RADIUS, id, Item, PartType, Robot, SphereXY, Stats} from "./domain";
 import Immutable from "immutable";
 import {Lobby} from "./Lobby";
 import {SphereMath} from "./SphereMath";
@@ -23,7 +23,7 @@ const baseRobot: Robot = {
 
 export class Game {
 
-    static fromLobby(lobby: Lobby, hostLocation: SphereXY, gameRadius: number): Game {
+    static fromLobby(lobby: Lobby, hostLocation: SphereXY): Game {
 
         const players: Immutable.Map<id, Player> = lobby.guests.map((it) => ({
             name: it.name,
@@ -34,7 +34,7 @@ export class Game {
         const playerCount = players.count()
 
         function randomLocation() {
-            return SphereMath.randomPointInCircle(hostLocation, gameRadius)
+            return SphereMath.randomPointInCircle(hostLocation, GAME_RADIUS)
         }
 
         function makeItemsOfType(type: PartType, count: number) {
